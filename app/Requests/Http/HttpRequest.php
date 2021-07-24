@@ -11,13 +11,15 @@ class HttpRequest extends Request
     private $method;
     public $path;
 
+    /**
+     * Проверку типа запроса можно было сделать здесь, но я решил передавать информацию в HttpCommand
+     * и принимать решение по обработке там.
+     * 
+     * @see app\Commands\Command\HttpCommand::execute()
+     */
     public function init()
     {
-        // Ради удобства здесь игнорируются отличия
-        // в методах запросов POST, GET, т.д., но
-        // этого нельзя делать в реальном проекте!
         $this->properties = $_REQUEST;
-        // d($this->properties);
 
         if (isset($_SERVER['PATH_INFO'])) {
             $this->path = $_SERVER['PATH_INFO'];
@@ -25,10 +27,13 @@ class HttpRequest extends Request
             $this->path = '/';
         }
 
-        $this->method     = $_SERVER['REQUEST_METHOD'];
-        // d($_SERVER);
-        
-        $this->path       = (empty ($this->path) ) ? : $this->path;
+        $this->method = $_SERVER['REQUEST_METHOD'];        
+        $this->path   = (empty ($this->path) ) ? : $this->path;
+    }
+
+    public function getHttpMethod()
+    {
+        return $this->method;
     }
 
     /**

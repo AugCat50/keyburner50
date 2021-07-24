@@ -16,6 +16,7 @@ class DefaultCommand extends Command
     public function execute(Request $request)
     {
         // $request->addFeedback('Добро пожаловать в систему!');
+        return $request->getHttpMethod();
         return "<p>Hello world! <br>default command</p>";
     }
 }
