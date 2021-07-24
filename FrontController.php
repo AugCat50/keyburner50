@@ -28,7 +28,8 @@ class FrontController
     public static function run()
     {
         $frontController = new FrontController();
-        $frontController->init() ;
+        $frontController->init();
+        // d($frontController->reg);
         $frontController->handleRequest();
         // d($frontController);
     }

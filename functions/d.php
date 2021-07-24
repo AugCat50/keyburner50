@@ -47,7 +47,7 @@ if (! function_exists('d')) {
         echo '<tr><td><b>'. basename( $a['file'] ). '</b></td>'
             . '<td><span style="color: red">('. $a['line']. ')</span></td>'
             . '<td><span style="color: green"> '. $a['function']. '</span></td>'
-            . '<td>---<span style="color: blue">'. dirname($a['file']). '</span></td></tr>';
+            . '<td>---<span style="color: orange">'. dirname($a['file']). '</span></td></tr>';
     }
 
 }

@@ -6,7 +6,7 @@ namespace app\Commands;
 
 use app\Requests\Request;
 
-class DefaultCommand extends Command
+class DefaultTestCommand extends Command
 {
     /**
      * Можно сделать что угодно. Редирект на главную страницу, сообщение о ощибке; всё, что позволит фантазия
@@ -16,6 +16,6 @@ class DefaultCommand extends Command
     public function execute(Request $request)
     {
         // $request->addFeedback('Добро пожаловать в систему!');
-        return "Hello world! <br>default command";
+        return "<p>Hello world! <br>default ТЕСТ command</p>";
     }
 }
