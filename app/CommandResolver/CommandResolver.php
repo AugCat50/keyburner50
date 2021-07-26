@@ -7,11 +7,15 @@ namespace app\CommandResolver;
 
 use app\Requests\Request;
 use app\Commands\Command;
+use app\Commands\DefaultCommand;
+use app\Commands\Http\DefaultTextHttpCommand;
 use app\Registry\Registry;
+use app\Response\Response;
 
 class CommandResolver{
     private static $refcmd     = null;
-    private static $defaultcmd = DefaultCommand::class;
+    // private static $defaultcmd = DefaultCommand::class;
+    private static $defaultcmd = DefaultTextHttpCommand::class;
 
     public function __construct()
     {
@@ -40,20 +44,22 @@ class CommandResolver{
         //Ищем в массиве роутов соответствие url запроса, получаем полное имя класса
         $class = $commands->get($path);
 
+        $response = new Response();
+
         if (is_null($class)) {
-            $request->addFeedback("Соответствие пути ". $path. " не обнаружено!");
+            $response->addFeedback("Соответствие пути ". $path. " не обнаружено!");
             return new self::$defaultcmd();
         }
 
         if (! class_exists($class)) {
-            $request->addFeedback("Класс ". $class. " не найден!");
+            $response->addFeedback("Класс ". $class. " не найден!");
             return new self::$defaultcmd();
         }
 
         $refclass = new \ReflectionClass ($class);
 
         if (! $refclass->isSubClassOf(self::$refcmd)) {
-            $request->addFeedback("Команда ". $refclass. " не относится к классу Command!");
+            $response->addFeedback("Команда ". $refclass. " не относится к классу Command!");
             return new self::$defaultcmd();
         }
 

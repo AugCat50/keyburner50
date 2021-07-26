@@ -42,7 +42,10 @@ class DefaultTextHttpCommand extends HttpCommand
     {
         $worker = new GetDefaultTextWorker();
         $model  = $worker->findOne($id);
-        // return $model;
+        $text   = $model->getText();
+
+        $result = [ 'view' => 'Simple', 'response' => new Response($text)];
+        return $result;
     }
 
     /**

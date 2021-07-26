@@ -55,6 +55,7 @@
         
         <script src="resources/js/jquery-3.5.1.min.js"></script>
         <script src="resources/js/textarea_autosize.js"></script>
+        <script src="resources/js/default_text.js"></script>
         <!-- <script src="resources/js/main.js"></script>
         <script src="resources/js/log_in.js"></script>
         <script src="resources/js/check_in.js"></script> -->

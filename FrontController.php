@@ -62,10 +62,9 @@ class FrontController
         $cmd      = $resolver->getCommand($request);
         $msg      = $cmd->execute($request);
 
-        if($msg['view']) {
+        if(is_array($msg) && $msg['view']) {
             $this->getView($msg);
         }
-
         // echo $msg;
         // d($msg);
     }

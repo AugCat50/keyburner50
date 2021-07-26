@@ -13,11 +13,15 @@ class Response
      */
     protected $feedback = [];
 
-    public function __construct($feedback){
-        if(is_array($feedback)){
-            $this->feedback = $feedback;
-        } else {
-            $this->feedback[] = $feedback;
+    public function __construct($feedback = null){
+        if(! is_null($feedback)){
+
+            if(is_array($feedback)){
+                $this->feedback = $feedback;
+            } else {
+                $this->feedback[] = $feedback;
+            }
+
         }
     }
 

@@ -11,6 +11,7 @@ use app\Requests\Request;
 abstract class HttpCommand extends Command
 {
     abstract public function index  (Request $request);
+    abstract public function show   (int $id);
     abstract public function store  (Request $request);
     abstract public function update (Request $request);
     abstract public function destroy(Request $request);
@@ -22,9 +23,16 @@ abstract class HttpCommand extends Command
         }
 
         $httpMethod = $request->getHttpMethod();
+        $id         = $request->getProperty('id');
 
         switch ($httpMethod) {
             case 'GET':
+                //Если есть id, получаем одну запись
+                if(! is_null($id)){
+                    return $this->show($id);
+                }
+
+                //Если нет id, получаем все записи
                 return $this->index($request);
                 break;
             case 'POST':

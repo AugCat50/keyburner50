@@ -37,9 +37,8 @@ class Conf
      */
     public function get(string $key)
     {
-        $j = $this->data[$key];
-        if (isset($j)) {
-            return $j;
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
         }
         return null;
     }
