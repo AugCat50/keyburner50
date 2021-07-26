@@ -18,7 +18,7 @@
                             // $request = new app\Requests\Http\HttpRequest();
 
                             //Точка входа
-                            FrontController::run();
+                            // FrontController::run();
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +79,10 @@
 
                     <ul class="default-text-list js_ul_list js_default-text-list">
                         <h3 class="default-text-list__head pink-neon">Быстрый старт:</h3>
-
+                        <?php
+                            //Точка входа. Так же вывод списка по роуту "/" - DefaultTextHttpCommand --- DefaultTextListView
+                            FrontController::run();
+                        ?>
                     </ul>
                 </header> 
                 
@@ -87,7 +90,7 @@
                     <section class="test">
                                 <?php
                                     //Точка входа
-                                    FrontController::run();
+                                    // FrontController::run();
                                 ?>
                     </section>
 

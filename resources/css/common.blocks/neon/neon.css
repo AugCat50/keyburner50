@@ -12,7 +12,8 @@
 .blue-neon{
     color: #c6e2ff;
 /*    color: #F5FEFF;*/
-    animation: blueNeon .08s ease-in-out infinite alternate;
+/* временно отключу, на время разработки */
+    /* animation: blueNeon .08s ease-in-out infinite alternate; */
 }
 
 .blue-neon:hover{
@@ -141,7 +142,7 @@
     color: white;
 }
 
-.red-neon{
+/* .red-neon{ */
 /*
     color: #ffd8d8;
      text-shadow: 
@@ -161,7 +162,7 @@
     0 0 54px rgba(254,62,134,0.92);
     }
 */
-}
+/* } */
 
 .neon-line{
     width: 100%;

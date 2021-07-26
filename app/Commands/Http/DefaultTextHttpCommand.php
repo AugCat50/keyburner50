@@ -5,6 +5,7 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
+use app\Response\Response;
 use app\Workers\GetDefaultTextWorker;
 
 class DefaultTextHttpCommand extends HttpCommand
@@ -19,13 +20,16 @@ class DefaultTextHttpCommand extends HttpCommand
         $worker     = new GetDefaultTextWorker();
         $collection = $worker->find();
         $data       = [];
+        $i          = 0;
 
-        // foreach ($collection as $model) {
-        //     $name = $model->getName();
-        //     $result = '';
-        //     <li class='default-text-list__name blue-neon js_default-text-list__name' data-id='".$val['id']."' name='".$val['name']."'><span class='pointer'>&#187; </span><span class='js_value'>" . $val['name'] . "</span></li>
-        //     echo "$name <br>";
-        // }
+        foreach ($collection as $model) {
+            $data[$i]['id']   = $model->getId();
+            $data[$i]['name'] = $model->getName();
+            $i++;
+        }
+
+        $result = [ 'view' => 'DefaultTextList', 'response' => new Response($data)];
+        return $result;
     }
 
     /**

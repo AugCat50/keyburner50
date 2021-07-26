@@ -2,9 +2,9 @@
 /**
  * Хранилище данных, которые требуется передать на уровень представления
  */
-namespace app\Responce;
+namespace app\Response;
 
-class Responce
+class Response
 {
     /**
      * Массив, содержащий feedback на запрос

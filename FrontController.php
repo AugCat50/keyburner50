@@ -61,6 +61,20 @@ class FrontController
         $resolver = new CommandResolver();
         $cmd      = $resolver->getCommand($request);
         $msg      = $cmd->execute($request);
-        echo $msg;
+
+        if($msg['view']) {
+            $this->getView($msg);
+        }
+
+        // echo $msg;
+        // d($msg);
+    }
+
+    private function getView(array $msg)
+    {
+        $className = 'resources\views\\' . $msg['view'] .'View';
+        $class     = new \ReflectionClass($className);
+        $view      = $class->newInstance();
+        $view->print($msg['response']);
     }
 }

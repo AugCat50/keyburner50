@@ -25,7 +25,7 @@ abstract class HttpCommand extends Command
 
         switch ($httpMethod) {
             case 'GET':
-                $this->index($request);
+                return $this->index($request);
                 break;
             case 'POST':
                 $this->store($request);

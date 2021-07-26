@@ -29,7 +29,7 @@ abstract class Collection implements \Iterator
      * 
      * @var Mapper\Mapper
      */
-    protected $mapper;
+    // protected $mapper;
 
     /**
      * Размер полученного массива данных
@@ -249,6 +249,6 @@ abstract class Collection implements \Iterator
      */
     public function valid()
     {
-        return (! is_null($this->current()));
+        return isset($this->raw[$this->pointer]);
     }
 }
