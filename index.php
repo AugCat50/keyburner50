@@ -1,3 +1,26 @@
+<?php
+    //Подключение дебаг функции
+    require_once('functions/d.php');
+    //Подключение автозагрузчика
+    require_once('autoload.php');
+
+                            // require_once "controllers/component_default_get_name_texts.php";
+                            // foreach($data as $val){
+                            //     echo "<li class='default-text-list__name blue-neon js_default-text-list__name' data-id='".$val['id']."' name='".$val['name']."'><span class='pointer'>&#187; </span><span class='js_value'>" . $val['name'] . "</span></li>";
+                            // }
+
+                            // //Подключение дебаг функции
+                            // require_once('functions/d.php');
+                            // //Подключение автозагрузчика
+                            // require_once('autoload.php');
+                            // //Точка входа
+                            // FrontController::run();
+                            // $request = new app\Requests\Http\HttpRequest();
+
+                            //Точка входа
+                            FrontController::run();
+?>
+
 <!DOCTYPE html>
 <html lang="ru" class="html">
     <head>
@@ -56,24 +79,7 @@
 
                     <ul class="default-text-list js_ul_list js_default-text-list">
                         <h3 class="default-text-list__head pink-neon">Быстрый старт:</h3>
-                        <?php
-                            //Подключение дебаг функции
-                            require_once('functions/d.php');
-                            //Подключение автозагрузчика
-                            require_once('autoload.php');
 
-                            // require_once "controllers/component_default_get_name_texts.php";
-                            // foreach($data as $val){
-                            //     echo "<li class='default-text-list__name blue-neon js_default-text-list__name' data-id='".$val['id']."' name='".$val['name']."'><span class='pointer'>&#187; </span><span class='js_value'>" . $val['name'] . "</span></li>";
-                            // }
-
-                            // //Подключение дебаг функции
-                            // require_once('functions/d.php');
-                            // //Подключение автозагрузчика
-                            // require_once('autoload.php');
-                            // //Точка входа
-                            // FrontController::run();
-                        ?>
                     </ul>
                 </header> 
                 

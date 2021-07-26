@@ -9,7 +9,7 @@ use app\Requests\Request;
 class HttpRequest extends Request
 {
     private $method;
-    public $path;
+    public  $path;
 
     /**
      * Проверку типа запроса можно было сделать здесь, но я решил передавать информацию в HttpCommand
@@ -23,7 +23,7 @@ class HttpRequest extends Request
 
         if (isset($_SERVER['PATH_INFO'])) {
             $this->path = $_SERVER['PATH_INFO'];
-        } else{
+        } else {
             $this->path = '/';
         }
 
@@ -31,6 +31,9 @@ class HttpRequest extends Request
         $this->path   = (empty ($this->path) ) ? : $this->path;
     }
 
+    /**
+     * @return string
+     */
     public function getHttpMethod()
     {
         return $this->method;

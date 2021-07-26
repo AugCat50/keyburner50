@@ -11,17 +11,9 @@ namespace app\Requests;
 abstract class Request
 {
     /**
-     * Это простой канал связи, по которому классы контроллеров могут передавать сообщения пользователю.
+     * Для сохранения параметров запроса, массива $_REQUEST в http
      */
-    //TODO: Надо сделать фильтр ошибок или добавить отдельное свойство
     protected $properties;
-    
-    /**
-     * Массив, содержащий feedback на запрос
-     * 
-     * @var array
-     */
-    protected $feedback = [];
 
     /**
      * Неполный url, часть запроса, являющаяся ключом к команде. Роут, в общем.
@@ -114,45 +106,4 @@ abstract class Request
         $this->properties[$key] = $val;
     }
 
-    /**
-     * Установить Feedback на запрос. Есть смысл перенести в отдельный класс Response
-     * 
-     * @param string $msg
-     * 
-     * @return void
-     */
-    public function addFeedback(string $msg)
-    {
-        array_push($this->feedback, $msg);
-    }
-
-    /**
-     * Получить Feedback на запрос. Есть смысл перенести в отдельный класс Response
-     * 
-     * @return array
-     */
-    public function getFeedback(): array
-    {
-        return $this->feedback;
-    }
-
-    /**
-     * Получить Feedback на запрос в виде строки. Есть смысл перенести в отдельный класс Response
-     * 
-     * @return string
-     */
-    public function getFeedbackString($separator = "\n"): string
-    {
-        return implode($separator, $this->feedback);
-    }
-
-    /**
-     * Очистить массив feedback
-     * 
-     * @return void
-     */
-    public function clearFeedback()
-    {
-        $this->feedback = [];
-    }
 }

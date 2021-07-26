@@ -1,7 +1,7 @@
 <?php 
 namespace DomainObjectAssembler;
 
-use DomainObjectAssembler\Registry\Registry;
+use app\Registry\Registry;
 use DomainObjectAssembler\Collections\Collection;
 use DomainObjectAssembler\DomainModel\DomainModel;
 use DomainObjectAssembler\IdentityMap\ObjectWatcher;
@@ -19,6 +19,10 @@ class DomainObjectAssembler
         $this->factory = new PersistanceFactory($modelName);
         $reg           = Registry::getInstance();
         $this->pdo     = $reg->getPdo();
+        
+        if(is_null($this->pdo)) {
+            throw new \Exception('DomainObjectAssembler(__construct): получил NULL вместо объекта PDO.');
+        }
         // $this->factory->getModelFactory();
     }
 
@@ -75,7 +79,7 @@ class DomainObjectAssembler
         //[0] => "SELECT id, name, text, hidden FROM default_texts WHERE name = ? AND id = ?"
         //[1] => [0] => 'имя', [1] => int(4)
         list ($selection, $values) = $selfact->newSelection($idobj);
-
+        
         //подготовить запрос prepare
         $stmt = $this->getStatement($selection);
 

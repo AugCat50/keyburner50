@@ -5,6 +5,7 @@
 namespace app\Commands\Http;
 
 use app\Commands\Command;
+use app\Requests\Http\HttpRequest;
 use app\Requests\Request;
 
 abstract class HttpCommand extends Command
@@ -16,6 +17,10 @@ abstract class HttpCommand extends Command
 
     public function execute(Request $request)
     {
+        if (! $request instanceof HttpRequest) {
+            throw new \Exception('HttpCommand(21): HTTP команде должен быть передан объект HttpRequest. Получен - '. get_class($request));
+        }
+
         $httpMethod = $request->getHttpMethod();
 
         switch ($httpMethod) {

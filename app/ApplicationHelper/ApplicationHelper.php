@@ -88,5 +88,28 @@ class ApplicationHelper
         $rts = parse_ini_file($this->routes, true);
         $rConf = new Conf($rts['commands']);
         $this->reg->setRoutes($rConf);
+
+        //Установить подключение с БД
+        $this->setDataBaseConnection($eConf);
+    }
+
+    public function setDataBaseConnection(Conf $eConf)
+    {
+        $dbType = $eConf->get('dbType');
+        $host   = $eConf->get('host');
+        $dbName = $eConf->get('dbName');
+        $dbUser = $eConf->get('dbUser');
+        $dpPass = $eConf->get('dbPass');
+        $dsn    = $dbType. ':host='. $host. ';dbname='. $dbName;
+
+        try {
+            $pdo = new \PDO( $dsn, $dbUser, $dpPass);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $e){
+            echo "ApplicationHelper(109): Соединение с БД не удалось: " . $e->getMessage() . "<br>";
+            exit;
+        }
+
+        $this->reg->setPdo($pdo);
     }
 }

@@ -5,6 +5,7 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
+use app\Workers\GetDefaultTextWorker;
 
 class DefaultTextHttpCommand extends HttpCommand
 {
@@ -15,7 +16,29 @@ class DefaultTextHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        echo '<p>Index!</p>';
+        $worker     = new GetDefaultTextWorker();
+        $collection = $worker->find();
+        $data       = [];
+
+        // foreach ($collection as $model) {
+        //     $name = $model->getName();
+        //     $result = '';
+        //     <li class='default-text-list__name blue-neon js_default-text-list__name' data-id='".$val['id']."' name='".$val['name']."'><span class='pointer'>&#187; </span><span class='js_value'>" . $val['name'] . "</span></li>
+        //     echo "$name <br>";
+        // }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $worker = new GetDefaultTextWorker();
+        $model  = $worker->findOne($id);
+        // return $model;
     }
 
     /**

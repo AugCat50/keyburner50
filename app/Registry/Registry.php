@@ -48,6 +48,7 @@ class Registry
      * @var Request
      */
     private $request;
+    private $pdo;
 
 
     /**
@@ -121,12 +122,24 @@ class Registry
 
     /**
      * Получить объект Request
-
      * 
      * @return app\Request
      */
     public function getRequest(): Request
     {
         return $this->request;
+    }
+
+    /**
+     * Созранить объект PDO
+     */
+    public function setPdo(\PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    public function getPdo()
+    {
+        return $this->pdo;
     }
 }
