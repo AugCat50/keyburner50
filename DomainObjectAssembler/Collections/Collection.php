@@ -251,4 +251,9 @@ abstract class Collection implements \Iterator
     {
         return isset($this->raw[$this->pointer]);
     }
+
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
 }

@@ -113,24 +113,37 @@ class IdentityObject
         return $this;
     }
 
+    /**
+     * Ввести логический оператор OR для ТЕКУЩЕГО объекта поля
+     */
     public function or()
     {
         $this->setLogicalConnective('OR');
         return $this;
     }
 
+    /**
+     * Ввести логический оператор AND для ТЕКУЩЕГО объекта поля
+     */
     public function and()
     {
         $this->setLogicalConnective('AND');
         return $this;
     }
 
-    // public function not()
-    // {
-    //     $this->setLogicalConnective('NOT');
-    //     return $this;
-    // }
+    /**
+     * Ввести логический оператор NOT для ТЕКУЩЕГО объекта поля
+     * 
+     * На данный момент возможно не до конца адекватно будет работать в сложных запросах. Надо следить, если применяется.
+     * В простых должен работать нормально
+     */
+    public function not()
+    {
+        $this->setLogicalConnective('NOT');
+        return $this;
+    }
 
+    //Это на будущее
     // public function like()
     // {
     //     $this->setLogicalConnective('LIKE');
@@ -143,6 +156,9 @@ class IdentityObject
     //     return $this;
     // }
 
+    /**
+     * Сохраняет установленный логический оператор в текущий объект Field
+     */
     public function setLogicalConnective(string $str): self
     {
         if ($this->isVoid()) {

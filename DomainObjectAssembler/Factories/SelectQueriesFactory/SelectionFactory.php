@@ -47,6 +47,8 @@ class SelectionFactory
      * В самом методе buildWhere() вызывается метод IdentityObject::getComps() с целью получить сведения, 
      * требующиеся для создания предложения WHERE, а также составить список значений, причем и то и другое возвращается в двухэлементном массиве.
      * 
+     * Для более сложных запросов логика требует доработки. NOT возможно работает не до конца верно, надо контролировать, если применяется
+     * 
      * @param DomainObjectAssembler\IdentityObject\IdentityObject $obj
      * 
      * @return array
@@ -61,38 +63,48 @@ class SelectionFactory
         $values      = [] ;
 
         $array = $obj->getComps();
-        d($array,1); 
-        foreach ($obj->getComps() as $comp) {
+        $count = count($array);
 
-            //Проверяем наличие логического оператора, собираем запрос
-            //Пока что только AND и OR. Если потребуется сложнее, надо доработать логику составления выражений
-            switch ($comp['connective']) {
-                case null:
-                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' AND ';
-                    $values     [] = $comp['value'];
-                    break;
-                case 'AND':
-                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' AND ';
-                    $values     [] = $comp['value'];
-                    break;
-                case 'OR':
-                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' OR ';
-                    $values     [] = $comp['value'];
-                    break;
-                // case 'NOT':
-                //     $compstrings[] = ' NOT '. $comp['name']. $comp['operator']. '?';
-                //     $values     [] = $comp['value'];
-                //     break;
+
+        for($i=0, $not = false; $i<$count; $i++){
+            $comp = $array[$i];
+
+            if (
+                $comp['connective'] == null && $count==1 
+                || 
+                $comp['connective'] !== 'NOT' && $i==($count-1)
+                ) {
+
+                //Если логический оператор null и массив из одного условия 
+                //или 
+                //если логический оператор не NOT и последний элемент массива
+                $compstrings[] = $comp['name']. $comp['operator']. '?';
+                $values     [] = $comp['value'];
+
+            } else if ($comp['connective'] === 'NOT') {
+
+                //Если логический оператор NOT, добавляем в начало строки
+                $compstrings[] = ' NOT '. $comp['name']. $comp['operator']. '?';
+                $values     [] = $comp['value'];
+
+            } else if ($comp['connective'] === 'OR' && $i!=($count-1)) {
+
+                //Если логический оператор OR и не последний элемент массива
+                $compstrings[] = $comp['name']. $comp['operator']. '?'. ' OR ';
+                $values     [] = $comp['value'];
+
+            } else if ($comp['connective'] === 'AND' && $i!=($count-1)) {
+
+                //Если логический оператор AND и не последний элемент массива
+                $compstrings[] = $comp['name']. $comp['operator']. '?'. ' AND ';
+                $values     [] = $comp['value'];
+
             }
-
-            // name operator value
-            // $compstrings[] = $comp['name']. $comp['operator']. '?';
-            // $values     [] = $comp['value'];
-
         }
+
         $where = "WHERE " . implode(' ', $compstrings);
+        //Как было в простом варианте:
         // $where = "WHERE " . implode(" AND ", $compstrings);
-        // d();
         return [$where, $values];
     }
 }

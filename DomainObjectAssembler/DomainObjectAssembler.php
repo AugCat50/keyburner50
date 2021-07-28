@@ -79,8 +79,7 @@ class DomainObjectAssembler
         //[0] => "SELECT id, name, text, hidden FROM default_texts WHERE name = ? AND id = ?"
         //[1] => [0] => 'имя', [1] => int(4)
         list ($selection, $values) = $selfact->newSelection($idobj);
-        d($selection);
-        d($values);
+        
         //подготовить запрос prepare
         $stmt = $this->getStatement($selection);
 
@@ -113,10 +112,10 @@ class DomainObjectAssembler
      * она автоматически попадает на сохраниенние в конструкторе. 
      * Если такое поведение не устраивает, необходимо в DomainModel удалить markNew() в конструкторе
      */
-    public function insert(DomainModel $model)
-    {
-        ObjectWatcher::addNew($model);
-    }
+    // public function insert(DomainModel $model)
+    // {
+    //     ObjectWatcher::addNew($model);
+    // }
 
     public function update(DomainModel $model)
     {
