@@ -55,11 +55,23 @@
         
         <script src="resources/js/jquery-3.5.1.min.js"></script>
         <script src="resources/js/textarea_autosize.js"></script>
+
+        <script src="resources/js/const_and_null_var.js"></script>
+        <script src="resources/js/text_replace.js"></script>
+        <script src="resources/js/ajaxQuery.js"></script>
+        <script src="resources/js/ajaxQuery_stat.js"></script>
         <script src="resources/js/default_text.js"></script>
-        <!-- <script src="resources/js/main.js"></script>
+        <script src="resources/js/template_textarea.js"></script>
+        <script src="resources/js/work_textarea.js"></script>
+        <script src="resources/js/edit_button.js"></script>
+        <script src="resources/js/page_reload.js"></script>
+        <script src="resources/js/random_default_text.js"></script>
+        <script src="resources/js/random_user_text.js"></script>
+        <script src="resources/js/new_text_button.js"></script>
+        
+        <!-- <script src="resources/js/main.js"></script> -->
         <script src="resources/js/log_in.js"></script>
-        <script src="resources/js/check_in.js"></script> -->
-<!--        <script src="resources/js/default_text.js"></script> -->
+        <script src="resources/js/check_in.js"></script>
     </head>
     
     <body class="body">
@@ -74,6 +86,7 @@
                             <li class="blue-neon main-header-menu__item js_get-random-text-default"><span class='pointer'>&#187;</span> Случайный текст</li>
                             <li class="blue-neon main-header-menu__item js_check-in__show"><span class='pointer'>&#187;</span> Регистрация</li>
                             <li class="blue-neon main-header-menu__item js_authorization__show"><span class='pointer'>&#187;</span> Вход</li>
+                            <li class="blue-neon main-header-menu__item js_test"><span class='pointer'>&#187;</span> Test</li>
 <!--                            <li class="blue-neon main-header-menu__item"><span class='pointer'>&#187;</span> Добавить текст</li>-->
                         </nav>
                     </menu>
@@ -82,7 +95,7 @@
                         <h3 class="default-text-list__head pink-neon">Быстрый старт:</h3>
                         <?php
                             //Точка входа. Так же вывод списка по роуту "/" - DefaultTextHttpCommand --- DefaultTextListView
-                            FrontController::run();
+                            // FrontController::run();
                         ?>
                     </ul>
                 </header> 

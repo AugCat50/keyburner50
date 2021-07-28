@@ -2,7 +2,7 @@
 function check_in(){
     function ajax_query_check_in(name, pass_1, pass_2, mail){
         $.ajax({
-            url:    "ajax_check_in.php",
+            url:    "ajax.php/check_in",
             method: "post",
             data:{
                 name:   name,
@@ -11,7 +11,8 @@ function check_in(){
                 mail:   mail
             },
             success:function(answer){
-                $(".js_check-in-message").html(answer);
+                // $(".js_check-in-message").html(answer);
+                $(".test").html(answer);
                 
 //                setTimeout(function(){
 //                    $(".check-in").hide();

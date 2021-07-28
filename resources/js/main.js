@@ -377,8 +377,8 @@ function main_ready(){
         localStorage.clear();
         let id = $(this).attr('data-id');
         
+        // ajaxQuery(id, "get_default_text", ".js-main-textarea");
         ajaxQuery(id, "get_default_text", ".js-main-textarea");
-        
     });
     
     //Получение дефолтного текста
@@ -497,7 +497,8 @@ function main_ready(){
         }        
     });
     
-
+    var perfEntries = performance.getEntriesByType("navigation");
+    console.log(perfEntries);
     //При перезагрузке страницы вставляем старые данные
     if (performance.navigation.type == 1) {
         let r_id    = localStorage.getItem("id");

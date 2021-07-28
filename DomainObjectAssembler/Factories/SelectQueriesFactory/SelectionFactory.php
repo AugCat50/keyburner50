@@ -60,12 +60,39 @@ class SelectionFactory
         $compstrings = [];
         $values      = [] ;
 
+        $array = $obj->getComps();
+        d($array,1); 
         foreach ($obj->getComps() as $comp) {
+
+            //Проверяем наличие логического оператора, собираем запрос
+            //Пока что только AND и OR. Если потребуется сложнее, надо доработать логику составления выражений
+            switch ($comp['connective']) {
+                case null:
+                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' AND ';
+                    $values     [] = $comp['value'];
+                    break;
+                case 'AND':
+                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' AND ';
+                    $values     [] = $comp['value'];
+                    break;
+                case 'OR':
+                    $compstrings[] = $comp['name']. $comp['operator']. '?'. ' OR ';
+                    $values     [] = $comp['value'];
+                    break;
+                // case 'NOT':
+                //     $compstrings[] = ' NOT '. $comp['name']. $comp['operator']. '?';
+                //     $values     [] = $comp['value'];
+                //     break;
+            }
+
             // name operator value
-            $compstrings[] = $comp['name']. $comp['operator']. '?';
-            $values     [] = $comp['value'];
+            // $compstrings[] = $comp['name']. $comp['operator']. '?';
+            // $values     [] = $comp['value'];
+
         }
-        $where = "WHERE " . implode(" AND ", $compstrings);
+        $where = "WHERE " . implode(' ', $compstrings);
+        // $where = "WHERE " . implode(" AND ", $compstrings);
+        // d();
         return [$where, $values];
     }
 }

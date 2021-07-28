@@ -13,6 +13,7 @@ class IdentityObject
     protected $fields       = [];
     private   $enforce      = [];
     private   $tableName    = null;
+    private   $or           = false;
 
     /**
      * Объект идентичности может быть создан пустым или же с отдельным полем
@@ -106,9 +107,48 @@ class IdentityObject
     private function operator(string $symbol, $value): self
     {
         if ($this->isVoid()) {
-            throw new \Exception ("IdentityObject(95): Поле не определено <br>");
+            throw new \Exception ("IdentityObject(118): Не задано ни одного поля (массив объектов полей пуст)<br>");
         }
         $this->currentfield->addTest($symbol, $value);
+        return $this;
+    }
+
+    public function or()
+    {
+        $this->setLogicalConnective('OR');
+        return $this;
+    }
+
+    public function and()
+    {
+        $this->setLogicalConnective('AND');
+        return $this;
+    }
+
+    // public function not()
+    // {
+    //     $this->setLogicalConnective('NOT');
+    //     return $this;
+    // }
+
+    // public function like()
+    // {
+    //     $this->setLogicalConnective('LIKE');
+    //     return $this;
+    // }
+
+    // public function in()
+    // {
+    //     $this->setLogicalConnective('IN');
+    //     return $this;
+    // }
+
+    public function setLogicalConnective(string $str): self
+    {
+        if ($this->isVoid()) {
+            throw new \Exception ("IdentityObject(127): Не задано ни одного поля (массив объектов полей пуст)<br>");
+        }
+        $this->currentfield->addLogicalConnective($str);
         return $this;
     }
 

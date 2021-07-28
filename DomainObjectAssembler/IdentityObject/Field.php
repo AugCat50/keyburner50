@@ -19,10 +19,17 @@ class Field
     public function addTest(string $operator, $value)
     {
         $this->comps[] = [
-            'name'     => $this->name,
-            'operator' => $operator,
-            'value'    => $value
+            'name'       => $this->name,
+            'operator'   => $operator,
+            'value'      => $value,
+            'connective' => null
         ];
+    }
+
+    public function addLogicalConnective(string $logicalConnective)
+    {
+        $i = count($this->comps) - 1;
+        $this->comps[$i]['connective'] = $logicalConnective;
     }
 
     // $comps - это массив, поэтому проверить одно поле

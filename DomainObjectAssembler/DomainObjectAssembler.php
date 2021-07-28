@@ -79,7 +79,8 @@ class DomainObjectAssembler
         //[0] => "SELECT id, name, text, hidden FROM default_texts WHERE name = ? AND id = ?"
         //[1] => [0] => 'имя', [1] => int(4)
         list ($selection, $values) = $selfact->newSelection($idobj);
-        
+        d($selection);
+        d($values);
         //подготовить запрос prepare
         $stmt = $this->getStatement($selection);
 
