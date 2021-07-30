@@ -157,24 +157,24 @@ class ObjectWatcher
             // $obj->getFinder()->update($obj);
             $obj->getAssembler()->doUpdate($obj);
 
-            //Служеюное сообщение для тестирования
-            print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getName() . "<br>";
+            //Служебное сообщение для тестирования
+            print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getId() . "<br>";
         }
 
         foreach ($this->new as $key => $obj) {
             // $obj->getFinder()->insert($obj);
             $obj->getAssembler()->doInsert($obj);
 
-            //Служеюное сообщение для тестирования
-            print "ObjectWather(168): Выполяется сохранение в БД: " . $obj->getName() . "<br>";
+            //Служебное сообщение для тестирования
+            print "ObjectWather(168): Выполяется сохранение в БД: " . $obj->getId() . "<br>";
         }
 
         //Так же сделать обход массива delete
         foreach ($this->delete as $key => $obj) {
             $obj->getAssembler()->doDelete($obj);
 
-            //Служеюное сообщение для тестирования
-            print "ObjectWather(176): Выполяется удаление в БД: " . $obj->getName() . "<br>";
+            //Служебное сообщение для тестирования
+            print "ObjectWather(176): Выполяется удаление в БД: " . $obj->getId() . "<br>";
         }
         
         //Удалить из массива all все модели, подвергшиеся удалению из БД

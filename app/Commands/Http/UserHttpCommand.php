@@ -57,8 +57,10 @@ class UserHttpCommand extends HttpCommand
      */
     public function store(Request $request)
     {
-        $worker     = new UserCheckInWorker();
-        $worker->addNewUser($request);
+        $worker = new UserCheckInWorker();
+        $msg    = $worker->addNewUser($request);
+
+        d($msg);
         d($request);
     }
 

@@ -151,7 +151,6 @@ class DomainObjectAssembler
 
         //Выполнить запрос
         $stmt->execute($query[1]);
-        // d($query);
     }
 
     /**
@@ -176,5 +175,11 @@ class DomainObjectAssembler
 
         //Выполнить запрос
         $stmt->execute();
+    }
+
+    public function getLastInsertId()
+    {
+        $id = $this->pdo->lastInsertId();
+        return $id;
     }
 }
