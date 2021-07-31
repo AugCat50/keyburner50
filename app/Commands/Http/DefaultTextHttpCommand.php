@@ -5,15 +5,14 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
-use app\Response\Response;
 use app\Workers\GetDefaultTextWorker;
 
 class DefaultTextHttpCommand extends HttpCommand
 {
     /**
-     * Display a listing of the resource.
+     * Получение списка дефолтных текстов, сохранение в response и передача в фронт контроллер
      *
-     * @return 
+     * @return app\Response\Response
      */
     public function index(Request $request)
     {
@@ -27,16 +26,18 @@ class DefaultTextHttpCommand extends HttpCommand
             $data[$i]['name'] = $model->getName();
             $i++;
         }
-
-        $result = [ 'view' => 'DefaultTextList', 'response' => new Response($data)];
-        return $result;
+        
+        $this->response->setFeedback($data, 'DefaultTextList');
+        return $this->response;
     }
 
     /**
-     * Display the specified resource.
+     * Получение одного дефолтного текста, сохранение в response и передача в фронт контроллер. 
+     * 
+     * Возвращается только текст, возможно есть смысл возвращать модель.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return app\Response\Response
      */
     public function show($id)
     {
@@ -44,10 +45,12 @@ class DefaultTextHttpCommand extends HttpCommand
         $model  = $worker->findOne($id);
         $text   = $model->getText();
 
-        $result = [ 'view' => 'Simple', 'response' => new Response($text)];
-        return $result;
+        $this->response->setFeedback($text, 'Simple');
+        return $this->response;
     }
 
+
+    
     /**
      * Store a newly created resource in storage.
      *

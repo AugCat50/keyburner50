@@ -5,17 +5,19 @@
  */
 namespace app\CommandResolver;
 
-use app\Requests\Request;
 use app\Commands\Command;
-use app\Commands\DefaultCommand;
-use app\Commands\Http\DefaultTextHttpCommand;
+use app\Requests\Request;
 use app\Registry\Registry;
 use app\Response\Response;
+use app\Commands\NotFoundCommand;
 
 class CommandResolver{
-    private static $refcmd     = null;
-    // private static $defaultcmd = DefaultCommand::class;
-    private static $defaultcmd = DefaultTextHttpCommand::class;
+    private static $refcmd = null;
+
+    /**
+     * Дефолтная команда, при пустом роуте. Вывод списка дефолтных текстов
+     */
+    private static $defaultcmd = NotFoundCommand::class;
 
     public function __construct()
     {
@@ -44,25 +46,24 @@ class CommandResolver{
         //Ищем в массиве роутов соответствие url запроса, получаем полное имя класса
         $class = $commands->get($path);
 
-        $response = new Response();
-
         if (is_null($class)) {
-            $response->addFeedback("Соответствие пути ". $path. " не обнаружено!");
-            return new self::$defaultcmd();
+            $response = new Response("CommandResolver(46): Соответствие пути ". $path. " не обнаружено!");
+            return new self::$defaultcmd($response);
         }
 
         if (! class_exists($class)) {
-            $response->addFeedback("Класс ". $class. " не найден!");
-            return new self::$defaultcmd();
+            $response = new Response("CommandResolver(51): Класс ". $class. " не найден!");
+            return new self::$defaultcmd($response);
         }
 
         $refclass = new \ReflectionClass ($class);
 
         if (! $refclass->isSubClassOf(self::$refcmd)) {
-            $response->addFeedback("Команда ". $refclass. " не относится к классу Command!");
-            return new self::$defaultcmd();
+            $response = new Response("CommandResolver(58): Команда ". $refclass. " не относится к классу Command!");
+            return new self::$defaultcmd($response);
         }
 
-        return $refclass->newInstance();
+        $response = new Response();
+        return $refclass->newInstance($response);
     }
 }

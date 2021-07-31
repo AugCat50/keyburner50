@@ -104,7 +104,7 @@
                     <section class="test">
                                 <?php
                                     //Точка входа
-                                    // FrontController::run();
+                                    FrontController::run();
                                 ?>
                     </section>
 

@@ -5,7 +5,6 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
-use app\Response\Response;
 use app\Workers\UserCheckInWorker;
 
 class UserHttpCommand extends HttpCommand
@@ -17,20 +16,7 @@ class UserHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        // $worker     = new UserCheckInWorker();
-
-        // $collection = $worker->find();
-        // $data       = [];
-        // $i          = 0;
-
-        // foreach ($collection as $model) {
-        //     $data[$i]['id']   = $model->getId();
-        //     $data[$i]['name'] = $model->getName();
-        //     $i++;
-        // }
-
-        // $result = [ 'view' => 'DefaultTextList', 'response' => new Response($data)];
-        // return $result;
+        //
     }
 
     /**
@@ -41,27 +27,22 @@ class UserHttpCommand extends HttpCommand
      */
     public function show($id)
     {
-        // $worker = new GetDefaultTextWorker();
-        // $model  = $worker->findOne($id);
-        // $text   = $model->getText();
-
-        // $result = [ 'view' => 'Simple', 'response' => new Response($text)];
-        // return $result;
+        //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Зарегистрировать нового пользователя, проверить, сохранить в БД
      *
      * @param  app\Requests\Request  $request
-     * @return 
+     * @return app\Response\Response
      */
     public function store(Request $request)
     {
         $worker = new UserCheckInWorker();
         $msg    = $worker->addNewUser($request);
 
-        d($msg);
-        d($request);
+        $this->response->setFeedback($msg);
+        return $this->response;
     }
 
     /**
@@ -73,7 +54,7 @@ class UserHttpCommand extends HttpCommand
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
@@ -84,6 +65,6 @@ class UserHttpCommand extends HttpCommand
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }

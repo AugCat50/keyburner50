@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Логика приложения
+ * Класс получает из БД коллекцию жефолтных текстов или одну модель по id
+ */
 namespace app\Workers;
 
 use DomainObjectAssembler\Collections\Collection;

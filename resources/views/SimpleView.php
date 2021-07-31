@@ -7,13 +7,9 @@ class SimpleView extends View
 {
     public function print(Response $response)
     {
-        $array = $response->getFeedback();
-
-        $str = null;
-
-        foreach ($array as $value) {
-            echo $value;
-
-        }
+        echo 'kj';
+        $this->debug($response);
+        $msg = $response->getFeedbackString('<br>');
+        echo $msg;
     }
 }

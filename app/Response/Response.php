@@ -1,11 +1,14 @@
 <?php
 /**
  * Хранилище данных, которые требуется передать на уровень представления
+ * 
+ * Возвращается в FrontController, который вызывает view
  */
 namespace app\Response;
 
 class Response
 {
+    private $view = 'Simple';
     /**
      * Массив, содержащий feedback на запрос
      * 
@@ -13,16 +16,23 @@ class Response
      */
     protected $feedback = [];
 
-    public function __construct($feedback = null){
+    protected $error = null;
+
+    public function __construct(string $error = null){
+        $this->error = $error;
+    }
+
+    public function setFeedback($feedback = null, string $view = 'Simple'){
         if(! is_null($feedback)){
 
             if(is_array($feedback)){
-                $this->feedback = $feedback;
+                $this->feedback   = $feedback;
             } else {
                 $this->feedback[] = $feedback;
             }
 
         }
+        $this->view = $view;
     }
 
     /**
@@ -32,7 +42,7 @@ class Response
      * 
      * @return void
      */
-    public function addFeedback(string $msg)
+    public function addFeedback($msg)
     {
         array_push($this->feedback, $msg);
     }
@@ -65,5 +75,25 @@ class Response
     public function clearFeedback()
     {
         $this->feedback = [];
+    }
+
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    public function setView(string $view)
+    {
+        $this->view = $view;
+    }
+
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    public function setError(string $error)
+    {
+        $this->error = $error;
     }
 }

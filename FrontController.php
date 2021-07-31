@@ -1,7 +1,7 @@
 <?php
 use app\Registry\Registry;
 use app\CommandResolver\CommandResolver;
-use app\Commands\CommandContext;
+use app\Response\Response;
 
 class FrontController
 {
@@ -60,20 +60,41 @@ class FrontController
         $request  = $this->reg->getRequest();
         $resolver = new CommandResolver();
         $cmd      = $resolver->getCommand($request);
-        $msg      = $cmd->execute($request);
+        $response = $cmd->execute($request);
 
-        if(is_array($msg) && $msg['view']) {
-            $this->getView($msg);
-        }
-        // echo $msg;
-        // d($msg);
+        $this->print($response);
     }
 
-    private function getView(array $msg)
+    /**
+     * Вывод данных ответа. 
+     * 
+     * Если получен объект Response и у него заполнено свойство view, то создаём объект View и передаём ему Response на отрисовку. 
+     * Если свойство view не заполнено, выводим feedback как строку. 
+     * Если получен не объект Response, то просто выводим в поток вывода.
+     * 
+     * @param  string|app\Response\Response
+     * @return void
+     */
+    private function print($response)
     {
-        $className = 'resources\views\\' . $msg['view'] .'View';
-        $class     = new \ReflectionClass($className);
-        $view      = $class->newInstance();
-        $view->print($msg['response']);
+        
+        if($response instanceof Response){
+
+            $viewName = $response->getView();
+
+            if(! is_null($viewName)){
+                $className = 'resources\views\\' . $viewName .'View';
+                $class     = new \ReflectionClass($className);
+                $view      = $class->newInstance();
+                $view->print($response);
+            } else {
+                echo $response->getFeedbackString('<br>');
+            }
+
+        } else{
+            //Если возвращён не Response
+            // d($response);
+            echo $response;
+        }
     }
 }

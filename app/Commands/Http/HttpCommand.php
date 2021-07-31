@@ -1,6 +1,7 @@
 <?php 
 /**
- * Комманда для обработки http запросов
+ * Суперкласс - Комманда для обработки http запросов. 
+ * Выясняет метод http запроса и направляет на соответствующий метод реализующей команды, дескать rest.
  */
 namespace app\Commands\Http;
 
@@ -36,7 +37,7 @@ abstract class HttpCommand extends Command
                 return $this->index($request);
                 break;
             case 'POST':
-                $this->store($request);
+                return $this->store($request);
                 break;
             case 'PUT':
                 $this->update($request);
