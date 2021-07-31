@@ -6,6 +6,8 @@ namespace app\Commands\Http;
 
 use app\Requests\Request;
 use app\Workers\UserActivationWorker;
+use DomainObjectAssembler\DomainModel\NullModel;
+use DomainObjectAssembler\DomainObjectAssembler;
 
 class UserActivationHttpCommand extends HttpCommand
 {
@@ -21,12 +23,30 @@ class UserActivationHttpCommand extends HttpCommand
      * @param  int  $id
      * @return app\Response\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
+        $id  = $request->getProperty('id');
+        $key = $request->getProperty('key');
+
+        $tempAssembler = new DomainObjectAssembler('Temp');
+        $identityObj   = $tempAssembler->getIdentityObject()
+                                            ->field('key_act')
+                                            ->eq($key)
+                                            ->and()
+                                            ->field('user_id')
+                                            ->eq($id);
         
+        $tempModel = $tempAssembler->findOne($identityObj);
 
+        //Если NullModel, значит запись не была найдена
+        if($tempModel instanceof NullModel){
+            $this->response->setError('Пользователь с таким id и ключём активации не обнаружен! Обратитесь к администратору за помощью: <a href="mailto:draackul2@gmail.com">draackul2@gmail.com</a>');
+        } else{
+            $this->response->addFeedback('Пользователь успешно активирован!');
+        }
 
-        d('stop',1);
+        return $this->response;
+
         function activation($pdo, $key){
             try{
                 $query = "SELECT 1 FROM temp WHERE key_act = :key";

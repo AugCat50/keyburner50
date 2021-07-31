@@ -12,6 +12,7 @@ class DefaultTextHttpCommand extends HttpCommand
     /**
      * Получение списка дефолтных текстов, сохранение в response и передача в фронт контроллер
      *
+     * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
     public function index(Request $request)
@@ -36,11 +37,12 @@ class DefaultTextHttpCommand extends HttpCommand
      * 
      * Возвращается только текст, возможно есть смысл возвращать модель.
      *
-     * @param  int  $id
+     * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
+        $id     = $request->getProperty('id');
         $worker = new GetDefaultTextWorker();
         $model  = $worker->findOne($id);
         $text   = $model->getText();
@@ -66,7 +68,6 @@ class DefaultTextHttpCommand extends HttpCommand
      * Update the specified resource in storage.
      *
      * @param  app\Requests\Request  $request
-     * @param  int  $id
      * @return 
      */
     public function update(Request $request)
@@ -77,7 +78,7 @@ class DefaultTextHttpCommand extends HttpCommand
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param app\Requests\Request $request
      * @return 
      */
     public function destroy(Request $request)

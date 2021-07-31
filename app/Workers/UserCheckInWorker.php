@@ -35,7 +35,7 @@ class UserCheckInWorker
         $this->verification($request);
         $id_mail    = $this->insertUser();
         $hashed_key = $this->insertKeyAct($id_mail);
-        // $message    = $this->sendMail($this->mail, $id_mail['id'], $hashed_key);
+        $message    = $this->sendMail($this->mail, $id_mail['id'], $hashed_key);
 
         return 'Пользователь зарегистрирован! <br>'. $message;
     }

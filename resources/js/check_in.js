@@ -11,12 +11,12 @@ function check_in(){
                 mail:   mail
             },
             success:function(answer){
-                // $(".js_check-in-message").html(answer);
-                $(".test").html(answer);
+                $(".js_check-in-message").html(answer);
+                // $(".test").html(answer);
                 
-//                setTimeout(function(){
-//                    $(".check-in").hide();
-//                }, 2000);
+               setTimeout(function(){
+                   $(".check-in").hide();
+               }, 5000);
             },
             error:function(answer){
                 $(".js_check-in-message").html(answer);
