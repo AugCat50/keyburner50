@@ -30,14 +30,26 @@ class UserCheckInWorker
      */
     public function addNewUser(Request $request): string
     {
-        $message = '';
         // define('CHECKIN','true');
-        $this->verification($request);
-        $id_mail    = $this->insertUser();
-        $hashed_key = $this->insertKeyAct($id_mail);
-        $message    = $this->sendMail($this->mail, $id_mail['id'], $hashed_key);
+        $status = $this->verification($request);
 
-        return 'Пользователь зарегистрирован! <br>'. $message;
+        //если не false, значит есть сообщение об ошибке
+        if($status){
+            return $status;
+        }
+
+        $id_mail    = $this->insertUser();
+        $hashed_key = $this->getHeshedKey();
+
+        //Сначала пытаемся отправить письмо, чтобы в случае неудачи не удалять ключ активации из базы
+        $result     = $this->sendMail($this->mail, $id_mail['id'], $hashed_key);
+
+        //Если false, значит письмо не отправилось, ключ активации не сохраняем
+        if($result[1]){
+            $this->insertKeyAct($id_mail, $hashed_key);
+        }
+        
+        return 'Пользователь зарегистрирован! <br>'. $result[0];
     }
 
     /**
@@ -82,7 +94,7 @@ class UserCheckInWorker
                                                 ->eq($h_mail)
                                                 ;
         $collection = $userAssembler->find($identityObj);
-
+        
         //Если коллекция не пустая, проверяем на какие из введённых данных уже существуют пользователи
         //Или так или два запроса. Решил сделать один запрос и проверку тут
         if ( $collection->getTotal()) {
@@ -99,9 +111,11 @@ class UserCheckInWorker
                 if($h_mail === $exMail) {
                     $msg .= 'На этот mail уже зарегистрирован пользователь!<br>';
                 }
+                return $msg;
             }
-            return $msg;
         }
+
+        return false;
     }
 
     /**
@@ -145,12 +159,8 @@ class UserCheckInWorker
      * 
      * @return string
      */
-    private function insertKeyAct(array $id_mail){
-        //Генерируем ключ для активации
-        $length_key = rand(1,100);
-        $key        = random_bytes($length_key);
-        $hashed_key = hash("sha512", $key);
-
+    private function insertKeyAct(array $id_mail, string $hashed_key)
+    {
         $tempAssembler = new DomainObjectAssembler('Temp');
         
         $tempData = [
@@ -162,7 +172,15 @@ class UserCheckInWorker
         
         $tempAssembler->createNewModel($tempData);
         $this->objectWather->performOperations();
-        
+    }
+
+    private function getHeshedKey()
+    {
+        //Генерируем ключ для активации
+        $length_key = rand(1,100);
+        $key        = random_bytes($length_key);
+        $hashed_key = hash("sha512", $key);
+
         return $hashed_key;
     }
 
@@ -173,11 +191,11 @@ class UserCheckInWorker
      * 
      * @return string
      */
-    private function sendMail(string $to, int $id, string $hashed_key): string
+    private function sendMail(string $to, int $id, string $hashed_key)
     {
         $title          = "Активация учётной записи на keyburner.com";
-        $message_html   = "Активируйте учётную запись, пройдя по ссылке: <a href='http://94.244.191.245/keyburner50/activation.php/activation?id=$id&key=$hashed_key'>Активировать</a><br>Если вы не создавали учётную запись, проигнорируйте это письмо.";
-        $message_nohtml = "Активируйте учётную запись пройдя по ссылке: http://94.244.191.245/keyburner50/activation.php/activation?id=$id&key=$hashed_key   Если вы не создавали учётную запись, проигнорируйте это письмо.";
+        $message_html   = "Активируйте учётную запись, пройдя по ссылке: <a href='http://94.244.191.245/keyburner50/index.php/activation?id=$id&key=$hashed_key'>Активировать</a><br>Если вы не создавали учётную запись, проигнорируйте это письмо.";
+        $message_nohtml = "Активируйте учётную запись пройдя по ссылке: http://94.244.191.245/keyburner50/index.php/activation?id=$id&key=$hashed_key   Если вы не создавали учётную запись, проигнорируйте это письмо.";
 
         $sender = new SendMailWorker();
         $msg    = $sender->send($to, $title, $message_html, $message_nohtml);

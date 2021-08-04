@@ -1,5 +1,6 @@
 "use strict"
 function log_in(){
+
     function ajax_query_log_in(login, password, identifier){
         let name = "";
         let mail = "";
@@ -10,21 +11,24 @@ function log_in(){
             mail = login;
         }
         
-        
         $.ajax({
-            url: "ajax_log_in.php",
-            method: "post",
+            url: "ajax.php/log_in",
+            method: "get",
             data:{
+                id: -1,
                 name: name,
                 mail: mail,
                 password: password
             },
             success: function(data){
-                if(data === "Есть совпадение!"){
+                if(data){
+                    //В случае не успеха, выводим фидбэк
+                    $(".dialog__message").html(data);
+                } else {
+                    //В случае успеха - редирект
                     localStorage.clear();
-                    document.location.href = 'user.php';
+                    document.location.href = 'index.php/user';
                 }
-                $(".dialog__message").html(data);
             },
             error: function(data){
                 alert("ajax error:"+data);
@@ -45,6 +49,7 @@ function log_in(){
             $(".dialog__message").html("<p>Заполните парль!</p>");
         }else{
             
+            //Проверка, ввёл пользователь почту или логин
             if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(login)){
 //                alert("Почта! "+login);
                 ajax_query_log_in(login, password, false);
@@ -55,6 +60,7 @@ function log_in(){
             
         }
     });
+
    //BLOK-5 authorization log_in
     $(".js_authorization__show").click(function(){
         $(".authorization").show();

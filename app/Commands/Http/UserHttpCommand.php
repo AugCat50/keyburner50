@@ -4,8 +4,11 @@
  */
 namespace app\Commands\Http;
 
+use app\Registry\Registry;
 use app\Requests\Request;
+use app\Workers\GetDefaultTextWorker;
 use app\Workers\UserCheckInWorker;
+use app\Workers\UserThemesWorker;
 
 class UserHttpCommand extends HttpCommand
 {
@@ -16,7 +19,35 @@ class UserHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        //
+        //Костыль, товарищи. Чтобы не попадать сюда из check_in.
+        $path = $request->getPath();
+        if($path === '/check_in'){
+            throw new \Exception('"/check_in" доступен только с id = -1 и из ajax');
+        }
+
+        session_start();
+
+        //Если нет id пользователя - редирект на главную. Маркер авторизации
+        if(! isset($_SESSION["auth_subsystem"]["user_id"])) {
+            //Получить переменную окружения url из реестра
+            $reg = Registry::getInstance();
+            $url = $reg->getEnviroment()->get('url');
+            header('Location: '. $url. 'index.php');
+        }
+
+        //Получаем данные DefaultText
+        $defWorker  = new GetDefaultTextWorker();
+        $defTextCol = $defWorker->find();
+        $this->response->addKeyFeedback('defaultTextCollection', $defTextCol);
+
+        //Получаем стек пользовательских тем и текстов
+        $userThemeWorker = new UserThemesWorker();
+        $userThemesArray = $userThemeWorker->find();
+
+        $this->response->addKeyFeedback('userThemesArray', $userThemesArray);
+
+        $this->response->setView('User');
+        return $this->response;
     }
 
     /**

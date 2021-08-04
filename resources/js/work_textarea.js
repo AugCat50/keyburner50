@@ -24,6 +24,10 @@ function work_textarea(){
     
     let change_work_textarea = document.querySelector('.js-work-textarea');
 
+    if(! change_work_textarea){
+        return null;
+    }
+
     change_work_textarea.oninput = function(e){
         let word        = [];
         let work_text   = WORK_AREA.val();

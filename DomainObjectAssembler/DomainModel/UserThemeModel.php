@@ -1,10 +1,13 @@
 <?php
 namespace DomainObjectAssembler\DomainModel;
 
+use DomainObjectAssembler\Collections\UserTextCollection;
+
 class UserThemeModel extends DomainModel
 {
     private $user_id;
     private $name;
+    private $userTextCollection = null;
 
     public function __construct(int $id, int $user_id, string $name)
     {
@@ -33,6 +36,19 @@ class UserThemeModel extends DomainModel
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setUserTextCollection(UserTextCollection $collection)
+    {
+        $this->userTextCollection = $collection;
+    }
+
+    /**
+     * Конечно, можно было сделать реляционные заивсимости и автозагрузку текстов
+     */
+    public function getUserTextCollection()
+    {
+        return $this->userTextCollection;
     }
 
     public function getModelName(): string

@@ -39,9 +39,9 @@ class SendMailWorker
      * Сообщение в текстовом формате, если получатель не поддерживает html
      * @param string  $message_nohtml
      * 
-     * @return string
+     * @return array
      */
-    public function send(string $to, string $title, string $message_html, string $message_nohtml): string
+    public function send(string $to, string $title, string $message_html, string $message_nohtml)
     {
         $mail = new PHPMailer(true);
 
@@ -73,9 +73,11 @@ class SendMailWorker
             $mail->AltBody = $message_nohtml;
             
             $mail->send();
-            $data = "На почту отправлено письмо, активируйте учётную запись!";
+            $data[0] = "На почту отправлено письмо, активируйте учётную запись!";
+            $data[1] = true;
         }catch (\Exception $e){
-            $data = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $data[0] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $data[1] = false;
         }
 
         return $data;

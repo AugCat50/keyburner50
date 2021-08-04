@@ -17,7 +17,7 @@ abstract class View
         $err = $response->getError();
 
         if($err && $env){
-            echo "<div class='error' style='border: 1px solid red'>$err</div>";
+            return "<p class='error pink-neon'>$err</p>";
         }
     } 
 }

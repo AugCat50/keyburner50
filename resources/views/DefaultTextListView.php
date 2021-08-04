@@ -7,7 +7,7 @@ class DefaultTextListView extends View
 {
     public function print(Response $response)
     {
-        $this->debug($response);
+        $err = $this->debug($response);
 
         $array = $response->getFeedback();
         $str = null;
@@ -20,6 +20,11 @@ class DefaultTextListView extends View
                     </li>";
 
         }
-        echo $str;
+        
+        $str = $err. $str;
+
+        //Выводим html страницы index и переменную $str в нём
+        require('templates/index.php');
+        // echo $str;
     }
 }

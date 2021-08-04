@@ -162,17 +162,17 @@
                 </details>
                 <a target="_blank" href="https://www.artstation.com/antoinecollignon">Art by Antoine Collignon</a>
             </footer>
-        </div>
-        
-        <dialog class="dialog dialog_delete">
-            <div class="dialog__display">
-                <div class="dialog__form" method="post">
-                    <h3 class="dialog__h bright-blue-neon">Удалить текст?</h3>
-                    <div class="dialog__message pink-neon js_dialog_delete-message"></div>
-                    <button class="button dialog__button blue-neon-box js_dialog_delete__ready">Удалить</button>
-                    <button class="button dialog__button blue-neon-box js_dialog_delete__hide">Отмена</button>
+
+            <dialog class="dialog dialog_delete">
+                <div class="dialog__display">
+                    <div class="dialog__form" method="post">
+                        <h3 class="dialog__h bright-blue-neon">Удалить текст?</h3>
+                        <div class="dialog__message pink-neon js_dialog_delete-message"></div>
+                        <button class="button dialog__button blue-neon-box js_dialog_delete__ready">Удалить</button>
+                        <button class="button dialog__button blue-neon-box js_dialog_delete__hide">Отмена</button>
+                    </div>
                 </div>
-            </div>
-        </dialog>
+            </dialog>
+        </div>
     </body>
 </html>

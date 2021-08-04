@@ -3,12 +3,13 @@ namespace resources\views;
 
 use app\Response\Response;
 
-class SimpleView extends View
+class UserView extends View
 {
     public function print(Response $response)
     {
         $err = $this->debug($response);
-        $msg = $response->getFeedbackString('<br>');
-        echo $err. $msg;
+
+        //Выводим html страницы user
+        require('templates/user.php');
     }
 }

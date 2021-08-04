@@ -47,6 +47,16 @@ class Response
         array_push($this->feedback, $msg);
     }
 
+    public function addKeyFeedback($key, $msg)
+    {
+        $this->feedback[$key] = $msg;
+    }
+
+    public function getKeyFeedback($key)
+    {
+        return $this->feedback[$key];
+    }
+
     /**
      * Получить Feedback на запрос. Есть смысл перенести в отдельный класс Response
      * 
