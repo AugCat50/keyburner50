@@ -1,25 +1,10 @@
 <?php
-
     //Подключение дебаг функции
     require_once('functions/d.php');
     //Подключение автозагрузчика
     require_once('autoload.php');
-    
-                            // require_once "controllers/component_default_get_name_texts.php";
-                            // foreach($data as $val){
-                            //     echo "<li class='default-text-list__name blue-neon js_default-text-list__name' data-id='".$val['id']."' name='".$val['name']."'><span class='pointer'>&#187; </span><span class='js_value'>" . $val['name'] . "</span></li>";
-                            // }
-
-                            // //Подключение дебаг функции
-                            // require_once('functions/d.php');
-                            // //Подключение автозагрузчика
-                            // require_once('autoload.php');
-                            // //Точка входа
-                            // FrontController::run();
-                            // $request = new app\Requests\Http\HttpRequest();
-
-                            //Точка входа
-                            // FrontController::run();
+    //Старт стессии в index.php, потому что иконка загружается http
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +17,7 @@
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
         <title>Keyburner - Тренажёр слепого набора</title>
         
-        <link rel="shortcut icon" type="image/jpeg" href="resources/img/favicon.jpg"/>
+        <link rel="shortcut icon" type="image/jpeg" href="http://94.244.191.245/keyburner50/resources/img/favicon.jpg"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet"> 
         
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/normalize/normalize.css">
@@ -63,6 +48,7 @@
         <script src="http://94.244.191.245/keyburner50/resources/js/ajaxQuery.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/ajaxQuery_stat.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/default_text.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/user_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/template_textarea.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/work_textarea.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/edit_button.js"></script>
@@ -70,6 +56,7 @@
         <script src="http://94.244.191.245/keyburner50/resources/js/random_default_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/random_user_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/new_text_button.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/user.js"></script>
         
         <script src="http://94.244.191.245/keyburner50/resources/js/log_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/check_in.js"></script>

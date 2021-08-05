@@ -20,7 +20,7 @@ class HttpRequest extends Request
     public function init()
     {
         $this->properties = $_REQUEST;
-
+        
         if (isset($_SERVER['PATH_INFO'])) {
             $this->path = $_SERVER['PATH_INFO'];
         } else {
@@ -29,6 +29,19 @@ class HttpRequest extends Request
 
         $this->method = $_SERVER['REQUEST_METHOD'];        
         $this->path   = (empty ($this->path) ) ? : $this->path;
+
+        //Если заполнено свойство ajax_path, значит запрос из ajaxQuery, перезаписываем путь на переданный
+        $ajaxPath = $this->getProperty('ajax_path'); 
+        if(isset($ajaxPath)){
+            $this->path = $ajaxPath;
+        }
+
+        $method = $this->getProperty('method');
+        if(isset($method)){
+            $this->method = $method;
+        }
+
+        // d($this);
     }
 
     /**

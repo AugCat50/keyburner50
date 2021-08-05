@@ -41,6 +41,19 @@ class IdentityObject
         return $this->enforce;
     }
 
+    /**
+     * На случай, если захочется выбирать не все поля из БД, этим методом можно изменить список полей,
+     * захардкоженный в дочерних реализациях в конструкторе. Поля условий тоже должны быть в списке
+     * 
+     * Передать массив строк имён полей.
+     * @param array $enforce
+     */
+    public function setEnforrceFields(array $enforce)
+    {
+        $this->enforce = [];
+        $this->enforce = $enforce;
+    }
+
     // Вводит новое поле.
     // Генерирует ошибку, если текущее поле неполное
     // (т.е. age, а не age > 40) .
@@ -188,17 +201,5 @@ class IdentityObject
             return $this->tableName;
         }
         throw new \Exception("IdentityObject(132): Имя таблицы, которую обслуживает объект идентификации, не установлено!");    
-    }
-
-    /**
-     * На случай, если захочется выбирать не все поля из БД, этим методом можно изменить список полей,
-     * захардкоженный в дочерних реализациях в конструкторе
-     * 
-     * Передать массив строк имён полей.
-     * @param array $enforce
-     */
-    public function setEnforrceFields(array $enforce)
-    {
-        $this->enforce = $enforce;
     }
 }

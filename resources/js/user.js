@@ -13,19 +13,21 @@ function user(){
     }
     
     //Добавление (add), удаление (del), редактирование текста (edit). Для добавления id = false
-    function ajaxUser(id, operation, name, theme, text, clss){
+    function ajaxUser(id, method, operation, name, theme, text, clss){
         $.ajax({
-            url:    "ajax_user.php",
-            method: "post",
+            url:    "http://94.244.191.245/keyburner50/ajax.php",
+            method: 'post',
             data: {
                 id:        id,
-                operation: operation,
+                method:    method,
+                ajax_path: operation,
                 name:      name,
                 theme:     theme,
                 text:      text
             },
             success: function (data){
-                
+                $('.test').html(data);
+
                 if(operation && operation != 'search'){
                     //В ответ приходит строка ответа из модели и html отрисовки нового меню. (id, <span>Текст ответа</span>, html нового меню) Разделяем ответ и код и отрисовываем в их местах
                     let index, answer, html;
@@ -103,6 +105,7 @@ function user(){
             q();
             return;
         }else if(name == false){
+            $(".message").html("Заполните имя!").show();
             q();
             return;
         }else if(theme == false){
@@ -121,9 +124,13 @@ function user(){
         
         let end_text = user_text_replace();
         if(id != undefined){
-            ajaxUser(id, "edit", name, theme, end_text, ".message");
+            // console.log(id);
+            // console.log(name);
+            // console.log(theme);
+            // console.log(end_text);
+            ajaxUser(id, 'PUT', "/edit_user_text", name, theme, end_text, ".message");
         }else{
-            ajaxUser(false, "add", name, theme, end_text, ".message");
+            ajaxUser(false, 'POST', "/add_user_text", name, theme, end_text, ".message");
         }
     });
     

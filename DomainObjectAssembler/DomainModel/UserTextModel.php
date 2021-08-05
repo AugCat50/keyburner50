@@ -7,7 +7,7 @@ class UserTextModel extends DomainModel
     private $user_themes;
     private $text;
 
-    public function __construct(int $id, int $user_id, string $user_themes, string $name, string $text)
+    public function __construct(int $id, int $user_id, int $user_themes, string $name, string $text)
     {
         $this->user_id     = $user_id;
         $this->user_themes = $user_themes;

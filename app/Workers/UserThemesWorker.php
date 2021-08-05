@@ -34,7 +34,7 @@ class UserThemesWorker
     }
 
     /**
-     * Возвращает массив моделей пользовательских тем
+     * Возвращает массив моделей пользовательских тем, но без самих текстов
      */
     public function getUserTexts(UserThemeCollection $collection){
         $assembler = new DomainObjectAssembler('UserText');
@@ -46,7 +46,9 @@ class UserThemesWorker
             $identityObj        = $assembler->getIdentityObject()
                                                 ->field('user_themes')
                                                 ->eq($id);
+            $identityObj->setEnforrceFields(['id', 'user_themes', 'name']);
             $userTextCollection = $assembler->find($identityObj);
+
             $theme->setUserTextCollection($userTextCollection);
             $themes[] = $theme;
         }

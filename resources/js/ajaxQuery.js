@@ -1,16 +1,16 @@
 "use strict"
-function ajaxQuery (id, its_text, clss){
+function ajaxQuery (id, ajax_path, clss){
     var WORK_AREA = getWorkAreaSelector();
-    //its_text = "get_user_text" если пользовательский или "get_default_text" если дефолтный
+    //ajax_path = "get_user_text" если пользовательский или "get_default_text" если дефолтный
     $.ajax({
-        url:    "ajax.php",
+        url:    "http://94.244.191.245/keyburner50/ajax.php",
         method: "get",
         data: {
             id: id,
-            its_text: its_text
+            ajax_path: ajax_path
         },
         success: function(msg){
-            //                $(clss).html(msg);
+            // $('.test').html(msg);
             $(clss).replaceWith("<textarea class='textarea main__textarea blue-neon-box js-main-textarea js-textarea' placeholder='Добавьте ваш текст в это окно или выберите текст из списка'>"+msg+"</textarea>");
             // $('.test').html(msg);
 

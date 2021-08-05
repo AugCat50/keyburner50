@@ -26,6 +26,12 @@ class UserTextObjectFactory extends DomainObjectFactory
      */
     protected function doCreateObject(array $raw): DomainModel
     {
+        if(! array_key_exists('id', $raw))          $raw['id'] = -1;
+        if(! array_key_exists('user_id', $raw))     $raw['user_id'] = -1;
+        if(! array_key_exists('user_themes', $raw)) $raw['user_themes'] = -1;
+        if(! array_key_exists('name', $raw))        $raw['name'] = '';
+        if(! array_key_exists('text', $raw))        $raw['text'] = '';
+
         $model = new UserTextModel( 
             (int)    $raw['id'],
             (int)    $raw['user_id'],
