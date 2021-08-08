@@ -2,13 +2,28 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
+use app\Response\Response;
 use app\Workers\UserTextWorker;
 use app\Workers\UserThemesWorker;
 use DomainObjectAssembler\DomainObjectAssembler;
 
 class UserTextHttpCommand extends HttpCommand
 {
+    private $userTextWorker;
+
+    public function __construct(Response $response)
+    {
+        //Запрос приходит из ajax, проверяем сессию
+        session_start();
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+
+        $this->userTextWorker = new UserTextWorker();
+        parent::__construct($response);
+    }
+
     /**
+     * GET
+     * 
      * @return app\Response\Response
      */
     public function index(Request $request)
@@ -17,6 +32,8 @@ class UserTextHttpCommand extends HttpCommand
     }
 
     /**
+     * GET
+     * Получить один текст
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
@@ -44,17 +61,15 @@ class UserTextHttpCommand extends HttpCommand
      */
     public function store(Request $request)
     {
-        $this->getSession();
-
         //Получить id темы
-        $userThemeWorker = new UserThemesWorker();
-        $themeName       = $request->getProperty('theme');
-        $themeId         = $userThemeWorker->getThemeIdWhereName($themeName);
-        $request->setProperty('themeId', $themeId);
+        $request = $this->getThemeId($request);
+        // $userThemeWorker = new UserThemesWorker();
+        // $themeName       = $request->getProperty('theme');
+        // $themeId         = $userThemeWorker->getThemeIdWhereName($themeName);
+        // $request->setProperty('themeId', $themeId);
 
         //Запись самого нового текста, получение id записанного текста
-        $userTextWorker = new UserTextWorker();
-        $textId         = $userTextWorker->insert($request);
+        $textId = $this->userTextWorker->insert($request);
 
         //Получаем обновлённый стек пользовательских тем и текстов, чтобы обновить меню
         $this->updateUserTextList();
@@ -68,7 +83,7 @@ class UserTextHttpCommand extends HttpCommand
 
     /**
      * PUT
-     * Update the specified resource in storage.
+     * Обновить текст в БД
      *
      * @param  app\Requests\Request  $request
      * @param  int  $id
@@ -76,9 +91,18 @@ class UserTextHttpCommand extends HttpCommand
      */
     public function update(Request $request)
     {
-        d('update');
-        d($request);
-        //edit
+        //Получить id темы
+        $request = $this->getThemeId($request);
+
+        $textId = $this->userTextWorker->update($request);
+
+        // $this->response->addKeyFeedback('textId', $textId);
+        $this->response->addKeyFeedback('message', "<span>Текст ID: $textId обновлён!</span>");
+
+        //Получаем обновлённый стек пользовательских тем и текстов, чтобы обновить меню
+        $this->updateUserTextList();
+
+        return $this->response;
     }
 
     /**
@@ -90,15 +114,13 @@ class UserTextHttpCommand extends HttpCommand
      */
     public function destroy(Request $request)
     {
-        $this->getSession();
-
-        $worker = new UserTextWorker();
         $id     = $request->getProperty('id');
-        $worker->delete($id);
+        $this->userTextWorker->delete($id);
+
         $this->response->addKeyFeedback('message', "<span>Текст ID: $id успешно удалён!</span>");
 
         $this->updateUserTextList();
-        
+
         return $this->response;
     }
 
@@ -115,10 +137,14 @@ class UserTextHttpCommand extends HttpCommand
         $this->response->setView('UserTextList');
     }
 
-    private function getSession()
+    public function getThemeId(Request $request): Request
     {
-        //Запрос приходит из ajax, проверяем сессию
-        session_start();
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+        //Получить id темы
+        $userThemeWorker = new UserThemesWorker();
+        $themeName       = $request->getProperty('theme');
+        $themeId         = $userThemeWorker->getThemeIdWhereName($themeName);
+        $request->setProperty('themeId', $themeId);
+
+        return $request;
     }
 }
