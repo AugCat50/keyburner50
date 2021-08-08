@@ -26,12 +26,12 @@ function user(){
                 text:      text
             },
             success: function (data){
-                $('.test').html(data);
+                // $('.test').html(data);
 
                 if(operation && operation != 'search'){
                     //В ответ приходит строка ответа из модели и html отрисовки нового меню. (id, <span>Текст ответа</span>, html нового меню) Разделяем ответ и код и отрисовываем в их местах
                     let index, answer, html;
-                    if(operation === 'add'){
+                    if(operation === '/add_user_text'){
                         //При добавлении текста надо вернуть id из модели
                         let in_id, id;
                         in_id  = data.indexOf("<span>");
@@ -59,11 +59,11 @@ function user(){
                     $(clss).html(answer).show();
                     $('.users-theme').html(html);
                     
-                    //Количество текстов в категории
-                    $(".user-text-list").each(function () {
-                        let q = $(this).find('.select__option').length;
-                        $(this).children(".user-text-list__head").append(" ["+q+"]");
-                    });
+                    //Количество текстов в категории (теперь в view)
+                    // $(".user-text-list").each(function () {
+                    //     let q = $(this).find('.select__option').length;
+                    //     $(this).children(".user-text-list__head").append(" ["+q+"]");
+                    // });
                 }else {
                     //Код вывода ответа на запрос поиска
                     $(clss).html(data).show();
@@ -78,10 +78,11 @@ function user(){
                 
                 setTimeout(function(){
                         $(clss).hide();
-                }, 3000);
+                }, 5000);
                 
             },
             error: function (data){
+                // $('.test').html(data);
                 $(clss).html(data).show();
             }
         });
@@ -97,7 +98,7 @@ function user(){
         function q(){
             setTimeout(function(){
                 $(".message").hide();
-            }, 100000);
+            }, 10000);
         }
         
         if($(".js_main-theme-name").attr('data') === "Default"){
@@ -152,7 +153,7 @@ function user(){
         
         
         if(id){
-            ajaxUser(id, "del", false, false, false, ".message");
+            ajaxUser(id, 'DELETE', "/del_user_text", false, false, false, ".message");
             $('.js_main-name').val("");
             theme.val("");
             $('.current-text-id').html("");

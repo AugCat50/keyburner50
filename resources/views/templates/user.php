@@ -19,34 +19,10 @@
             <h2 class='h1 main-header_h2 pink-neon'>Ваши темы:</h2>
             <div class="users-theme js_users-theme">
                 <?php
-                    //массив
-                    $userThemes = $response->getKeyFeedback('userThemesArray');
-                    $count      = count($userThemes);
-                    
-                    if(! $count) {
-                        echo '<p>У вас ещё нет текстов.</p>';
-                    } else {
-                        $result = '';
-                        foreach($userThemes as $themeModel){
-                            $result .= "<ul class='user-text-list'>
-                                            <h4 class='user-text-list__head bright-blue-neon'>".$themeModel->getName()."</h4>
-                                            <div class='select__wrapper blue-neon-box'>
-                                                <span class='select__arrow'>&#9660;</span>
-                                                <select class='select js_select'>";
+                    use resources\views\UserTextListView;
 
-                            $collection = $themeModel->getUserTextCollection();
-                            foreach ($collection as $textModel) {
-                                $id        = $textModel->getId();
-                                $themeName = $themeModel->getName();
-                                $name      = $textModel->getName();
-
-                                $result .= "<option class='user-text-list__name select__option blue-neon js_user-text-name' data-id=".$id." data-area='".$themeName."' name='".$name."'>" . $name . "</option>";
-                            }
-
-                            $result .= "</select></div></ul>";
-                        }
-                        echo $result;
-                    }
+                    $view = new UserTextListView();
+                    $view->print($response);
                 ?>
             </div>
         </div>

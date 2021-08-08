@@ -46,7 +46,7 @@ class UserHttpCommand extends HttpCommand
         $userThemesArray = $userThemeWorker->find();
 
         $this->response->addKeyFeedback('userThemesArray', $userThemesArray);
-
+        
         $this->response->setView('User');
         return $this->response;
     }

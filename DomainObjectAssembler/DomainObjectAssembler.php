@@ -139,6 +139,8 @@ class DomainObjectAssembler
     public function doInsert(DomainModel $model)
     {
         $this->doUpdate($model);
+
+        // return $this->pdo->lastInsertId();
         // $insFactory = $this->factory->getInsertFactory();
     }
 

@@ -54,7 +54,10 @@ class Response
 
     public function getKeyFeedback($key)
     {
-        return $this->feedback[$key];
+        if (isset($this->feedback[$key])){
+            return $this->feedback[$key];
+        }
+        return null;
     }
 
     /**

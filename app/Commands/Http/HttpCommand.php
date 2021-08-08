@@ -40,10 +40,10 @@ abstract class HttpCommand extends Command
                 return $this->store($request);
                 break;
             case 'PUT':
-                $this->update($request);
+                return $this->update($request);
                 break;
             case 'DELETE':
-                $this->destroy($request);
+                return $this->destroy($request);
                 break;
         }
     }
