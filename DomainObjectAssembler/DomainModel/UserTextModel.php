@@ -1,18 +1,28 @@
 <?php
+/**
+ * Модель для обслуживагния сущности пользовательского текста и его статистики
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 class UserTextModel extends DomainModel
 {
+    /**
+     * В случае отсутствия значения, значение по умолчанию задаётся в UserTextIdentityObject
+     */
     private $user_id;
     private $user_themes;
     private $text;
+    private $statistics;
+    private $statistics_best;
 
-    public function __construct(int $id, int $user_id, int $user_themes, string $name, string $text)
+    public function __construct(int $id, int $user_id, int $user_themes, string $name, string $text, string $statistics = '', string $statistics_best = '')
     {
-        $this->user_id     = $user_id;
-        $this->user_themes = $user_themes;
-        $this->name        = $name;
-        $this->text        = $text;
+        $this->user_id         = $user_id;
+        $this->user_themes     = $user_themes;
+        $this->name            = $name;
+        $this->text            = $text;
+        $this->statistics      = $statistics;
+        $this->statistics_best = $statistics_best;
         parent::__construct($id);
     }
 
@@ -59,6 +69,28 @@ class UserTextModel extends DomainModel
     public function getText(): string
     {
         return $this->text;
+    }
+
+    public function getStatistics(): string
+    {
+        return $this->statistics;
+    }
+
+    public function setStatistics(string $statistics)
+    {
+        $this->statistics = $statistics;
+        $this->markDirty(['statistics', 'getStatistics']);
+    }
+
+    public function getStatisticsBest():string
+    {
+        return $this->statistics_best;
+    }
+
+    public function setStatisticsBest(string $statistics_best)
+    {
+        $this->statistics_best = $statistics_best;
+        $this->markDirty(['statistics_best', 'getStatisticsBest']);
     }
 
     public function getModelName(): string

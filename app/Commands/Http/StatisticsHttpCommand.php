@@ -2,19 +2,29 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
+use app\Response\Response;
 use app\Workers\StatisticsWorker;
 
 class StatisticsHttpCommand extends HttpCommand
 {
+    public function __construct(Response $response)
+    {
+        //Запрос приходит из ajax, проверяем сессию
+        session_start();
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+
+        parent::__construct($response);
+    }
+    
     /**
      * @return app\Response\Response
      */
     public function index(Request $request)
     {
-        $worker = new StatisticsWorker();
-        $worker->main($request);
+        d('index');
         d($request);
-        
+
+        // return $this->response;
     }
 
     /**
@@ -24,7 +34,10 @@ class StatisticsHttpCommand extends HttpCommand
      */
     public function show(Request $request)
     {
-         return $this->response;
+        d('show');
+        d($request);
+
+        // return $this->response;
     }
 
     /**
@@ -35,7 +48,10 @@ class StatisticsHttpCommand extends HttpCommand
      */
     public function store(Request $request)
     {
-
+        // d('store');
+        // d($request);
+        $worker = new StatisticsWorker();
+        $worker->main($request);
     }
 
     /**

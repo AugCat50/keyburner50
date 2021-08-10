@@ -1,4 +1,23 @@
 "use strict"
+//Начальные значения для буффера должны быть ВНЕ функции, данные циклически обновляются
+        
+//Обновляются раз в слово
+var old_work        = "";
+var old_work_length = 0;
+var startStr        = 0;
+
+//Обновляются раз в символ
+var oldVal    = "";
+var oldLength = 0;
+
+//template_length -- Длина шаблонного текста, определяется при блокировке шаблонного текста
+//start_time      -- время начала, определяется при блокировке шаблонного текста
+var start_time      = 0; 
+var end_time        = 0;
+var template_length = 0;
+var wrong_length    = 0;
+var errors          = 0;
+
 function work_textarea(){
     var WORK_AREA = getWorkAreaSelector();
 
@@ -6,21 +25,21 @@ function work_textarea(){
     //Начальные значения для буффера должны быть ВНЕ функции, данные циклически обновляются
         
     //Обновляются раз в слово
-    let old_work        = "";
-    let old_work_length = 0;
-    let startStr        = 0;
+    // let old_work        = "";
+    // let old_work_length = 0;
+    // let startStr        = 0;
     
     //Обновляются раз в символ
-    let oldVal    = "";
-    let oldLength = 0;
+    // let oldVal    = "";
+    // let oldLength = 0;
     
     //template_length -- Длина шаблонного текста, определяется при блокировке шаблонного текста
     //start_time      -- время начала, определяется при блокировке шаблонного текста
-    let start_time      = 0; 
-    let end_time        = 0;
-    let template_length = 0;
-    let wrong_length    = 0;
-    let errors          = 0;
+    // let start_time      = 0; 
+    // let end_time        = 0;
+    // let template_length = 0;
+    // let wrong_length    = 0;
+    // let errors          = 0;
     
     let change_work_textarea = document.querySelector('.js-work-textarea');
 
@@ -159,17 +178,21 @@ function work_textarea(){
                 let stat_id = $('.js_current-text-id').html();
                 
                 function ajax_statistics(id, time, speed){
-                    let stat_time = time.getDate() +"."+ time.getMonth() +"."+ time.getFullYear();
+                    let $month_number = time.getMonth() + 1;
+                    let stat_time     = time.getDate() +"."+ $month_number +"."+ time.getFullYear();
+                    let ajax_path     = '/statistics';
                     
                     $.ajax({
-                        url:    "ajax_statistics.php",
+                        url:    "http://94.244.191.245/keyburner50/ajax.php",
                         method: "post",
                         data:{
-                            id:     id,
-                            time:   stat_time,
-                            speed:  speed
+                            id:        id,
+                            ajax_path: ajax_path,
+                            time:      stat_time,
+                            speed:     speed
                         },
                         success: function (data){
+                            $('.test').html(data);
                             $('.message').html(data);
                             $('.message').show();
                         },

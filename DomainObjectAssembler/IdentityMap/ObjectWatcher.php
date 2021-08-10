@@ -153,20 +153,20 @@ class ObjectWatcher
      */
     public function performOperations()
     {
-        foreach ($this->dirty as $key => $obj) {
-            // $obj->getFinder()->update($obj);
-            $obj->getAssembler()->doUpdate($obj);
-
-            //Служебное сообщение для тестирования
-            // print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getId() . "<br>";
-        }
-
         foreach ($this->new as $key => $obj) {
             // $obj->getFinder()->insert($obj);
             $obj->getAssembler()->doInsert($obj);
 
             //Служебное сообщение для тестирования
             // print "ObjectWather(168): Выполяется сохранение в БД: " . $obj->getId() . "<br>";
+        }
+
+        foreach ($this->dirty as $key => $obj) {
+            // $obj->getFinder()->update($obj);
+            $obj->getAssembler()->doUpdate($obj);
+
+            //Служебное сообщение для тестирования
+            // print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getId() . "<br>";
         }
 
         //Так же сделать обход массива delete

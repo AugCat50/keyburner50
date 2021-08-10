@@ -7,7 +7,18 @@ class StatisticsWorker
 {
     public function main(Request $request)
     {
-        if(isset($_POST['time'], $_POST['speed'])){
+        $id    = $request->getProperty('id');
+        $time  = $request->getProperty('time');
+        $speed = $request->getProperty('speed');
+
+        $dataWorker = new StatisticsDataWorker($request);
+
+        $dataWorker->addNewStatistics();
+
+
+        exit;
+
+        if(isset($time, $speed)){
             //запись
             statistics($pdo, $_POST['id'], $_POST['time'], $_POST['speed']);
             statistics_best($pdo, $_POST['id'], $_POST['time'], $_POST['speed']);

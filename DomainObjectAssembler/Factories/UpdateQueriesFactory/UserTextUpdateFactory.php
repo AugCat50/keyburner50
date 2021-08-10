@@ -20,12 +20,28 @@ class UserTextUpdateFactory extends UpdateFactory
         if(! $obj instanceof UserTextModel){
             throw new \Exception('UserTextUpdateFactory(21): Oбъект должен быть типа: '. UserTextModel::class . ' ---- Получен: '. get_class($obj));
         }
+
+        $id = $obj->getId();
+
+        $dirty = $obj->getDirtyFields();
         
-        $id                    = $obj->getId();
-        $values['user_id']     = $obj->getUserId();
-        $values['user_themes'] = $obj->getUserThemes();
-        $values['name']        = $obj->getName();
-        $values['text']        = $obj->getText();
+
+        //Если массив полей для обновления пуст, то обновляем все поля (кроме статистики)
+        //Это данные для INSERT
+        if( empty($dirty)){
+            $fields['user_id']     = $obj->getUserId();
+            $fields['user_themes'] = $obj->getUserThemes();
+            $fields['name']        = $obj->getName();
+            $fields['text']        = $obj->getText();
+        } else {
+            //Если есть массив грязных полей, то заполняем их на обработку
+            foreach ($dirty as $field) {
+                $name   = $field[0];
+                $method = $field[1];
+
+                $fields[$name] = $obj->{$method}();;
+            }
+        }
 
         $cond = null;
 
@@ -33,6 +49,6 @@ class UserTextUpdateFactory extends UpdateFactory
             $cond['id'] = $id;
         }
 
-        return $this->buildStatement("user_texts", $values, $cond);
+        return $this->buildStatement("user_texts", $fields, $cond);
     }
 }

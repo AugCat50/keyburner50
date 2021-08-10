@@ -16,6 +16,7 @@ use PDO;
 abstract class DomainModel
 {
     private $id;
+    private $dirtyFieldsArray = [];
 
     // abstract public function getFinder(): Mapper;
     abstract public function getModelName(): string;
@@ -69,9 +70,13 @@ abstract class DomainModel
         ObjectWatcher::addDelete($this);
     }
 
-    public function markDirty()
+    public function markDirty(array $field = [])
     {
         ObjectWatcher::addDirty($this);
+
+        if (isset($field)){
+            array_push($this->dirtyFieldsArray, $field);
+        }
     }
 
     public function markClean()
@@ -84,6 +89,9 @@ abstract class DomainModel
         ObjectWatcher::add($this);
     }
 
+    public function getDirtyFields(){
+        return $this->dirtyFieldsArray;
+    }
 
 
 
