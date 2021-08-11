@@ -192,8 +192,10 @@ function work_textarea(){
                             speed:     speed
                         },
                         success: function (data){
-                            $('.test').html(data);
-                            $('.message').html(data);
+                            let arr = data.split('---');
+                            
+                            $('.test').html(arr[0]);
+                            $('.message').html(arr[1]);
                             $('.message').show();
                         },
                         error: function (data){

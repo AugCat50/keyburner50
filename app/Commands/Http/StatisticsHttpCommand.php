@@ -51,7 +51,12 @@ class StatisticsHttpCommand extends HttpCommand
         // d('store');
         // d($request);
         $worker = new StatisticsWorker();
-        $worker->main($request);
+        $data   = $worker->main($request);
+        // $this->response->addKeyFeedback('statistics', $data);
+        // $this->response->addFeedback('999');
+        $this->response->addFeedback($data);
+
+        return $this->response;
     }
 
     /**
