@@ -177,3 +177,42 @@
     0 0 6px rgba(30,132,242,1),
     0 0 9px rgba(30,132,242,1);
 }
+
+
+
+.green-neon {
+    color: #fff;
+    text-shadow:
+        /* 0 0 7px #fff,
+        0 0 10px #fff,
+        0 0 21px #fff, */
+        0 0 4px #0fa,
+        0 0 7px #0fa,
+        0 0 10px #0fa,
+        0 0 15px #0fa,
+        0 0 21px #0fa;
+}
+
+  .green-neon-box {
+    color: #fff;
+    text-shadow:
+        /* 0 0 7px #fff,
+        0 0 10px #fff,
+        0 0 21px #fff, */
+        0 0 4px #0fa,
+        0 0 7px #0fa,
+        0 0 10px #0fa,
+        0 0 15px #0fa,
+        0 0 21px #0fa;
+
+    box-shadow:
+    0 0 6px rgba(0,255,170,.5),
+    0 0 30px rgba(0,255,170,0.18),
+    0 0 12px rgba(0,213,170,0.26),
+    0 0 21px rgba(0,213,170,0.46),
+    0 0 34px rgba(0,213,170,0.4),
+    0 0 45px rgba(0,213,170,0.46);
+
+        border-radius: 3px;
+        border: 1px solid white;
+  }

@@ -21,6 +21,11 @@ function new_text_button(){
 
         localStorage.clear();
         null_var();
+
+        //Небольшая настройка кнопки и диалога графика
+        $('.js-graph-image').html('<p class="bright-blue-neon">Статистика для нового текста пуста. Сохраните текст и начинайте тренировки, чтобы заполнить статистику!</p>');
+        $('.js_graph-button').removeClass('green-neon-box');
+        $('.js_graph-button').addClass('pink-neon-box');
     });
     //END BLOK-5
 }

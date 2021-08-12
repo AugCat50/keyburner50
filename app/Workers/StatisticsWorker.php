@@ -5,6 +5,17 @@ use app\Requests\Request;
 
 class StatisticsWorker
 {
+    public function getStatistics(Request $request)
+    {
+        $dataWorker = new StatisticsDataWorker($request);
+
+        $statistics_best = $dataWorker->bestStatistics();
+        $statistics      = $dataWorker->getUserStatistics();
+
+        $data = $this->createImage($statistics, $statistics_best);
+        return $data;
+    }
+
     public function main(Request $request)
     {
         $id    = $request->getProperty('id');
@@ -288,14 +299,14 @@ class StatisticsWorker
         
             $base64 = base64_encode($contents);
             $data = "<img src='data:image/png;base64,".$base64."' />";
-            $data = $statistics_best.'---'.$data;
+            $data = $statistics_best. '---'. $data. '---1';
         
             //echo $data;
         
             imagedestroy($im);
         }else{
         //    $data = $statistics_best.'---'.'<p class="blue-neon">Статистики ещё нет</p>';
-            $data = $statistics_best.'---'.'0';
+            $data = $statistics_best.'---'.'<p class="bright-blue-neon">Статистика ещё пуста! Тренируйтесь, чтобы её заполнить!</p>'. '---0';
         }
         //echo $data;
         return $data;

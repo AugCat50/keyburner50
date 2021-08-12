@@ -17,6 +17,8 @@ class StatisticsHttpCommand extends HttpCommand
     }
     
     /**
+     * GET
+     * 
      * @return app\Response\Response
      */
     public function index(Request $request)
@@ -24,7 +26,7 @@ class StatisticsHttpCommand extends HttpCommand
         d('index');
         d($request);
 
-        // return $this->response;
+
     }
 
     /**
@@ -34,10 +36,11 @@ class StatisticsHttpCommand extends HttpCommand
      */
     public function show(Request $request)
     {
-        d('show');
-        d($request);
+        $worker = new StatisticsWorker();
+        $data   = $worker->getStatistics($request);
 
-        // return $this->response;
+        $this->response->addFeedback($data);
+        return $this->response;
     }
 
     /**
@@ -55,7 +58,6 @@ class StatisticsHttpCommand extends HttpCommand
         // $this->response->addKeyFeedback('statistics', $data);
         // $this->response->addFeedback('999');
         $this->response->addFeedback($data);
-
         return $this->response;
     }
 

@@ -34,6 +34,7 @@ function random_user_text() {
         localStorage.setItem("id", elem_id);
         
         ajaxQuery(elem_id, "/user_text", ".js-main-textarea");
+        ajaxQuery_stat(elem_id, 'get');
     });
 }
 document.addEventListener("DOMContentLoaded", random_user_text);

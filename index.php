@@ -47,6 +47,7 @@
         <script src="http://94.244.191.245/keyburner50/resources/js/user.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/log_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/check_in.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/statistics.js"></script>
     </head>
     <body class="body">
         <div class="body__size">

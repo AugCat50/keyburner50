@@ -213,16 +213,6 @@ function user(){
 //    $('.js_main-theme-name').oninput(function(){
 //        let area = $('.js_main-theme-name').val();
 //        localStorage.setItem("area", area);
-//    });
-    
-    
-    $('.graph').on('click', '.js_graph-button', function(){
-        $('.graph__dialog').show();
-    });
-    
-    $('.graph').on('click', '.js-graph__close', function(){
-        $('.graph__dialog').hide();
-    });
-    
+//    });    
 }
 document.addEventListener("DOMContentLoaded", user);

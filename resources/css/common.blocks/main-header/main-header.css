@@ -50,7 +50,7 @@
     border: none;
     background: none;
     cursor: pointer;
-    position: absolute;
+    position: absolute !important;
     top: 6px;
     right: 4px;
 }

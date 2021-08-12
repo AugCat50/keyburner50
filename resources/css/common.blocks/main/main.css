@@ -27,7 +27,7 @@
 }
 
 .current-text-id{
-    margin: 0;
+    margin: 3px 0 0;
 }
 
 .main__section + .main__section{
@@ -84,11 +84,13 @@ div.main__textarea{
 .main__name{
     max-width: 250px;
     text-overflow: ellipsis;
+    /* height: 28px; */
 }
 
 .main__theme-name{
     max-width: 150px;
     text-overflow: ellipsis;
+    /* height: 28px; */
 }
 
 .main__button{
@@ -115,13 +117,25 @@ div.main__textarea{
 }
 
 .graph{
-    display: none;
+    /* display: none; */
+    margin-left: 10px;
+    height: 28px;
 }
 
 .graph__button{
-    padding: 1px 3px;
+    padding: 2px 3px 0px;
     background-color: rgba(0,0,0,.5);
-    margin-left: 10px;
+    /* margin-left: 10px; */
+    width: 28px;
+    height: 28px;
+    /* position: relative; */
+}
+
+.graph__ico{
+    width: 20px;
+    /* position: absolute;
+    left: 3px;
+    top: 3px; */
 }
 
 .graph__button:hover{
@@ -144,6 +158,11 @@ div.main__textarea{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.graph__inner p{
+    font-size: 25px;
 }
 
 .graph__close{
@@ -153,7 +172,12 @@ div.main__textarea{
     font-size: 30px;
     background: none;
     cursor: pointer;
+    padding: 0px 5px;
 }
+
+/* .graph-fail{
+    display: block;
+} */
 
 .activation-main{
     min-height: 70vh;
@@ -166,4 +190,41 @@ div.main__textarea{
 .activation-main__button{
     text-decoration: none;
     font-size: 30px;
+}
+
+/* Всплывающая подсказка */
+[data-tooltip] {
+    position: relative; /* Относительное позиционирование  */
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    width: 240px; /* Ширина подсказки */
+    left: 0; top: 0; /* Положение подсказки */
+    background: rgba(0, 0, 0, 1); /*Синий цвет фона*/
+    color: #c6e2ff; /* Цвет текста */
+    padding: 0.5em; /* Поля вокруг текста */
+    /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); Параметры тени */
+    pointer-events: none; /* Подсказка */
+    opacity: 0; /* Подсказка невидима */
+    transition: 1s; /* Время появления подсказки */
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border: 1px solid #fff;
+    box-shadow:
+        0 0 7px #0fa,
+        0 0 10px #0fa,
+        0 0 21px #0fa,
+        0 0 42px #0fa;
+    text-shadow: none;
+    font-size: 17px;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1; /* Показываем подсказку */
+    top: 2em; /* Положение подсказки */
 }

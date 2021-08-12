@@ -207,7 +207,8 @@ function work_textarea(){
                 
                 // if(stat_id && stat_id){
                 if(stat_id != undefined && stat_id != ""){
-                    let qwe = ajax_statistics(stat_id, end_time, result_speed);
+                    // let qwe = ajax_statistics(stat_id, end_time, result_speed);
+                    ajaxQuery_stat(stat_id, 'post', end_time, result_speed);
                 }
                 //                console.log(my_time);
                 //                console.log(my_minute+":"+my_second);
@@ -217,6 +218,7 @@ function work_textarea(){
 
                 //Работа со статистикой, пока отключить
                 // ajaxQuery_stat(id, 'user');
+                // ajaxQuery_stat(stat_id, 'post', end_time, result_speed);
             }
             
             old_work        = WORK_AREA.val();

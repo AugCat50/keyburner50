@@ -9,7 +9,7 @@
                 <li class="blue-neon main-header-menu__item js_desroy"><span class='pointer'>&#187;</span> <a class="link blue-neon" href="user.php?exit=exit">Выйти</a></li>
                 <li class="blue-neon-box main-header-menu__item search js_search">
                     <input class="search__input js_search-word" type="text" placeholder="Поиск">
-                    <button class="search__go blue-neon js_search-button" title="Искать" label="Искать">&#10140;</button>
+                    <button class="search__go blue-neon js_search-button" data-tooltip="Искать" label="Искать">&#10140;</button>
                 </li>
             </nav>
             <ul class="serch-result users-theme blue-neon-box js_serch-result" search_attr=""></ul>
@@ -78,19 +78,27 @@
                 <span class="pink-neon">Штраф: </span>
                 <span class="blue-neon js-penalty">0</span>
             </div>
-            <div class="statistics-section__item stat-best"><span class="pink-neon">Топ: </span><span class="blue-neon js_stat-best">0</span></div>
+            <div class="statistics-section__item stat-best"><span class="green-neon">Топ: </span><span class="blue-neon js_stat-best">0</span></div>
             <div class="statistics-section__item blue-neon last"><span class="">(симв. в мин.)</span></div>
+            <!-- <div class="statistics-section__item blue-neon last">
+                <span class='show-chart green-neon js-show-chart' data-tooltip='Показать график статистики'>&#9660;</span>
+            </div> -->
         </section>
         
         <section class="section main__head main__section">
             <input class="main__name blue-neon-box js_main-name" type="text" placeholder="Название">
             <input class="main__theme-name blue-neon-box js_main-theme-name" type="text" placeholder="Тема">
             <p class="current-text-id pink-neon js_current-text-id-wrapper"></p>
+
+            <!-- Отображение кнопки вызова графика статистики и самого окна графика -->
             <div class="graph">
-                <button class="graph__button pink-neon pink-neon-box js_graph-button">&#9660;</button>
+                <button class="graph__button pink-neon-box js_graph-button" data-tooltip='Показать график статистики'>
+                    <img src="http://94.244.191.245/keyburner50/resources/img/chart-icon.png" class="graph__ico">
+                </button>
                 <dialog class="dialog graph__dialog">
                     <div class="graph__inner">
-                        <p class="blue-neon">Выберите текст для отображения статистики</p>
+                        <!-- <p class="blue-neon graph-fail js-graph-fail">Выберите текст для отображения статистики</p> -->
+                        <div class="js-graph-image"><p class="bright-blue-neon">Выберите текст для отображения статистики</p></div>
                     </div>
                     <button class="graph__close pink-neon pink-neon-box js-graph__close">&#10006;</button>
                 </dialog>
@@ -106,9 +114,15 @@
             <textarea class="textarea main__textarea main__work-textarea blue-neon-box js-work-textarea js-textarea" placeholder='Сначала добавьте текст в верхнее поле' autofocus disabled></textarea>
         </section>        
         
-        <button class="button main__button pink-neon pink-neon-box js-del" title="Удалить"><img src="http://94.244.191.245/keyburner50/resources/img/del.png" class="main__ico"></button>
-        <button class="button main__button pink-neon pink-neon-box save-button js_add-text" title="Сохранить"><img src="http://94.244.191.245/keyburner50/resources/img/save.png" class="main__ico main__ico-save"></button>
-        <button class="button main__button main__button-edit pink-neon pink-neon-box js-replaceWith" title="Редактировать"><img src="http://94.244.191.245/keyburner50/resources/img/edit.png" class="main__ico"></button>
+        <button class="button main__button pink-neon pink-neon-box js-del" title="Удалить">
+            <img src="http://94.244.191.245/keyburner50/resources/img/del.png" class="main__ico">
+        </button>
+        <button class="button main__button pink-neon pink-neon-box save-button js_add-text" title="Сохранить">
+            <img src="http://94.244.191.245/keyburner50/resources/img/save.png" class="main__ico main__ico-save">
+        </button>
+        <button class="button main__button main__button-edit pink-neon pink-neon-box js-replaceWith" title="Редактировать">
+            <img src="http://94.244.191.245/keyburner50/resources/img/edit.png" class="main__ico">
+        </button>
     </main>
 </div>
             

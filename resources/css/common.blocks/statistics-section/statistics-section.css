@@ -12,3 +12,8 @@
 .statistics-section__item + .statistics-section__item{
     margin-left: 10px;
 }
+
+.show-chart{
+    cursor: pointer;
+    font-size: 20px;
+}

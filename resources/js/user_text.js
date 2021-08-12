@@ -21,7 +21,8 @@ function user_text(){
             }
             
             ajaxQuery(id, "/user_text",".js-main-textarea");
-            // ajaxQuery_stat(id, 'user');
+
+            ajaxQuery_stat(id, 'get');
             
             //Удалить атрибут data='Default', защищающий стандартнные тексты от изменения
             $('.js_main-theme-name').removeAttr('data');
