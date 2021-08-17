@@ -20,7 +20,10 @@ function user_text(){
                 name = name.slice(0, index);
             }
             
-            ajaxQuery(id, "/user_text",".js-main-textarea");
+            $('.js-main-textarea').attr("placeholder", "Текст загружается, ожидайте...");
+            $('.js-main-textarea').val('');
+            
+            ajaxQuery(id, "/user_text", ".js-main-textarea");
 
             ajaxQuery_stat(id, 'get');
             

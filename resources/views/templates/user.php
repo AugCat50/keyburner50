@@ -144,3 +144,15 @@
         </div>
     </div>
 </dialog>
+
+<dialog class="dialog js_dialog_delete_theme">
+    <div class="dialog__display">
+        <div class="dialog__form" method="post">
+            <h3 class="dialog__h bright-blue-neon">Удалить тему?</h3>
+            <p>Все тексты и их статистика будут утеряны навсегда.</p>
+            <div class="dialog__message pink-neon js_dialog_delete-message"></div>
+            <button class="button dialog__button blue-neon-box js_dialog_delete_theme__ready">Удалить</button>
+            <button class="button dialog__button blue-neon-box js_dialog_delete_theme__hide">Отмена</button>
+        </div>
+    </div>
+</dialog>

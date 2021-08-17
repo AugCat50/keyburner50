@@ -70,12 +70,19 @@ abstract class DomainModel
         ObjectWatcher::addDelete($this);
     }
 
-    public function markDirty(array $field = [])
+    /**
+     * Поместить модель в очередь на UPDATE
+     * 
+     * Список полей поддерживается только в UserTextUpdateFactory. 
+     * Но вообще, при необходимости можно добавить для фабрики любой модели
+     * @param array|string $fields
+     */
+    public function markDirty($fields = null)
     {
         ObjectWatcher::addDirty($this);
 
-        if (isset($field)){
-            array_push($this->dirtyFieldsArray, $field);
+        if (isset($fields)){
+            array_push($this->dirtyFieldsArray, $fields);
         }
     }
 

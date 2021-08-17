@@ -10,26 +10,33 @@ function ajaxQuery (id, ajax_path, clss){
             ajax_path: ajax_path
         },
         success: function(msg){
-            // $('.test').html(msg);
-            $(clss).replaceWith("<textarea class='textarea main__textarea blue-neon-box js-main-textarea js-textarea' placeholder='Добавьте ваш текст в это окно или выберите текст из списка'>"+msg+"</textarea>");
-            // $('.test').html(msg);
-
-            WORK_AREA.val("");
-            let result = text_replace();
-            localStorage.setItem("text", result);
+            if(msg.indexOf('_error_') >= 0){
+                $('.message').html(msg);
+                $('.message').show();
+            } else{
+                $(clss).replaceWith("<textarea class='textarea main__textarea blue-neon-box js-main-textarea js-textarea' placeholder='Добавьте ваш текст в это окно иливыберите текст из списка'>"+msg+"</textarea>");
             
-            //Обнуление переменных.
-            null_var();
-            
-            let val = $(".js-main-textarea").val();
-            if(val){
-                WORK_AREA.removeAttr("disabled");
-                WORK_AREA.attr("placeholder", "Готовы приступать? :) \nШаблон блокируется на время теста.");
-            }else{
-                WORK_AREA.attr("disabled", "true");
-                WORK_AREA.attr("placeholder", "Сначала добавьте текст в верхнее поле");
                 WORK_AREA.val("");
+                let result = text_replace();
+                localStorage.setItem("text", result);
+                
+                //Обнуление переменных.
+                null_var();
+                
+                let val = $(".js-main-textarea").val();
+                if(val){
+                    WORK_AREA.removeAttr("disabled");
+                    WORK_AREA.attr("placeholder", "Готовы приступать? :) \nШаблон блокируется на время теста.");
+                }else{
+                    WORK_AREA.attr("disabled", "true");
+                    WORK_AREA.attr("placeholder", "Сначала добавьте текст в верхнее поле");
+                    WORK_AREA.val("");
+                }
             }
+        },
+        error: function (data){
+            $('.message').html(data);
+            $('.message').show();
         }
     });
 }

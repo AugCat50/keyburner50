@@ -106,7 +106,7 @@ class ApplicationHelper
             $pdo = new \PDO( $dsn, $dbUser, $dpPass);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e){
-            echo "ApplicationHelper(109): Соединение с БД не удалось: " . $e->getMessage() . "<br>";
+            echo "ApplicationHelper(109) _error_: Соединение с БД не удалось: " . $e->getMessage() . "<br>";
             exit;
         }
 

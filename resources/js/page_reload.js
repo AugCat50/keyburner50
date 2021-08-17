@@ -6,10 +6,6 @@ function page_reload(){
     let perf_entries = performance.getEntriesByType("navigation");
     let nav_type     = perf_entries[0].type;
 
-    // $('.js_main-header-menu').on('click', '.js_test', function() {
-    //     alert('test');
-    // });
-
     //При перезагрузке страницы вставляем старые данные
     if (nav_type === 'reload') {
         let r_id    = localStorage.getItem("id");

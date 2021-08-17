@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main/main.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/statistics-section/statistics-section.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/default-text-list/default-text-list.css">
+        <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/user-text-list/user-text-list.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/select/select.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/footer/footer.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/html/html.css">

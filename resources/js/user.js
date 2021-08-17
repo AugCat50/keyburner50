@@ -26,60 +26,67 @@ function user(){
                 text:      text
             },
             success: function (data){
-                // $('.test').html(data);
+                
+                if(!(data.indexOf('_error_') >= 0)){
+                    $('.test').html(data);
 
-                if(operation && operation != 'search'){
-                    //В ответ приходит строка ответа из модели и html отрисовки нового меню. (id, <span>Текст ответа</span>, html нового меню) Разделяем ответ и код и отрисовываем в их местах
-                    let index, answer, html;
-                    if(operation === '/add_user_text'){
-                        //При добавлении текста надо вернуть id из модели
-                        let in_id, id;
-                        in_id  = data.indexOf("<span>");
-                        index  = data.indexOf("</span>") + 7;
-                        id     = data.slice(0, in_id);
-                        answer = data.slice(in_id, index);
-                        html   = data.slice(index);
+                    if(operation === "/del_user_theme"){
+                        $(clss).html(data);
+                    } else if(operation === 'search'){
+                        //Код вывода ответа на запрос поиска
+                        $(clss).html(data).show();
+                        $(clss).attr('search_attr', text);
                         
-                        //Если id нет, не отображаем блок. Это может произойти в случае, когда текст с таким именем уже есть
-                        if(id != '') {
-                            $('.js_current-text-id-wrapper').html("ID:<span class='js_current-text-id'>"+id+"</span>");
-                        }                      
-                        localStorage.setItem("id", id);
-                    }else{
-                        //При изменении текста id уже есть
-                        index  = data.indexOf("</span>") + 7;
-                        answer = data.slice(0, index);
-                        html   = data.slice(index);
+                        //Количество текстов найдено
+                        $(clss).each(function () {
+                            let q = $(this).find('.select__option').length;
+                            $(this).children(".user-text-list__head").append(" ["+q+"]");
+                        });
+                    } else if(operation){
+                        //В ответ приходит строка ответа из модели и html отрисовки нового меню. (id, <span>Текст ответа</span>, html нового меню) Разделяем ответ и код и отрисовываем в их местах
+                        let index, answer, html;
+                        if(operation === '/add_user_text'){
+                            //При добавлении текста надо вернуть id из модели
+                            let in_id, id;
+                            in_id  = data.indexOf("<span>");
+                            index  = data.indexOf("</span>") + 7;
+                            id     = data.slice(0, in_id);
+                            answer = data.slice(in_id, index);
+                            html   = data.slice(index);
+                            
+                            //Если id нет, не отображаем блок. Это может произойти в случае, когда текст с таким именем уже есть
+                            if(id != '') {
+                                $('.js_current-text-id-wrapper').html("ID:<span class='js_current-text-id'>"+id+"</span>");
+                            }                      
+                            localStorage.setItem("id", id);
+                        }else{
+                            //При изменении текста id уже есть
+                            index  = data.indexOf("</span>") + 7;
+                            answer = data.slice(0, index);
+                            html   = data.slice(index);
+                        }
+                        
+                        localStorage.setItem("name", name);
+                        localStorage.setItem("area", theme);
+                        localStorage.setItem("text", text);
+                        
+                        $(clss).html(answer).show();
+                        $('.users-theme').html(html);
+                        
+                        //Количество текстов в категории (теперь в view)
+                        // $(".user-text-list").each(function () {
+                        //     let q = $(this).find('.select__option').length;
+                        //     $(this).children(".user-text-list__head").append(" ["+q+"]");
+                        // });
                     }
                     
-                    localStorage.setItem("name", name);
-                    localStorage.setItem("area", theme);
-                    localStorage.setItem("text", text);
-                    
-                    $(clss).html(answer).show();
-                    $('.users-theme').html(html);
-                    
-                    //Количество текстов в категории (теперь в view)
-                    // $(".user-text-list").each(function () {
-                    //     let q = $(this).find('.select__option').length;
-                    //     $(this).children(".user-text-list__head").append(" ["+q+"]");
-                    // });
-                }else {
-                    //Код вывода ответа на запрос поиска
-                    $(clss).html(data).show();
-                    $(clss).attr('search_attr', text);
-                    
-                    //Количество текстов найдено
-                    $(clss).each(function () {
-                        let q = $(this).find('.select__option').length;
-                        $(this).children(".user-text-list__head").append(" ["+q+"]");
-                    });
+                    setTimeout(function(){
+                            $(clss).hide();
+                    }, 5000);    
+                } else {
+                    $('.message').html(data);
+                    $('.message').show();
                 }
-                
-                setTimeout(function(){
-                        $(clss).hide();
-                }, 5000);
-                
             },
             error: function (data){
                 // $('.test').html(data);
@@ -204,6 +211,44 @@ function user(){
         $('.js_search-word').val("");
     });
     
+    //Копирование темы в поле кликом по кнопке
+    $(".js_users-theme").on("click", ".js_copy-theme", function(){
+        let area = $(this).attr('theme-name');
+        $('.js_main-theme-name').val(area);
+        localStorage.setItem("area", area);
+    });
+    
+
+    //Удаление темы кликом по кнопке
+    var id   = null;
+    var area = null;
+    var list = null;
+
+    //Вызов диалогового окна удаления темы и заполнение буфферных переменных
+    $(".js_users-theme").on("click", ".js_delete-theme", function(){
+        $('.js_dialog_delete_theme').show();
+
+        id   = $(this).attr('theme-id');
+        area = $(this).attr('theme-name');
+        list = $(this).closest('.js_user-text-list');
+    });
+    
+    //Нажатие кнопки "Отмена"
+    $('.js_dialog_delete_theme').on('click', '.js_dialog_delete_theme__hide', function(event){
+        $('.js_dialog_delete_theme').hide();
+    })
+
+    //Нажатие кноки "Удалить"
+    $('.js_dialog_delete_theme').on('click', '.js_dialog_delete_theme__ready', function(event){
+        $('.js_dialog_delete_theme').hide();
+
+        ajaxUser(id, 'DELETE', "/del_user_theme", area, false, false, ".message");
+
+        list.remove();
+        localStorage.clear();
+    })
+
+
     
 //    $('.js_main-name').oninput(function(){
 //        let name = $('.js_main-name').val();

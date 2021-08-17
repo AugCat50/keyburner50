@@ -177,33 +177,33 @@ function work_textarea(){
                 //Отправка-получение статистики
                 let stat_id = $('.js_current-text-id').html();
                 
-                function ajax_statistics(id, time, speed){
-                    let $month_number = time.getMonth() + 1;
-                    let stat_time     = time.getDate() +"."+ $month_number +"."+ time.getFullYear();
-                    let ajax_path     = '/statistics';
+                // function ajax_statistics(id, time, speed){
+                //     let $month_number = time.getMonth() + 1;
+                //     let stat_time     = time.getDate() +"."+ $month_number +"."+ time.getFullYear();
+                //     let ajax_path     = '/statistics';
                     
-                    $.ajax({
-                        url:    "http://94.244.191.245/keyburner50/ajax.php",
-                        method: "post",
-                        data:{
-                            id:        id,
-                            ajax_path: ajax_path,
-                            time:      stat_time,
-                            speed:     speed
-                        },
-                        success: function (data){
-                            let arr = data.split('---');
+                //     $.ajax({
+                //         url:    "http://94.244.191.245/keyburner50/ajax.php",
+                //         method: "post",
+                //         data:{
+                //             id:        id,
+                //             ajax_path: ajax_path,
+                //             time:      stat_time,
+                //             speed:     speed
+                //         },
+                //         success: function (data){
+                //             let arr = data.split('---');
                             
-                            $('.test').html(arr[0]);
-                            $('.message').html(arr[1]);
-                            $('.message').show();
-                        },
-                        error: function (data){
-                            $('.message').html(data);
-                            $('.message').show();
-                        }
-                    });
-                }
+                //             $('.test').html(arr[0]);
+                //             $('.message').html(arr[1]);
+                //             $('.message').show();
+                //         },
+                //         error: function (data){
+                //             $('.message').html(data);
+                //             $('.message').show();
+                //         }
+                //     });
+                // }
                 
                 // if(stat_id && stat_id){
                 if(stat_id != undefined && stat_id != ""){

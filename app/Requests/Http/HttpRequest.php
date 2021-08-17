@@ -36,12 +36,12 @@ class HttpRequest extends Request
             $this->path = $ajaxPath;
         }
 
+        //Если заполнено свойство method, значит переопределяем http метод (PUT, DELETE т.п.)
+        //Дело в том, что ajax работает только с GET, POST
         $method = $this->getProperty('method');
         if(isset($method)){
             $this->method = $method;
         }
-
-        // d($this);
     }
 
     /**

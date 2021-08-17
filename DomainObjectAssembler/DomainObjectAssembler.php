@@ -71,28 +71,33 @@ class DomainObjectAssembler
      */
     public function find(IdentityObject $idobj): Collection
     {
-        //Получить объект SelectionFactory
-        $selfact = $this->factory->getSelectionFactory();
+        try{
+            //Получить объект SelectionFactory
+            $selfact = $this->factory->getSelectionFactory();
 
-        //Полоучить массив {[0] => 'запрос', [1] => переменные} в объекте SelectionFactory
-        //Получается массив готовый для prepare, типа:
-        //[0] => "SELECT id, name, text, hidden FROM default_texts WHERE name = ? AND id = ?"
-        //[1] => [0] => 'имя', [1] => int(4)
-        list ($selection, $values) = $selfact->newSelection($idobj);
+            //Полоучить массив {[0] => 'запрос', [1] => переменные} в объекте SelectionFactory
+            //Получается массив готовый для prepare, типа:
+            //[0] => "SELECT id, name, text, hidden FROM default_texts WHERE name = ? AND id = ?"
+            //[1] => [0] => 'имя', [1] => int(4)
+            list ($selection, $values) = $selfact->newSelection($idobj);
 
-        //Для тестирования - Посмотреть запрос и переменные
-        // d($selection);
-        // d($values);
+            //Для тестирования - Посмотреть запрос и переменные
+            // d($selection);
+            // d($values);
 
-        //подготовить запрос prepare
-        $stmt = $this->getStatement($selection);
+            //подготовить запрос prepare
+            $stmt = $this->getStatement($selection);
 
-        //Выполнить запрос
-        $status = $stmt->execute($values);
+            //Выполнить запрос
+            $status = $stmt->execute($values);
 
-        //Извлечь массив данных
-        $raw = $stmt->fetchAll();
-        return $this->factory->getCollection($raw);
+            //Извлечь массив данных
+            $raw = $stmt->fetchAll();
+            return $this->factory->getCollection($raw);
+
+        } catch(\Exception $e){
+            return 'DOA(99): Не удалось получить данные. Текст ошибки: '. $e->getMessage();
+        }
     }
 
     /**
@@ -147,16 +152,21 @@ class DomainObjectAssembler
     // public function update(DomainModel $model)
     public function doUpdate(DomainModel $model)
     {
-        $updFactory = $this->factory->getUpdateFactory();
+        try{
+            $updFactory = $this->factory->getUpdateFactory();
 
-        //Сгенерировать массив ['запрос', [данные]] в фабрике запросов
-        $query      = $updFactory->newUpdate($model);
+            //Сгенерировать массив ['запрос', [данные]] в фабрике запросов
+            $query      = $updFactory->newUpdate($model);
+    
+            //подготовить запрос prepare
+            $stmt = $this->getStatement($query[0]);
+    
+            //Выполнить запрос
+            $stmt->execute($query[1]);
+        } catch(\Exception $e){
+            return 'DOA(162): Не удалось сохранить '. $model->getModelName(). '--- ID: '. $model->getId(). ' Текст ошибки: '. $e->getMessage();
+        }
 
-        //подготовить запрос prepare
-        $stmt = $this->getStatement($query[0]);
-
-        //Выполнить запрос
-        $stmt->execute($query[1]);
     }
 
     /**
@@ -167,20 +177,25 @@ class DomainObjectAssembler
     // public function delete(DomainModel $model)
     public function doDelete(DomainModel $model)
     {
-        $id = $model->getId();
+        try{
+            $id = $model->getId();
 
-        //Чтобы не грузить клиента созданием Identity Object, когда это можно сделать автоматически
-        $idObj = $this->getIdentityObject();
-        $idObj->field('id')->eq($id);
+            //Чтобы не грузить клиента созданием Identity Object, когда это можно сделать автоматически
+            $idObj = $this->getIdentityObject();
+            $idObj->field('id')->eq($id);
+    
+            $delFactory = $this->factory->getDeletionFactory();
+            $queryStr   = $delFactory->newDeletion($idObj);
+    
+            //подготовить запрос prepare
+            $stmt = $this->getStatement($queryStr);
+    
+            //Выполнить запрос
+            $stmt->execute();
+        }catch(\Exception $e){
+            return 'DOA(191): Не удалось удалить '. $model->getModelName(). '--- ID: '. $model->getId(). ' Текст ошибки: '. $e->getMessage();
+        }
 
-        $delFactory = $this->factory->getDeletionFactory();
-        $queryStr   = $delFactory->newDeletion($idObj);
-
-        //подготовить запрос prepare
-        $stmt = $this->getStatement($queryStr);
-
-        //Выполнить запрос
-        $stmt->execute();
     }
 
     public function getLastInsertId()

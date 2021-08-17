@@ -153,26 +153,28 @@ class ObjectWatcher
      */
     public function performOperations()
     {
+        $messageArray = [];
+
         foreach ($this->new as $key => $obj) {
             // $obj->getFinder()->insert($obj);
-            $obj->getAssembler()->doInsert($obj);
-
+            $answer = $obj->getAssembler()->doInsert($obj);
+            array_push($messageArray, $answer);
             //Служебное сообщение для тестирования
             // print "ObjectWather(168): Выполяется сохранение в БД: " . $obj->getId() . "<br>";
         }
 
         foreach ($this->dirty as $key => $obj) {
             // $obj->getFinder()->update($obj);
-            $obj->getAssembler()->doUpdate($obj);
-
+            $answer = $obj->getAssembler()->doUpdate($obj);
+            array_push($messageArray, $answer);
             //Служебное сообщение для тестирования
             // print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getId() . "<br>";
         }
 
         //Так же сделать обход массива delete
         foreach ($this->delete as $key => $obj) {
-            $obj->getAssembler()->doDelete($obj);
-
+            $answer = $obj->getAssembler()->doDelete($obj);
+            array_push($messageArray, $answer);
             //Служебное сообщение для тестирования
             // print "ObjectWather(176): Выполяется удаление в БД: " . $obj->getId() . "<br>";
         }
@@ -186,5 +188,7 @@ class ObjectWatcher
         $this->dirty  = [];
         $this->new    = [];
         $this->delete = [];
+
+        return $messageArray;
     }
 }

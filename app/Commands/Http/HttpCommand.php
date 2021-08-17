@@ -25,7 +25,7 @@ abstract class HttpCommand extends Command
 
         $httpMethod = $request->getHttpMethod();
         $id         = $request->getProperty('id');
-
+        
         switch ($httpMethod) {
             case 'GET':
                 //Если есть id, получаем одну запись

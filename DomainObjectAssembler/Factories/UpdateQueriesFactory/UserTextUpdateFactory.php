@@ -25,10 +25,9 @@ class UserTextUpdateFactory extends UpdateFactory
 
         $dirty = $obj->getDirtyFields();
         
-
         //Если массив полей для обновления пуст, то обновляем все поля (кроме статистики)
         //Это данные для INSERT
-        if( empty($dirty)){
+        if( isset($dirty)){
             $fields['user_id']     = $obj->getUserId();
             $fields['user_themes'] = $obj->getUserThemes();
             $fields['name']        = $obj->getName();
