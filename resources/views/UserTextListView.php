@@ -20,8 +20,8 @@ class UserTextListView extends View
                 $count      = $collection->getTotal();
 
                 $result .= "<ul class='user-text-list js_user-text-list'>
-                                <h4 class='user-text-list__head bright-blue-neon'>".
-                                    $themeModel->getName(). " [$count]
+                                <h4 class='user-text-list__head bright-blue-neon'><span class='js_theme-name'>".
+                                    $themeModel->getName(). "</span><span> [$count]</span>
                                 </h4>
                                 <div class='select__wrapper blue-neon-box'>
                                     <span class='select__arrow'>&#9660;</span>

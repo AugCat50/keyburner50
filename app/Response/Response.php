@@ -36,7 +36,7 @@ class Response
     }
 
     /**
-     * Установить Feedback на запрос. Есть смысл перенести в отдельный класс Response
+     * Установить Feedback на запрос.
      * 
      * @param string $msg
      * 
@@ -44,7 +44,13 @@ class Response
      */
     public function addFeedback($msg)
     {
-        array_push($this->feedback, $msg);
+        if(is_array($msg)){
+            $this->feedback = array_merge($this->feedback, $msg);
+        } else{
+            $this->feedback[] = $msg;
+        }
+        
+        // array_push($this->feedback, $msg);
     }
 
     public function addKeyFeedback($key, $msg)

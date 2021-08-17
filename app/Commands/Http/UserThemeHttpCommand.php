@@ -61,7 +61,22 @@ class UserThemeHttpCommand extends HttpCommand
      */
     public function update(Request $request)
     {
-        //
+        // d('edit');
+        // d($request);
+        $id   = $request->getProperty('id');
+        $name = $request->getProperty('name');
+
+        $assembler   = new DomainObjectAssembler('UserTheme');
+        $identityObj = $assembler->getIdentityObject()->field('id')->eq($id);
+        $model       = $assembler->findOne($identityObj);
+        $model->setName($name);
+
+        $answer = $this->performDB();
+
+        $this->response->addFeedback($answer);
+        $this->response->addFeedback('Тема '. $request->getProperty('name'). ' успешно переименована!');
+        
+        return $this->response;
     }
 
     /**
@@ -86,10 +101,20 @@ class UserThemeHttpCommand extends HttpCommand
         $themeModel         = $userThemeAssembler->createNewModel(['id' => $themeId, 'user_id' => -1, 'name' => '']);
         $userThemeAssembler->delete($themeModel);
 
-        $objWather = ObjectWatcher::getInstance();
-        $objWather->performOperations();
+        $answer = $this->performDB();
 
+        $this->response->addFeedback($answer);
         $this->response->addFeedback('Тема '. $request->getProperty('name'). 'успешно удалена!');
         return $this->response;
+    }
+
+    /**
+     * Получение объекта ObjectWatcher и запуск на выполнение его очередей
+     */
+    private function performDB(){
+        $objWather = ObjectWatcher::getInstance();
+        $answer    = $objWather->performOperations();
+
+        return $answer;
     }
 }

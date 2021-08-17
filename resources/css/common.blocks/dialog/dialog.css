@@ -79,3 +79,7 @@
 .dialog__form:after{
     background: linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
 }
+
+.dialog_rename_theme .dialog__input{
+    max-width: none;
+}

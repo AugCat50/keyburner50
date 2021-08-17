@@ -28,9 +28,9 @@ function user(){
             success: function (data){
                 
                 if(!(data.indexOf('_error_') >= 0)){
-                    $('.test').html(data);
+                    // $('.test').html(data);
 
-                    if(operation === "/del_user_theme"){
+                    if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
                         $(clss).html(data);
                     } else if(operation === 'search'){
                         //Код вывода ответа на запрос поиска
@@ -236,7 +236,7 @@ function user(){
     //Нажатие кнопки "Отмена"
     $('.js_dialog_delete_theme').on('click', '.js_dialog_delete_theme__hide', function(event){
         $('.js_dialog_delete_theme').hide();
-    })
+    });
 
     //Нажатие кноки "Удалить"
     $('.js_dialog_delete_theme').on('click', '.js_dialog_delete_theme__ready', function(event){
@@ -246,10 +246,36 @@ function user(){
 
         list.remove();
         localStorage.clear();
-    })
+    });
 
 
+    //Редактировать тему 
+    $(".js_users-theme").on("click", ".js_edit-theme", function(){
+        $('.js_dialog_rename_theme').show();
+
+        id   = $(this).attr('theme-id');
+
+        list = $(this).closest('.js_user-text-list');
+    });
     
+    //Нажатие кнопки "Отмена"
+    $('.js_dialog_rename_theme').on('click', '.js_dialog_rename_theme__hide', function(event){
+        $('.js_dialog_rename_theme').hide();
+    });
+
+    //Нажатие кнопки "Сохранить"
+    $('.js_dialog_rename_theme').on('click', '.js_dialog_rename_theme__ready', function(event){
+        $('.js_dialog_rename_theme').hide();
+
+        let themeName = $('.js_rename-theme').val();
+
+        //В нажатом списке дочерний h4 в котором дочерний span, заменить имя темы на новое
+        list.children('h4').children('.js_theme-name').html(themeName);
+
+        ajaxUser(id, 'PUT', "/edit_user_theme", themeName, false, false, ".message");
+        localStorage.clear();
+    });
+
 //    $('.js_main-name').oninput(function(){
 //        let name = $('.js_main-name').val();
 //        localStorage.setItem("name", name);

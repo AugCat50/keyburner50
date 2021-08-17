@@ -147,12 +147,23 @@
 
 <dialog class="dialog js_dialog_delete_theme">
     <div class="dialog__display">
-        <div class="dialog__form" method="post">
+        <div class="dialog__form">
             <h3 class="dialog__h bright-blue-neon">Удалить тему?</h3>
             <p>Все тексты и их статистика будут утеряны навсегда.</p>
-            <div class="dialog__message pink-neon js_dialog_delete-message"></div>
             <button class="button dialog__button blue-neon-box js_dialog_delete_theme__ready">Удалить</button>
             <button class="button dialog__button blue-neon-box js_dialog_delete_theme__hide">Отмена</button>
+        </div>
+    </div>
+</dialog>
+
+<dialog class="dialog dialog_rename_theme js_dialog_rename_theme">
+    <div class="dialog__display">
+        <div class="dialog__form">
+            <h3 class="dialog__h bright-blue-neon">Переименовать тему?</h3>
+            <input name="name" class="dialog__input blue-neon-box js_rename-theme" type="text">
+            <div class="dialog__message pink-neon js_dialog_rename_theme-message"></div>
+            <button class="button dialog__button blue-neon-box js_dialog_rename_theme__ready">Сохранить</button>
+            <button class="button dialog__button blue-neon-box js_dialog_rename_theme__hide">Отмена</button>
         </div>
     </div>
 </dialog>
