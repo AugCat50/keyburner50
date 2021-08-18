@@ -86,7 +86,7 @@ abstract class Request
      */
     public function getProperty(string $key)
     {
-        if (isset($this->properties[$key])) {
+        if (isset($this->properties[$key]) && $this->properties[$key] != '') {
             return $this->properties[$key];
         }
 

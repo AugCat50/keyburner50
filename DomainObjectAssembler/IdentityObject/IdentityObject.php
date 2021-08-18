@@ -9,6 +9,9 @@ namespace DomainObjectAssembler\IdentityObject;
 
 class IdentityObject
 {
+    /**
+     * currentfield - объект класса Field в текущем namespace
+     */
     protected $currentfield = null;
     protected $fields       = [];
     private   $enforce      = [];
@@ -54,42 +57,63 @@ class IdentityObject
         $this->enforce = $enforce;
     }
 
-    // Вводит новое поле.
-    // Генерирует ошибку, если текущее поле неполное
-    // (т.е. age, а не age > 40) .
-    // Этот метод возвращает ссылку на текущий объект
-    // и тем самым разрешает текучий синтаксис
+    /**
+     * Вводит новое поле, генерирует ошибку, если текущее поле ещё неполное. (перед вводимым, предыдущее)
+     * Например, если было задано имя, но не был задан оператор сравнения.   (т.е. age, а не age > 40)
+     * 
+     * Возвращяет ссылку на текущий объект для поддержки текучего интерфейса
+     * 
+     * @return DomainObjectAssembler\IdentityObject
+     */
     public function field(string $fieldname): self
     {
         if (! $this->isVoid() && $this->currentfield->isIncomplete()) {
-            throw new \Exception ("IdentityObject(37): Неполное поле <br>");
+            throw new \Exception (">>>>> IdentityObject(71): Попытка ввести новое поле до того, как текущее было заполнено! <<<<<");
         }
 
+        //Проверка на допустимость использования поля
         $this->enforceField($fieldname);
 
-        if (isset($this->fields[$fieldname])) {
-            $this->currentfield=$this->fields[$fieldname];
-        } else {
-            $this->currentfield = new Field($fieldname);
-            $this->fields[$fieldname]=$this->currentfield;
-        }
+        //Пока я пришёл к выводу, что мне могут потребоваться два разных поля с одним именем. Проверку уберу
+        // if (isset($this->fields[$fieldname])) {
+        //     $this->currentfield=$this->fields[$fieldname];
+        // } else {
+        //     $this->currentfield       = new Field($fieldname);
+        //     $this->fields[$fieldname] = $this->currentfield;
+        // }
+
+        $this->currentfield = new Field($fieldname);
+        $this->fields[]     = $this->currentfield;
 
         return $this;
     }
 
-    // Имеются ли уже какие-нибудь поля
-    // у объекта идентичности?
+    /**
+     * Для целей тестирования, чтобы удобнее было смотреть массив полей
+     */
+    public function showFieldsArray()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * Проверка, имеются ли уже какие-нибудь поля у объекта идентичности?
+     * 
+     * @return bool
+     */
     public function isVoid(): bool
     {
         return empty($this->fields);
     }
 
-    // Допустимо ли заданное имя поля?
+    /**
+     * Допустимо ли заданное имя поля?
+     */
     public function enforceField(string $fieldname)
     {
         if (! in_array($fieldname, $this->enforce) && ! empty($this->enforce) ) {
             $forcelist = implode(', ', $this->enforce);
-            throw new \Exception("IdentityObject(64): {$fieldname} не является корректным полем ($forcelist) <br>");
+            throw new \Exception(">>>>> IdentityObject(64): {$fieldname} не является корректным полем ($forcelist) <<<<<");
         }
     }
 
@@ -105,22 +129,34 @@ class IdentityObject
     // Операция сравнения "меньше"
     public function lt($value): self
     {
-        return $this->operator("<", $value);
+        return $this->operator(" < ", $value);
     }
 
     // Операция сравнения "больше"
     public function gt($value): self
     {
-        return $this->operator(">", $value);
+        return $this->operator(" > ", $value);
     }
 
-    // Выполняет подготовку к операциям с полями.
-    // Получает текущее поле и вводит операцию
-    // и проверяемое значение
+    /**
+     * Ввести логический оператор LIKE для ТЕКУЩЕГО объекта поля
+     * 
+     * Поскольку он используется для сравнения с переменными, добавлен как обыный оператор
+     */
+    public function like($value) : self
+    {
+        // $this->setLogicalConnective('LIKE');
+        // return $this;
+        return $this->operator(" LIKE ", $value);
+    }
+
+    /**
+     * Вводит оператор и сравниваемое значение в текущий объект Field
+     */
     private function operator(string $symbol, $value): self
     {
         if ($this->isVoid()) {
-            throw new \Exception ("IdentityObject(118): Не задано ни одного поля (массив объектов полей пуст)<br>");
+            throw new \Exception (">>>>> IdentityObject(118): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
         }
         $this->currentfield->addTest($symbol, $value);
         return $this;
@@ -157,12 +193,6 @@ class IdentityObject
     }
 
     //Это на будущее
-    // public function like()
-    // {
-    //     $this->setLogicalConnective('LIKE');
-    //     return $this;
-    // }
-
     // public function in()
     // {
     //     $this->setLogicalConnective('IN');
@@ -175,7 +205,7 @@ class IdentityObject
     public function setLogicalConnective(string $str): self
     {
         if ($this->isVoid()) {
-            throw new \Exception ("IdentityObject(127): Не задано ни одного поля (массив объектов полей пуст)<br>");
+            throw new \Exception (">>>>> IdentityObject(127): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
         }
         $this->currentfield->addLogicalConnective($str);
         return $this;
@@ -200,6 +230,6 @@ class IdentityObject
         if(! is_null($this->tableName)) {
             return $this->tableName;
         }
-        throw new \Exception("IdentityObject(132): Имя таблицы, которую обслуживает объект идентификации, не установлено!");    
+        throw new \Exception(">>>>> IdentityObject(132): Имя таблицы, которую обслуживает объект идентификации, не установлено!  <<<<<");    
     }
 }

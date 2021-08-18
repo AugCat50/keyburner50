@@ -65,6 +65,8 @@ class SelectionFactory
         $array = $obj->getComps();
         $count = count($array);
 
+        //Посмотреть массив полей. Для целей тестирования
+        // d($obj->showFieldsArray());
 
         for($i=0, $not = false; $i<$count; $i++){
             $comp = $array[$i];

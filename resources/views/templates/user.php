@@ -12,7 +12,9 @@
                     <button class="search__go blue-neon js_search-button" data-tooltip="Искать" label="Искать">&#10140;</button>
                 </li>
             </nav>
-            <ul class="serch-result users-theme blue-neon-box js_serch-result" search_attr=""></ul>
+            <ul class="serch-result users-theme blue-neon-box js_serch-result" search_attr="">
+                <!-- Блок для вывода результатов поиска -->
+            </ul>
         </menu>
         
         <div class="users-theme-wrapper blue-neon-box js_users-theme-wrapper">

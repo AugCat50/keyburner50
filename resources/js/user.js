@@ -32,16 +32,19 @@ function user(){
 
                     if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
                         $(clss).html(data);
-                    } else if(operation === 'search'){
-                        //Код вывода ответа на запрос поиска
+                    } else if(operation === '/search'){
+                        // alert(data);
+                        $('.test').html(data);
+                        // Код вывода ответа на запрос поиска
                         $(clss).html(data).show();
                         $(clss).attr('search_attr', text);
                         
                         //Количество текстов найдено
-                        $(clss).each(function () {
-                            let q = $(this).find('.select__option').length;
-                            $(this).children(".user-text-list__head").append(" ["+q+"]");
-                        });
+                        //Теперь в SearchTextListView.php
+                        // $(clss).each(function () {
+                        //     let q = $(this).find('.select__option').length;
+                        //     $(this).children(".user-text-list__head").append(" ["+q+"]");
+                        // });
                     } else if(operation){
                         //В ответ приходит строка ответа из модели и html отрисовки нового меню. (id, <span>Текст ответа</span>, html нового меню) Разделяем ответ и код и отрисовываем в их местах
                         let index, answer, html;
@@ -80,9 +83,13 @@ function user(){
                         // });
                     }
                     
-                    setTimeout(function(){
-                            $(clss).hide();
-                    }, 5000);    
+                    //Чтобы не скрывать результаты поиска, но другие окна ответов
+                    if(clss !== '.js_serch-result'){
+                        setTimeout(function(){
+                                $(clss).hide();
+                        }, 5000); 
+                    }
+   
                 } else {
                     $('.message').html(data);
                     $('.message').show();
@@ -132,10 +139,6 @@ function user(){
         
         let end_text = user_text_replace();
         if(id != undefined){
-            // console.log(id);
-            // console.log(name);
-            // console.log(theme);
-            // console.log(end_text);
             ajaxUser(id, 'PUT', "/edit_user_text", name, theme, end_text, ".message");
         }else{
             ajaxUser(false, 'POST', "/add_user_text", name, theme, end_text, ".message");
@@ -154,7 +157,7 @@ function user(){
     $('.body').on('click', '.js_dialog_delete__ready', function(event){
         let id         = $('.js_current-text-id').html();
         let theme      = $(".js_main-theme-name");
-        let theme_name = theme.val();
+        // let theme_name = theme.val();
         //В случае, если текст дефолтный, но пользователь изменил val в input темы, берём значение для проверки из атрибута
         let theme_attr = theme.attr('data');
         
@@ -185,7 +188,7 @@ function user(){
             //Если данное ключевое слово уже запрашивалось и результаты уже есть, просто показываем
             result_box.show();
         }else if(search_word != undefined && search_word != ""){
-            ajaxUser(false, "search", false, false, search_word, ".js_serch-result");
+            ajaxUser(null, 'GET', "/search", null, null, search_word, ".js_serch-result");
         }
     });
     

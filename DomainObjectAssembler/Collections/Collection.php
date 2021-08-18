@@ -168,6 +168,7 @@ abstract class Collection implements \Iterator
      */
     private function getRow(int $num)
     {
+        //Lazy Load, пока не реалиовано
         $this->notifyAccess();
 
         //Если элемента не существует, возвращаем NullModel

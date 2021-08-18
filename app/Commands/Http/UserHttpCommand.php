@@ -59,6 +59,8 @@ class UserHttpCommand extends HttpCommand
      */
     public function show(Request $request)
     {
+        d('show');
+        d($request);
         //$id = $request->getProperty('id');
     }
 

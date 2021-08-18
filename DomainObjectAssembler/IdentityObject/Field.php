@@ -4,9 +4,9 @@ namespace DomainObjectAssembler\IdentityObject;
 class Field
 {
     protected $name       = null;
-    protected $operator   = null;
+    // protected $operator   = null;
     protected $comps      = [];
-    protected $incomplete = false;
+    // protected $incomplete = false;
 
     // Задать имя поля (например, age)
     public function __construct(string $name)
@@ -16,6 +16,9 @@ class Field
 
     // Ввести операцию и значение для тестирования
     // (например, больше 40), а также свойство $comps
+    /**
+     * Ввести операцию и значение в объект для составления запроса в будущем
+     */
     public function addTest(string $operator, $value)
     {
         $this->comps[] = [

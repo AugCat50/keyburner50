@@ -40,6 +40,18 @@ class UserThemesWorker
         return $collection;
     }
 
+    public function findThemeWhereId(int $id)
+    {
+        $assembler   = new DomainObjectAssembler('UserTheme');
+        $identityObj = $assembler->getIdentityObject()
+                                    ->field('id')
+                                    ->eq($id);
+        
+        $model  = $assembler->findOne($identityObj);
+
+        return $model;
+    }
+
     /**
      * Возвращает массив моделей пользовательских тем, но без самих текстов
      */

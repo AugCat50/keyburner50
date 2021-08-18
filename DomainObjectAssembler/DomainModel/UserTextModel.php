@@ -11,6 +11,7 @@ class UserTextModel extends DomainModel
      */
     private $user_id;
     private $user_themes;
+    private $theme_name;
     private $text;
     private $statistics;
     private $statistics_best;
@@ -48,6 +49,18 @@ class UserTextModel extends DomainModel
         return $this->user_themes;
     }
 
+    /**
+     * Имя темы только для внутренних системных нужд. markDirty не требуется
+     */
+    public function setThemeName(string $theme_name)
+    {
+        $this->theme_name = $theme_name;
+    }
+
+    public function getThemeName(): string
+    {
+        return $this->theme_name;
+    }
     
     public function setName(string $name)
     {
