@@ -55,7 +55,7 @@ class StatisticsDataWorker
         if ( $this->userTextModel instanceof UserTextModel ) return $this->userTextModel;
 
         $identityObj = $this->assembler->getIdentityObject();
-        $identityObj->setEnforrceFields(['id', 'statistics', 'statistics_best']);
+        $identityObj->addEnforrceFields(['statistics', 'statistics_best']);
         $identityObj->field('id')->eq($this->textId);
 
         $this->userTextModel = $this->assembler->findOne($identityObj);
@@ -117,13 +117,12 @@ class StatisticsDataWorker
         if(! $statistics){
 
             //Строка статистики в модели пустая, данные на запись есть
+
             //По типу: {3,11.8.2021-468.750,3}
             $it   = '{' . $this->userId . ',' . $this->time . '-' . $this->speed . ',' . $this->userId . '}';
-            // $userTextModel->setStatistics($it);
-            // $data = $this->doUpdate($userTextModel);
 
-            // return $data;
         }else{
+
             //Строка статистики в модели есть, данные на запись есть
 
             //Позиция начала строки
@@ -143,9 +142,6 @@ class StatisticsDataWorker
                 //статистика есть, но не для этого пользователя. Просто добавляем в конец данные для записи
                 $it   = $statistics . '{' . $this->userId . ',' . $this->time . '-' . $this->speed . ',' . $this->userId . '}';
 
-                // $userTextModel->setStatistics($it);
-                // $data = $this->doUpdate($userTextModel, $it);
-                // return $data;
             }else{
 
                 //Статистика для этого пользователя есть, работаем с ней
@@ -153,16 +149,10 @@ class StatisticsDataWorker
                 $user_stat_string = substr($statistics, $start_position, $length_stat_str) . ',' . $this->time . '-' . $this->speed;
                 $it               = $first_string . $user_stat_string . $last_string;
 
-                // $userTextModel->setStatistics($it);
-                // $data = $this->doUpdate($userTextModel);
-                // return $data;
             }
         }
 
         $userTextModel->setStatistics($it);
-        $data = $this->doUpdate($userTextModel);
-
-        return $data;
     }
 
     /**
@@ -180,36 +170,44 @@ class StatisticsDataWorker
         $userTextModel   = $this->getGeneralStatistics();
         $statistics_best = $userTextModel->getStatisticsBest();
 
-        if(!$statistics_best && isset($this->time, $this->speed)){
-            //В модели строки нет, данные на запись есть
-            
-            $it = '{' . $this->userId . ',' . $this->time . '-' . $this->speed . ',' . $this->userId . '}';
+        
+        if(!$statistics_best && !isset($this->time, $this->speed)){
 
+            //Если свойство "statistics_best" модели текста пустое и нет в реквесте времени и скорости, значит нет статистики - возвращаем 0
+            return 0;
+
+        } else if(!$statistics_best && isset($this->time, $this->speed)){
+
+            //Если свойство "statistics_best" модели текста пустое, но в реквесте есть время и скорость, значит записываем новую строку статистики
+            $it = '{' . $this->userId . ',' . $this->time . '-' . $this->speed . ',' . $this->userId . '}';
+            
             $userTextModel->setStatisticsBest($it);
-            $this->doUpdate($userTextModel);
             
             return $this->speed;
+
         }else{
-            //В модели строка есть, данные на запись есть
-            
+
+            //Если свойство "statistics_best" модели текста есть, в реквесте есть время и скорость
             $open_str_best       = '{' . $this->userId;
             $start_position_best = strripos($statistics_best, $open_str_best);
             
             $end_str_best        = ',' . $this->userId . '}';
             $end_position_best   = strripos($statistics_best, $end_str_best);
             
+            //проверка наличия строки статистики пользователя по наличию позиции конца строки ',userId}'
             if(!$end_position_best){
-                //Если пользовательской cтроки нет и есть данные для записи, просто записываем в конец общей строки
-                
+
+                //Если пользовательской cтроки нет ({id,data,id})и есть данные для записи, просто записываем в конец общей строки
                 $it = $statistics_best . '{' . $this->userId . ',' . $this->time . '-' . $this->speed . ',' . $this->userId . '}';
 
                 $userTextModel->setStatisticsBest($it);
-                $data = $this->doUpdate($userTextModel);
                 
                 return $this->speed;
+
             }else{
+
                 //Есть пользовательская строка и есть данные для записи
-                
+
                 //Длина строки пользователя и сама строка
                 $length_stat_str_best  = $end_position_best - $start_position_best;
                 $user_stat_string_best = substr($statistics_best, $start_position_best, $length_stat_str_best);
@@ -223,13 +221,13 @@ class StatisticsDataWorker
                     $it                = $first_string_best . '{' . $this->userId . ',' . $this->time . '-' . $this->speed . $last_string_best;
 
                     $userTextModel->setStatisticsBest($it);
-                    $data = $this->doUpdate($userTextModel);
 
                     return $this->speed;
                 }
 
                 //Если результат из БД не меньше нового, возвращаем его
                 return $arr_best[1];
+
             } 
         }
     }
@@ -240,11 +238,12 @@ class StatisticsDataWorker
      * Сначала передать в set методы модели данные! Например $userTextModel->setStatistics($it);
      * Ничего особенного, просто получается объект ObjectWatcher и запускается выполнение очереди работы с БД
      */
-    private function doUpdate(UserTextModel $userTextModel){
-
+    public function doUpdate()
+    {
+        $message    = null;
         $objWatcher = ObjectWatcher::getInstance();
-        $objWatcher->performOperations();
+        $message    = $objWatcher->performOperations();
 
-        return true;
+        return $message;
     }
 }

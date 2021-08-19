@@ -1,6 +1,7 @@
 <?php 
 /**
- * Комманда для обработки http запросов для пользователей (регистрация, авторизация, подтверждение)
+ * Комманда для получения базовых данных пользователя на странице /user
+ * а так же для регистрации нового пользовтеля. Может надо сделать отдельный контроллер или наоборот всё собрать в один 
  */
 namespace app\Commands\Http;
 
@@ -13,9 +14,13 @@ use app\Workers\UserThemesWorker;
 class UserHttpCommand extends HttpCommand
 {
     /**
-     * Display a listing of the resource.
+     * GET no id
+     * Получение данных пользователя, когда он попадает на роут /user
+     * Получение списка стандартных текстов, получение списков тем с текстами пользователя
+     * id пользователя в сессии - $_SESSION["auth_subsystem"]["user_id"]
      *
-     * @return 
+     * @param  app\Requests\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
@@ -52,19 +57,21 @@ class UserHttpCommand extends HttpCommand
     }
 
     /**
+     * GET id
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  app\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        d('show');
-        d($request);
-        //$id = $request->getProperty('id');
+        // d('show');
+        // d($request);
+        // return $this->response;
     }
 
     /**
+     * POST
      * Зарегистрировать нового пользователя, проверить, сохранить в БД
      *
      * @param  app\Requests\Request  $request
@@ -80,11 +87,10 @@ class UserHttpCommand extends HttpCommand
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function update(Request $request)
     {
@@ -92,10 +98,10 @@ class UserHttpCommand extends HttpCommand
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request 
      */
     public function destroy(Request $request)
     {

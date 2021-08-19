@@ -24,26 +24,40 @@ class StatisticsWorker
 
         $dataWorker = new StatisticsDataWorker($request);
 
+        //Если есть время и скорость, записываем в БД новую статистику
         if(isset($time, $speed)){
-            //запись
+            //Добавить данные на запись
             $result          = $dataWorker->addNewStatistics();
             $statistics_best = $dataWorker->bestStatistics();
-            $statistics      = $dataWorker->getUserStatistics();
+            //Запустить запись
+            $message         = $dataWorker->doUpdate();
+
             //чтение
-            // $statistics      = statistics($pdo, $_POST['id'], false, false);
-            // $statistics_best = statistics_best($pdo, $_POST['id'], false, false);
+            $statistics      = $dataWorker->getUserStatistics();
         }else{
             //чтение
-            // $statistics      = statistics($pdo, $_POST['id'], false, false);
-            // $statistics_best = statistics_best($pdo, $_POST['id'], false, false);
             $statistics_best = $dataWorker->bestStatistics();
             $statistics      = $dataWorker->getUserStatistics();
         }
         
         $data = $this->createImage($statistics, $statistics_best);
+
+        //В $message может прийти сообщение из ObjectWather, например с ошибкй. Можно придумать вывод или отлов
         return $data;
     }
 
+    /**
+     * Получает строку статистики и значение float лучшего результата,
+     * генерирует изображение с графиком статистики, прикрепляет к нему
+     * число лучшего результата через разделитель --- и возвращает его в виде строки.
+     * 
+     * Так же прикрепляет через разделитель --- маркер наличия картинки 1 или 0
+     * 
+     * @param string $statistics
+     * @param float  $statistics_best
+     * 
+     * @return string
+     */
     public function createImage($statistics, $statistics_best)
     {
         if(! function_exists('gd_info')) throw new \Exception('Включите графическую библиотеку GD на вашем php (php.ini добавить строку extension=php_gd.dll)');
@@ -301,14 +315,11 @@ class StatisticsWorker
             $data = "<img src='data:image/png;base64,".$base64."' />";
             $data = $statistics_best. '---'. $data. '---1';
         
-            //echo $data;
-        
             imagedestroy($im);
         }else{
-        //    $data = $statistics_best.'---'.'<p class="blue-neon">Статистики ещё нет</p>';
             $data = $statistics_best.'---'.'<p class="bright-blue-neon">Статистика ещё пуста! Тренируйтесь, чтобы её заполнить!</p>'. '---0';
         }
-        //echo $data;
+
         return $data;
     }
 }

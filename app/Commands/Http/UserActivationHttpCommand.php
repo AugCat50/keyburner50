@@ -5,7 +5,6 @@
 namespace app\Commands\Http;
 
 use app\Requests\Request;
-// use app\Workers\UserActivationWorker;
 use DomainObjectAssembler\DomainModel\NullModel;
 use DomainObjectAssembler\DomainObjectAssembler;
 use DomainObjectAssembler\IdentityMap\ObjectWatcher;
@@ -13,14 +12,17 @@ use DomainObjectAssembler\IdentityMap\ObjectWatcher;
 class UserActivationHttpCommand extends HttpCommand
 {
     /**
-     * @return app\Response\Response
+     * GET no id
+     * 
+     * @param  app\Requests\Request $request
      */
     public function index(Request $request)
     {
-        d($request);
+        //
     }
 
     /**
+     * GET id
      * Активация аккаунта по ссылке в письме. 
      * 
      * Получает запись по user_id и key_act, и если такая запись найдена, удаляет её.
@@ -60,36 +62,35 @@ class UserActivationHttpCommand extends HttpCommand
     }
 
     /**
+     * POST
      * Store a newly created resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }

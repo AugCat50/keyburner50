@@ -20,26 +20,6 @@ var errors          = 0;
 
 function work_textarea(){
     var WORK_AREA = getWorkAreaSelector();
-
-    //BLOK-2   Второй блок (work textarea)
-    //Начальные значения для буффера должны быть ВНЕ функции, данные циклически обновляются
-        
-    //Обновляются раз в слово
-    // let old_work        = "";
-    // let old_work_length = 0;
-    // let startStr        = 0;
-    
-    //Обновляются раз в символ
-    // let oldVal    = "";
-    // let oldLength = 0;
-    
-    //template_length -- Длина шаблонного текста, определяется при блокировке шаблонного текста
-    //start_time      -- время начала, определяется при блокировке шаблонного текста
-    // let start_time      = 0; 
-    // let end_time        = 0;
-    // let template_length = 0;
-    // let wrong_length    = 0;
-    // let errors          = 0;
     
     let change_work_textarea = document.querySelector('.js-work-textarea');
 
@@ -95,7 +75,6 @@ function work_textarea(){
                 word["word"] = word["word"]+"\n";
             }
             
-            
             //Работа с шаблонным текстом
             let tempText    = "";
             let tempWord    = [];
@@ -117,7 +96,7 @@ function work_textarea(){
             
             let z;
             let temp_word_l = tempWord[0].length - 1;
-//            console.log(tempWord[0][temp_word_l]);
+            //console.log(tempWord[0][temp_word_l]);
             
             if(word["word"] === tempWord[0]){
                 
@@ -176,49 +155,10 @@ function work_textarea(){
                 
                 //Отправка-получение статистики
                 let stat_id = $('.js_current-text-id').html();
-                
-                // function ajax_statistics(id, time, speed){
-                //     let $month_number = time.getMonth() + 1;
-                //     let stat_time     = time.getDate() +"."+ $month_number +"."+ time.getFullYear();
-                //     let ajax_path     = '/statistics';
-                    
-                //     $.ajax({
-                //         url:    "http://94.244.191.245/keyburner50/ajax.php",
-                //         method: "post",
-                //         data:{
-                //             id:        id,
-                //             ajax_path: ajax_path,
-                //             time:      stat_time,
-                //             speed:     speed
-                //         },
-                //         success: function (data){
-                //             let arr = data.split('---');
-                            
-                //             $('.test').html(arr[0]);
-                //             $('.message').html(arr[1]);
-                //             $('.message').show();
-                //         },
-                //         error: function (data){
-                //             $('.message').html(data);
-                //             $('.message').show();
-                //         }
-                //     });
-                // }
-                
-                // if(stat_id && stat_id){
+
                 if(stat_id != undefined && stat_id != ""){
-                    // let qwe = ajax_statistics(stat_id, end_time, result_speed);
                     ajaxQuery_stat(stat_id, 'post', end_time, result_speed);
                 }
-                //                console.log(my_time);
-                //                console.log(my_minute+":"+my_second);
-                //                console.log(errors);
-                //                console.log(result_speed.toFixed(3));
-                //                console.log(penalty_speed.toFixed(3));
-
-                //Работа со статистикой, пока отключить
-                // ajaxQuery_stat(id, 'user');
-                // ajaxQuery_stat(stat_id, 'post', end_time, result_speed);
             }
             
             old_work        = WORK_AREA.val();

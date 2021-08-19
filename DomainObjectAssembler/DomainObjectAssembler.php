@@ -1,4 +1,14 @@
-<?php 
+<?php
+/**
+ * Центральный класс предметной области. 
+ * 
+ * Получает фабрики для работы с своим видом модели с помощью абстрактной фабрики PersistanceFactory,
+ * выполняет работу по выполнению операций с БД: 
+ * получение коллекции объектов                    - find(), 
+ * получение модели объекта из БД                  - findOne(),
+ * получение нового объекта модели по своим данным - createNewModel(),
+ * сохранение, обновление, удаление строки БД сообтветствующей модели
+ */
 namespace DomainObjectAssembler;
 
 use app\Registry\Registry;
@@ -38,6 +48,13 @@ class DomainObjectAssembler
         return $this->identityObject;
     }
 
+    /**
+     * Создать новый объект модели с данными $raw
+     * 
+     * @param array $raw
+     * 
+     * @return DomainObjectAssembler\DomainModel\DomainModel
+     */
     public function createNewModel(array $raw = []): DomainModel
     {
         $domainFactory = $this->factory->getModelFactory();
@@ -58,7 +75,6 @@ class DomainObjectAssembler
     {
         $collection = $this->find($idobj);
         $model      = $collection->next();
-
         return $model;
     }
 
@@ -117,47 +133,52 @@ class DomainObjectAssembler
     }
 
     /**
-     * По сути метод не нужен, поскольку при создании модели new , 
-     * она автоматически попадает на сохраниенние в конструкторе. 
-     * Если такое поведение не устраивает, необходимо в DomainModel удалить markNew() в конструкторе
+     * Unit of Work. Добавить модель в очередь ObjectWatcher на сохранение
+     * 
+     * По сути метод не нужен, поскольку при создании модели new , она автоматически попадает на сохраниенние в конструкторе. 
+     * Если такое поведение не устраивает, необходимо в DomainModel удалить markNew() в конструкторе и раскомментировать этот метод
      */
     // public function insert(DomainModel $model)
     // {
     //     ObjectWatcher::addNew($model);
     // }
 
+    /**
+     * Unit of Work. Добавить модель в очередь ObjectWatcher на обновление
+     */
     public function update(DomainModel $model)
     {
         ObjectWatcher::addDirty($model);
     }
 
+    /**
+     * Unit of Work. Добавить модель в очередь ObjectWatcher на удаление
+     */
     public function delete(DomainModel $model)
     {
         ObjectWatcher::addDelete($model);
     }
 
     /**
-     * Делегирует полномочия методу Update, поскольку оператор INSERT генерирует фабрика Updete в случае, если id модели пуст.
-     * Если id модели пуст, значит это новый объект, которого нет в БД.
+     * Делегирует полномочия методу Update, поскольку оператор INSERT генерирует фабрика Updete в случае, если id модели пуст или -1.
+     * Если id модели пуст или -1, значит это новый объект, которого нет в БД.
      */
-    // public function insert(DomainModel $model)
     public function doInsert(DomainModel $model)
     {
         $this->doUpdate($model);
-
-        // return $this->pdo->lastInsertId();
-        // $insFactory = $this->factory->getInsertFactory();
     }
 
-    // public function update(DomainModel $model)
+    /**
+     * Обновление модели, строки в БД
+     */
     public function doUpdate(DomainModel $model)
     {
         try{
             $updFactory = $this->factory->getUpdateFactory();
 
             //Сгенерировать массив ['запрос', [данные]] в фабрике запросов
-            $query      = $updFactory->newUpdate($model);
-    
+            $query = $updFactory->newUpdate($model);
+
             //подготовить запрос prepare
             $stmt = $this->getStatement($query[0]);
     
@@ -166,15 +187,14 @@ class DomainObjectAssembler
         } catch(\Exception $e){
             return 'DOA(162): Не удалось сохранить '. $model->getModelName(). '--- ID: '. $model->getId(). ' Текст ошибки: '. $e->getMessage();
         }
-
     }
 
     /**
-     * Если id берётся из модели, рекомендую удалить и объект модели вручную,
-     * дабы не получить не связанный с БД объект модели в системе. Возможно пофикшу в Identity Map
+     * Удаление модели, строки из БД
+     * 
+     * id извлекается из модели, после удаления строки из БД, сам объект модели остаётся в системе в Identity Map. 
+     * В теории, это может вызвать проблемы, поэтому объект можно попытаться удалить или пометить как удалённый.
      */
-    // public function delete(int $id)
-    // public function delete(DomainModel $model)
     public function doDelete(DomainModel $model)
     {
         try{
@@ -195,7 +215,6 @@ class DomainObjectAssembler
         }catch(\Exception $e){
             return 'DOA(191): Не удалось удалить '. $model->getModelName(). '--- ID: '. $model->getId(). ' Текст ошибки: '. $e->getMessage();
         }
-
     }
 
     public function getLastInsertId()

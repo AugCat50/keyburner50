@@ -12,14 +12,17 @@ use DomainObjectAssembler\DomainObjectAssembler;
 class LogInHttpCommand extends HttpCommand
 {
     /**
-     * @return app\Response\Response
+     * GET no id
+     * 
+     * @param app\Requests\Request $request
      */
     public function index(Request $request)
     {
-        d($request);
+        //
     }
 
     /**
+     * GET id
      * Метод для проверки авторизации пользвателя
      * 
      * При неудаче заполняем feedback response. Если фидбек пуст, фронт редиректит на роут /user
@@ -82,36 +85,35 @@ class LogInHttpCommand extends HttpCommand
     }
 
     /**
+     * POST
      * Store a newly created resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return 
+     * @param app\Requests\Request $request
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }

@@ -17,19 +17,20 @@ class StatisticsHttpCommand extends HttpCommand
     }
     
     /**
-     * GET
+     * GET no id
      * 
      * @return app\Response\Response
      */
     public function index(Request $request)
     {
-        d('index');
-        d($request);
+        // d('index');
+        // d($request);
 
-
+        // return $this->response;
     }
 
     /**
+     * GET id
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
@@ -44,43 +45,40 @@ class StatisticsHttpCommand extends HttpCommand
     }
 
     /**
-     * Store a newly created resource in storage.
+     * POST
+     * Записать статистику в БД
      *
      * @param  app\Requests\Request  $request
-     * @return 
+     * @return app\Response\Response
      */
     public function store(Request $request)
     {
-        // d('store');
-        // d($request);
         $worker = new StatisticsWorker();
         $data   = $worker->main($request);
-        // $this->response->addKeyFeedback('statistics', $data);
-        // $this->response->addFeedback('999');
+
         $this->response->addFeedback($data);
         return $this->response;
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @param  app\Requests\Request $request
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return 
+     * @param  app\Requests\Request $request
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }

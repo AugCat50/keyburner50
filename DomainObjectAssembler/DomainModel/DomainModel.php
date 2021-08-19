@@ -7,18 +7,15 @@
  */
 namespace DomainObjectAssembler\DomainModel;
 
-use DomainObjectAssembler\Mapper\Mapper;
-use DomainObjectAssembler\Collections\Collection;
 use DomainObjectAssembler\DomainObjectAssembler;
 use DomainObjectAssembler\IdentityMap\ObjectWatcher;
-use PDO;
 
 abstract class DomainModel
 {
     private $id;
-    private $dirtyFieldsArray = [];
+    private $dirtyFieldsArray = null;
 
-    // abstract public function getFinder(): Mapper;
+    // abstract public function getFinder(): Mapper; --- перемещено в DomainObjectAssembler
     abstract public function getModelName(): string;
 
     /**
@@ -82,6 +79,7 @@ abstract class DomainModel
         ObjectWatcher::addDirty($this);
 
         if (isset($fields)){
+            if(is_null($this->dirtyFieldsArray)) $this->dirtyFieldsArray = [];
             array_push($this->dirtyFieldsArray, $fields);
         }
     }
@@ -96,17 +94,14 @@ abstract class DomainModel
         ObjectWatcher::add($this);
     }
 
+    /**
+     * Получить массив грязных полей, сохранённых в модели
+     * 
+     * Обратите внимание, возвнащаться должен массив или null, но не пустой массив
+     * @return null|array
+     */
     public function getDirtyFields(){
+        if( empty($this->dirtyFieldsArray) ) return null;
         return $this->dirtyFieldsArray;
-    }
-
-
-
-    //TODO: пока не очевидно, надо ли получать пустую коллекцию. Пусть пока будет
-    // public static function getCollection(string $type): Collection
-    public static function getCollection(string $type)
-    {
-        // фиктивная реализация
-        return Collection::getCollection($type);
     }
 }

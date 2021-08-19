@@ -10,6 +10,7 @@ use app\Workers\GetDefaultTextWorker;
 class DefaultTextHttpCommand extends HttpCommand
 {
     /**
+     * GET no id
      * Получение списка дефолтных текстов, сохранение в response и передача в фронт контроллер
      *
      * @param  app\Requests\Request $request
@@ -33,6 +34,7 @@ class DefaultTextHttpCommand extends HttpCommand
     }
 
     /**
+     * GET id
      * Получение одного дефолтного текста, сохранение в response и передача в фронт контроллер. 
      * 
      * Возвращается только текст, возможно есть смысл возвращать модель.
@@ -51,38 +53,36 @@ class DefaultTextHttpCommand extends HttpCommand
         return $this->response;
     }
 
-
-    
     /**
+     * POST
      * Store a newly created resource in storage.
      *
      * @param  app\Requests\Request  $request
-     * @return 
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
      * @param  app\Requests\Request  $request
-     * @return 
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
      * @param app\Requests\Request $request
-     * @return 
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }

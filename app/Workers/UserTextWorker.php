@@ -1,12 +1,11 @@
 <?php
 /**
- * Класс для логики работы с пользовательскими темами
+ * Класс для логики работы с пользовательскими текстами
  */
 namespace app\Workers;
 
 use app\Requests\Request;
 use app\Registry\Registry;
-use app\Response\Response;
 use DomainObjectAssembler\DomainModel\UserTextModel;
 use DomainObjectAssembler\IdentityMap\ObjectWatcher;
 
@@ -17,9 +16,9 @@ class UserTextWorker
      */
     public function insert(Request $request): int
     {
-        $reg         = Registry::getInstance();
-        $pdo         = $reg->getPdo();
-        $objWatcher  = ObjectWatcher::getInstance();
+        $reg        = Registry::getInstance();
+        $pdo        = $reg->getPdo();
+        $objWatcher = ObjectWatcher::getInstance();
         
         $name    = $request->getProperty('name');
         $text    = $request->getProperty('text');
@@ -42,7 +41,7 @@ class UserTextWorker
         $name    = $request->getProperty('name');
         $text    = $request->getProperty('text');
 
-        // int $id, int $user_id, int $user_themes, string $name, string $text
+        // UserTextModel(int $id, int $user_id, int $user_themes, string $name, string $text)
         $model = new UserTextModel(
                         $id, 
                         $_SESSION["auth_subsystem"]["user_id"], 
@@ -58,11 +57,19 @@ class UserTextWorker
         return $id;
     }
 
+    /**
+     * DELETE
+     * Удалить текст по id, для этого создаётся модель-пустышка с id и добавляется в очередб на удалениее
+     * 
+     * Может при необходимости вернуть строку ответ из ObjectWatcher. 
+     */
     public function delete(int $id)
     {
         $model      = new UserTextModel($id, 0, 0, '', '');
         $objWatcher = ObjectWatcher::getInstance();
         $objWatcher::addDelete($model);
-        $objWatcher->performOperations();
+        $message    = $objWatcher->performOperations();
+
+        return $message;
     }
 }

@@ -3,22 +3,26 @@ function user_text(){
     //Получение пользовательского текста и текста из поиска. По аналогии с дефолтным, см выше
     //Search не ищет в дефолтных текстах. Но эту возможность можно добавить, поэтому я решил не убирать проверки.
     $(".js_users-theme, .js_serch-result").on("click", ".js_select", function(){
-        let my_this = $(this);
+        let select = $(this);
         
-        //Если флаг уже есть, то это клик по <option> внутри списка, а згачит можно получить val селекта
-        if(my_this.hasClass('opened')){
+        //Если флаг уже есть, то это клик по <option> внутри списка, а значит можно получить val селекта
+        if(select.hasClass('opened')){
             localStorage.clear();
-            let name      = my_this.val();
-            //Получаем элемент по селектору типа $("[attr = 'val']")
-            let my_option = $('[name = "'+name+'"]');
-            let id        = my_option.attr("data-id");
-            let area      = my_option.attr("data-area");
-            
-            //Удаление лишнего при клике по результатам поиска
+            let name  = select.val();
+            let theme = select.attr('data-area');
+  
+            //Удаление лишнего при клике на Search
+            //В option поиска данные имеюд вид textName -- themeName для сихранения уникальности имени и наглядности
+            //Разделитель и имя темы необходимо удалить для дальнейшей работы с именем текста
             let index = name.indexOf(" --");
             if(index != -1){
                 name = name.slice(0, index);
             }
+
+            //Получаем элемент по составному селектору имени темы и имени текста
+            let my_option = $('[data-area = "'+theme+'"][name = "'+name+'"]');
+            let id        = my_option.attr("data-id");
+            let area      = my_option.attr("data-area");
             
             $('.js-main-textarea').attr("placeholder", "Текст загружается, ожидайте...");
             $('.js-main-textarea').val('');
@@ -54,12 +58,15 @@ function user_text(){
             
             localStorage.setItem("name", name);
             localStorage.setItem("area", area);
-            
-            my_option.removeClass('opened');
         }else{
             //Если флага нет, то это первый клик по списку, раскрывающий его. Добавляем флаг к <select>
-            my_this.addClass('opened');
-        }        
+            select.addClass('opened');
+        }
+        
+        //При потере фокуса на любом select, у него удаляется класс opened
+        $('.opened').blur(function() {
+            $('.opened').removeClass('opened');
+        });
     });
 }
 document.addEventListener("DOMContentLoaded", user_text);

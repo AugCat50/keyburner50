@@ -30,7 +30,7 @@ class SearchTextListView extends View
         $str = "<h4 class='user-text-list__head bright-blue-neon'>Результаты поиска: [$count]</h4>
                 <div class='select__wrapper blue-neon-box'>
                     <span class='select__arrow'>&#9660;</span>
-                    <select class='select js_select'>";
+                    <select class='select js_select' data-area='Search'>";
         
         // foreach ($array as $value) {
         //     $str .= "<option class='user-text-list__name select__option blue-neon js_user-text-name' data-id=". $value['id']." data-area='".$themeName."' name='". $value['name']."'>" . $value['name'] . "</option>";
@@ -44,9 +44,10 @@ class SearchTextListView extends View
 
             //Чтобы сделать имя гарантированно уникальным, добавлена нумирация $i)
             //Имя обязательно должно быть уникальным, на этом завязано получение текста и темы в user_text.js
-            $name      = $i. ') '. $textModel->getName();
+            // $name      = $i. ') '. $textModel->getName();
+            $name      = $textModel->getName();
 
-            $str .= "<option class='user-text-list__name select__option blue-neon js_user-text-name' data-id=". $id." data-area='".$themeName."' name='". $name."'>" . $name. "</option>";
+            $str .= "<option class='user-text-list__name select__option blue-neon js_user-text-name' data-id=". $id." data-area='Search' name='". $name."'>" . $name. " -- ". $themeName. "</option>";
             $i++;
         }
 

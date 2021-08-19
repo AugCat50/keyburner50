@@ -45,6 +45,7 @@ class IdentityObject
     }
 
     /**
+     * Заменить разрешённые поля
      * На случай, если захочется выбирать не все поля из БД, этим методом можно изменить список полей,
      * захардкоженный в дочерних реализациях в конструкторе. Поля условий тоже должны быть в списке
      * 
@@ -55,6 +56,14 @@ class IdentityObject
     {
         $this->enforce = [];
         $this->enforce = $enforce;
+    }
+
+    /**
+     * Добавить разрешённые поля к уже существующим, по аналогии с setEnforrceFields
+     */
+    public function addEnforrceFields(array $enforce)
+    {
+        $this->enforce = array_merge($this->enforce, $enforce);
     }
 
     /**
@@ -113,7 +122,7 @@ class IdentityObject
     {
         if (! in_array($fieldname, $this->enforce) && ! empty($this->enforce) ) {
             $forcelist = implode(', ', $this->enforce);
-            throw new \Exception(">>>>> IdentityObject(64): {$fieldname} не является корректным полем ($forcelist) <<<<<");
+            throw new \Exception(">>>>> IdentityObject(125): {$fieldname} не является корректным полем ($forcelist) <<<<<");
         }
     }
 
@@ -145,8 +154,6 @@ class IdentityObject
      */
     public function like($value) : self
     {
-        // $this->setLogicalConnective('LIKE');
-        // return $this;
         return $this->operator(" LIKE ", $value);
     }
 
@@ -156,7 +163,7 @@ class IdentityObject
     private function operator(string $symbol, $value): self
     {
         if ($this->isVoid()) {
-            throw new \Exception (">>>>> IdentityObject(118): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
+            throw new \Exception (">>>>> IdentityObject(166): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
         }
         $this->currentfield->addTest($symbol, $value);
         return $this;
@@ -205,7 +212,7 @@ class IdentityObject
     public function setLogicalConnective(string $str): self
     {
         if ($this->isVoid()) {
-            throw new \Exception (">>>>> IdentityObject(127): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
+            throw new \Exception (">>>>> IdentityObject(215): Не задано ни одного поля (массив объектов полей пуст)  <<<<<");
         }
         $this->currentfield->addLogicalConnective($str);
         return $this;
@@ -230,6 +237,6 @@ class IdentityObject
         if(! is_null($this->tableName)) {
             return $this->tableName;
         }
-        throw new \Exception(">>>>> IdentityObject(132): Имя таблицы, которую обслуживает объект идентификации, не установлено!  <<<<<");    
+        throw new \Exception(">>>>> IdentityObject(240): Имя таблицы, которую обслуживает объект идентификации, не установлено!  <<<<<");    
     }
 }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Класс для подготовки объекта модели UserTextModel к обновлению в БД
+ * Формирует SQL строку запроса и массив переменных для запроса
+ */
 namespace DomainObjectAssembler\Factories\UpdateQueriesFactory;
 
 use DomainObjectAssembler\DomainModel\DomainModel;
@@ -23,11 +27,12 @@ class UserTextUpdateFactory extends UpdateFactory
 
         $id = $obj->getId();
 
+        //Массив грязных полей (статистика)
         $dirty = $obj->getDirtyFields();
-        
-        //Если массив полей для обновления пуст, то обновляем все поля (кроме статистики)
+
+        //Если массив грязных полей для обновления пуст, то обновляем все поля (кроме статистики)
         //Это данные для INSERT
-        if( isset($dirty)){
+        if(empty($dirty)){
             $fields['user_id']     = $obj->getUserId();
             $fields['user_themes'] = $obj->getUserThemes();
             $fields['name']        = $obj->getName();

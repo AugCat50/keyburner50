@@ -18,6 +18,7 @@ class UserTextListView extends View
             foreach($userThemes as $themeModel){
                 $collection = $themeModel->getUserTextCollection();
                 $count      = $collection->getTotal();
+                $themeName  = $themeModel->getName();
 
                 $result .= "<ul class='user-text-list js_user-text-list'>
                                 <h4 class='user-text-list__head bright-blue-neon'><span class='js_theme-name'>".
@@ -25,13 +26,12 @@ class UserTextListView extends View
                                 </h4>
                                 <div class='select__wrapper blue-neon-box'>
                                     <span class='select__arrow'>&#9660;</span>
-                                    <select class='select js_select'>";
+                                    <select class='select js_select' data-area='".$themeName."'>";
                 
 
                 foreach ($collection as $textModel) {
-                    $id        = $textModel->getId();
-                    $themeName = $themeModel->getName();
-                    $name      = $textModel->getName();
+                    $id   = $textModel->getId();
+                    $name = $textModel->getName();
     
                     $result .= "<option class='user-text-list__name select__option blue-neon js_user-text-name' data-id=".$id." data-area='".$themeName."' name='".$name."'>" . $name . "</option>";
                 }

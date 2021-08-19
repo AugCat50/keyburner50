@@ -33,8 +33,7 @@ function user(){
                     if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
                         $(clss).html(data);
                     } else if(operation === '/search'){
-                        // alert(data);
-                        $('.test').html(data);
+                        // $('.test').html(data);
                         // Код вывода ответа на запрос поиска
                         $(clss).html(data).show();
                         $(clss).attr('search_attr', text);

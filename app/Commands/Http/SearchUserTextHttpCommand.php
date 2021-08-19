@@ -37,7 +37,7 @@ class SearchUserTextHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        $searchPhrase = $request->getProperty('text');
+        $searchPhrase = '%'. $request->getProperty('text'). '%';
         $assembler    = new DomainObjectAssembler('UserText');
         $identityObj  = $assembler->getIdentityObject()
                             ->field('user_id')->eq( $_SESSION["auth_subsystem"]["user_id"] )
@@ -71,52 +71,49 @@ class SearchUserTextHttpCommand extends HttpCommand
     }
 
     /**
-     *GET id
+     * GET id
      * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
     public function show(Request $request)
     {
-        d('show');
-        d($request);
+        // d('show');
+        // d($request);
         // return $this->response;
     }
 
 
     
     /**
+     * POST
      * Store a newly created resource in storage.
      *
      * @param  app\Requests\Request  $request
-     * @return 
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
+     * PUT
      * Update the specified resource in storage.
      *
-     * @param  app\Requests\Request  $request
-     * @return 
+     * @param  app\Requests\Request  $request 
      */
     public function update(Request $request)
     {
-
+        //
     }
 
     /**
+     * DELETE
      * Remove the specified resource from storage.
      *
-     * @param app\Requests\Request $request
-     * @return 
+     * @param app\Requests\Request $request 
      */
     public function destroy(Request $request)
     {
-
+        //
     }
 }
-
-
-
