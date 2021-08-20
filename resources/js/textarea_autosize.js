@@ -1,8 +1,7 @@
-"use strict"
 //Source: https://github.com/jackmoore/autosize/blob/master/src/autosize.js
 //Подключение в конце
 
-    const map = (typeof Map === "function") ? new Map() : (function () {
+const map = (typeof Map === "function") ? new Map() : (function () {
 	const keys = [];
 	const values = [];
 
@@ -257,17 +256,18 @@ if (typeof window === 'undefined' || typeof window.getComputedStyle !== 'functio
 	};
 }
 
-//export default autosize;
-    
-    // список элементов
-    //autosize( document.querySelectorAll('textarea') );
-    
-    // один элемент
-    //autosize( document.querySelector('textarea') );
-    
-    // jQuery элементы
-    //autosize( $('textarea') );
-function ready(){
-    autosize( $('.js-textarea') );
+// export default autosize;
+
+// список элементов
+//autosize( document.querySelectorAll('textarea') );
+
+// один элемент
+//autosize( document.querySelector('textarea') );
+
+// jQuery элементы
+//autosize( $('textarea') );
+
+function ready_autosize(){
+	autosize( $('.js-textarea') );
 }
-document.addEventListener("DOMContentLoaded", ready);
+document.addEventListener("DOMContentLoaded", ready_autosize);

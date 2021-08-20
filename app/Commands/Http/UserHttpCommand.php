@@ -30,9 +30,7 @@ class UserHttpCommand extends HttpCommand
             throw new \Exception('"/check_in" доступен только с id = -1 и из ajax');
         }
 
-        //Старт стессии в index.php, потому что иконка загружается http
-        // session_start();
-
+        //Старт стессии в index.php
         //Если нет id пользователя - редирект на главную. Маркер авторизации
         if(! isset($_SESSION["auth_subsystem"]["user_id"])) {
             //Получить переменную окружения url из реестра

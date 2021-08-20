@@ -30,8 +30,14 @@ function user(){
                 if(!(data.indexOf('_error_') >= 0)){
                     // $('.test').html(data);
 
-                    if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
+                    if(operation === "/log_out") {
+
+                        deleteCookie('PHPSESSID');
+                        document.location.href = 'http://94.244.191.245/keyburner50/index.php';
+
+                    }else if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
                         $(clss).html(data);
+                        $(clss).show();
                     } else if(operation === '/search'){
                         // $('.test').html(data);
                         // Код вывода ответа на запрос поиска
@@ -203,7 +209,7 @@ function user(){
                 //Если данное ключевое слово уже запрашивалось и результаты уже есть, просто показываем
                 result_box.show();
             }else if(search_word != undefined && search_word != ""){
-                ajaxUser(false, "search", false, false, search_word, ".js_serch-result");
+                ajaxUser(null, 'GET', "/search", null, null, search_word, ".js_serch-result");
             }
         }
     });
@@ -215,9 +221,16 @@ function user(){
     
     //Копирование темы в поле кликом по кнопке
     $(".js_users-theme").on("click", ".js_copy-theme", function(){
+        //Сначала вызывать ивент клик по "Новый текст", чтобы очистить все поля
+        $('.js_clean-all').trigger('click');
+        
         let area = $(this).attr('theme-name');
         $('.js_main-theme-name').val(area);
         localStorage.setItem("area", area);
+
+        //Второй вариант:
+        //Сначала вызывать ивент клик по "Редактировать", чтобы сбросить ввод, но остаить текст и id.
+        // $('.js-replaceWith').trigger('click');
     });
     
 
@@ -286,6 +299,12 @@ function user(){
 //    $('.js_main-theme-name').oninput(function(){
 //        let area = $('.js_main-theme-name').val();
 //        localStorage.setItem("area", area);
-//    });    
+//    });
+
+    $(".main-header-menu").on('click', '.js_desroy', function(){
+        ajaxUser(null, 'DELETE', '/log_out', null, null, null, null);
+    });
+    
+    
 }
 document.addEventListener("DOMContentLoaded", user);

@@ -22,17 +22,17 @@ class UserTextHttpCommand extends HttpCommand
     }
 
     /**
-     * GET
+     * GET no id
      * 
      * @return app\Response\Response
      */
     public function index(Request $request)
     {
-        
+        //
     }
 
     /**
-     * GET
+     * GET id
      * Получить один текст
      * 
      * @param  app\Requests\Request $request

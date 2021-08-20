@@ -20,6 +20,8 @@ function ajaxQuery (id, ajax_path, clss){
                 let result = text_replace();
                 localStorage.setItem("text", result);
                 
+                //autosize.js - библиотека для создания эффекта автовысоты textarea по тексту
+                autosize( $('.js-textarea') );
                 //Обнуление переменных.
                 null_var();
                 

@@ -64,6 +64,17 @@ function log_in(){
    //BLOK-5 authorization log_in
     $(".js_authorization__show").click(function(){
         $(".authorization").show();
+
+            if(typeof(sessId) != "undefined" && sessId !== null ){
+                // document.location.href = 'http://94.244.191.245/keyburner50/index.php/user';
+                console.log('сессия есть');
+                console.log(sessId);
+            }else{
+                console.log('сессии нет');
+                console.log(sessId);
+            }
+
+
     });
     
     $(".js_authorization__hide").click(function(event){

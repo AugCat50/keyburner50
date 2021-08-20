@@ -173,6 +173,16 @@ function work_textarea(){
            
         oldLength = work_length;
         oldVal    = work_text;
+
+
+        //Отследивает высоту уже набранного текста шаблона main-inner, сравинивает с высотой js-div-main-textarea
+        //и скроллит js-div-main-textarea если высота main-inner больше
+        let inner_h    = $('.main-inner').height();
+        var textarea_h = $('.js-div-main-textarea').height();
+        
+        if(inner_h >= textarea_h){
+            $('.js-div-main-textarea').animate({scrollTop:inner_h - 5}, '100');
+        }
     }
 //END BLOK-2 
 }

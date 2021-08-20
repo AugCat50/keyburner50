@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Комманда для работы с пользовательской темой, обновление, удаление.
+ * За исключением создания и сохранения новой, это находится там же, где создаётся пользовательский текст
+ */
 namespace app\Commands\Http;
 
 use app\Requests\Request;
@@ -29,10 +33,8 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * GET
-     * Получить один текст
      * 
      * @param  app\Requests\Request $request
-     * @return app\Response\Response
      */
     public function show(Request $request)
     {
@@ -41,10 +43,8 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * POST
-     * Метод для сохранения пользовательского текста. Если тема новая, сохраняется так же тема
      *
      * @param  app\Requests\Request  $request
-     * @return 
      */
     public function store(Request $request)
     {
@@ -53,16 +53,13 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * PUT
-     * Обновить текст в БД
+     * Обновить тему в БД (переименовать)
      *
      * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @return app\Response\Response
      */
     public function update(Request $request)
     {
-        // d('edit');
-        // d($request);
         $id   = $request->getProperty('id');
         $name = $request->getProperty('name');
 
@@ -81,26 +78,33 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * DELETE
-     * Remove the specified resource from storage.
+     * Удаление пользовательской темы, вместе со всеми её текстами из БД
+     * 
+     * Сначала получается коллекция текстов, затем они помечаются как удаляемые,
+     * запускается работа с БД и всё удаляется
      *
-     * @param  int  $id
-     * @return 
+     * @param  app\Requests\Request  $request
+     * @return app\Response\Response
      */
     public function destroy(Request $request)
     {
+        //Получаем коллекцию текстов этой темы
         $themeId           = $request->getProperty('id');
         $userTextAssembler = new DomainObjectAssembler('UserText');
         $identityObj       = $userTextAssembler->getIdentityObject()->field('user_themes')->eq($themeId);
         $collection        = $userTextAssembler->find($identityObj);
 
+        //Ставим тексты в очередь на удаление
         foreach ($collection as $model) {
             $userTextAssembler->delete($model);
         }
 
+        //Создаём фейковую модель темы с настоящим id и ставим её в очередь на удаление
         $userThemeAssembler = new DomainObjectAssembler('UserTheme');
         $themeModel         = $userThemeAssembler->createNewModel(['id' => $themeId, 'user_id' => -1, 'name' => '']);
         $userThemeAssembler->delete($themeModel);
 
+        //Запускаем очереди БД на выполнение
         $answer = $this->performDB();
 
         $this->response->addFeedback($answer);
@@ -110,6 +114,8 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * Получение объекта ObjectWatcher и запуск на выполнение его очередей
+     * 
+     * @return array
      */
     private function performDB(){
         $objWather = ObjectWatcher::getInstance();

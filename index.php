@@ -5,6 +5,7 @@
     require_once('autoload.php');
     //Старт стессии в index.php, потому что иконка загружается http
     session_start();
+    ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="ru" class="html">
@@ -31,7 +32,7 @@
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/button/button.css">
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/dialog/dialog.css">
         <script src="http://94.244.191.245/keyburner50/resources/js/jquery-3.5.1.min.js"></script>
-        <script src="http://94.244.191.245/keyburner50/resources/js/textarea_autosize.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/cookie.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/const_and_null_var.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/text_replace.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/ajaxQuery.js"></script>
@@ -49,6 +50,7 @@
         <script src="http://94.244.191.245/keyburner50/resources/js/log_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/check_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/statistics.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/textarea_autosize.js"></script>
     </head>
     <body class="body">
         <div class="body__size">

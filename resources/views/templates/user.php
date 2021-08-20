@@ -6,7 +6,7 @@
             <nav>
                 <li class="blue-neon main-header-menu__item js_clean-all"><span class='pointer'>&#187;</span> Новый текст</li>
                 <li class="blue-neon main-header-menu__item js_get-random-text"><span class='pointer'>&#187;</span> Случайный текст</li>
-                <li class="blue-neon main-header-menu__item js_desroy"><span class='pointer'>&#187;</span> <a class="link blue-neon" href="user.php?exit=exit">Выйти</a></li>
+                <li class="blue-neon main-header-menu__item js_desroy"><span class='pointer'>&#187;</span> <a class="link blue-neon">Выйти</a></li>
                 <li class="blue-neon-box main-header-menu__item search js_search">
                     <input class="search__input js_search-word" type="text" placeholder="Поиск">
                     <button class="search__go blue-neon js_search-button" data-tooltip="Искать" label="Искать">&#10140;</button>
@@ -113,7 +113,7 @@
         </section>
         
         <section class="section main__section">
-            <textarea class="textarea main__textarea main__work-textarea blue-neon-box js-work-textarea js-textarea" placeholder='Сначала добавьте текст в верхнее поле' autofocus disabled></textarea>
+            <textarea class="textarea main__textarea main__work-textarea blue-neon-box js-work-textarea js-textarea" id="ta" placeholder='Сначала добавьте текст в верхнее поле' autofocus disabled></textarea>
         </section>        
         
         <button class="button main__button pink-neon pink-neon-box js-del" title="Удалить">

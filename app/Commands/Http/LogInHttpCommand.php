@@ -108,12 +108,24 @@ class LogInHttpCommand extends HttpCommand
 
     /**
      * DELETE
-     * Remove the specified resource from storage.
+     * Удаление сессии
      *
      * @param app\Requests\Request $request
+     * @return void
      */
     public function destroy(Request $request)
     {
-        //
+        session_start();
+        //Затереть массив сессии
+        $_SESSION = [];
+
+        //Удалить идентификатор сессии из куки
+        unset($_COOKIE[session_name()]);
+
+        session_destroy();
+
+        //редирект в js, в обработчике нажатия кнопки
+        // header("Location: index.php");
+        exit;
     }
 }
