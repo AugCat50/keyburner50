@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс заниматеся работой с строками статистики. Получение, сохранение. 
+ * Класс заниматеся работой с строками статистики. Получение, сохранение. Вызывается в основном из StatisticsWorker
  * 
  * Пример того, что получается - {3,11.8.2021-444.444,11.8.2021-19.487,3}
  * Разделение участков статистики по пользователям {userId,time-speed,time-speed,time-speed,userId}{nextUser,...
@@ -32,7 +32,7 @@ class StatisticsDataWorker
      */
     public function __construct(Request $request)
     {
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('StatisticsDataWorker(18): ID пользователя отсутствует в сессии');
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('>>>>> StatisticsDataWorker(35): ID пользователя отсутствует в сессии <<<<<');
         
         $this->userId = $_SESSION["auth_subsystem"]["user_id"];
         $this->textId = $request->getProperty('id');
@@ -41,7 +41,7 @@ class StatisticsDataWorker
 
         $this->assembler = new DomainObjectAssembler('UserText');
 
-        if (! isset($this->textId) ) return 'StatisticsDataWorker(25): отсутствует id текста';
+        if (! isset($this->textId) ) return 'StatisticsDataWorker(44): отсутствует id текста';
     }
 
     /**
@@ -62,7 +62,7 @@ class StatisticsDataWorker
 
         //Если NullModel, то по какой-то причене не удалось прочитать данные текста из БД, что происходить не должно.
         if (! $this->userTextModel instanceof UserTextModel ) {
-            throw new \Exception('StatisticsDataWorker(44): Что-то пошло не так и не удалось получить модель текста, получено: '. get_class($this->userTextModel));
+            throw new \Exception('>>>>> StatisticsDataWorker(65): Что-то пошло не так и не удалось получить модель текста, получено: '. get_class($this->userTextModel). ' <<<<<');
         }
         
         return $this->userTextModel;

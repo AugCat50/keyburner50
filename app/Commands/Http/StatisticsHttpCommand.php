@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Комманда для работы со статистикой. Получение и запись статистики по id 
+ */
 namespace app\Commands\Http;
 
 use app\Requests\Request;
@@ -11,7 +14,7 @@ class StatisticsHttpCommand extends HttpCommand
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('StatisticsHttpCommand(17): ID пользователя отсутствует в сессии');
 
         parent::__construct($response);
     }
@@ -23,14 +26,12 @@ class StatisticsHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        // d('index');
-        // d($request);
-
         // return $this->response;
     }
 
     /**
      * GET id
+     * Получить и вернуть статистику для текста по id
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
@@ -73,7 +74,7 @@ class StatisticsHttpCommand extends HttpCommand
 
     /**
      * DELETE
-     * Remove the specified resource from storage.
+     * Удаления статистики текста пока не предусмотрено, но можно сделать
      *
      * @param  app\Requests\Request $request
      */

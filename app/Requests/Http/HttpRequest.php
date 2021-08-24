@@ -8,7 +8,19 @@ use app\Requests\Request;
 
 class HttpRequest extends Request
 {
+    /**
+     * Тип http запроса, строка 'GET', 'POST', 'PUT', 'DELETE'
+     * Можно заполнить при ajax запросе, чтобы определить действие
+     * 
+     * @var string
+     */
     private $method;
+
+    /**
+     * Учаток url, по которому будет побдираться соответствие в роутах
+     * 
+     * @var string
+     */
     public  $path;
 
     /**
@@ -45,6 +57,8 @@ class HttpRequest extends Request
     }
 
     /**
+     * Получить строку http метода
+     * 
      * @return string
      */
     public function getHttpMethod()
@@ -54,6 +68,7 @@ class HttpRequest extends Request
 
     /**
      * Determine if the user is authorized to make this request.
+     * Пока не зайдествовано. Но можно поместить сюда проверку сессии
      *
      * @return bool
      */

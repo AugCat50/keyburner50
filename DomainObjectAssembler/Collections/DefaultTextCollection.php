@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Коллекция для модели DefaultTextModel
+ */
 namespace DomainObjectAssembler\Collections;
 
 use DomainObjectAssembler\Factories\DomainObjectFactory\DefaultTextObjectFactory;

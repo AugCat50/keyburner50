@@ -1,4 +1,7 @@
 "use strict"
+//Универсальные функции для работы с cookie
+
+//Получить куки по имени
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -10,29 +13,37 @@ function getCookie(cname) {
     return "";
 }
 
+//Удалить куки по имени
 function deleteCookie(name) {
-var domain = location.hostname,
-    path = '/'; // root path
+    var domain = location.hostname,
+        path = '/'; // root path
 
-document.cookie = [
-    name, '=',
-    '; expires=' + new Date(0).toUTCString(),
-    '; path=' + path,
-    '; domain=' + domain
-].join('');
+    document.cookie = [
+        name, '=',
+        '; expires=' + new Date(0).toUTCString(),
+        '; path=' + path,
+        '; domain=' + domain
+    ].join('');
 }
 
 // deleteCookie('Clickme');
-
 // deleteCookie('PHPSESSID');
 
 
 // let sessId = getCookie('PHPSESSID');
 // if(typeof(sessId) != "undefined" && sessId !== null ){
-//     // document.location.href = 'http://94.244.191.245/keyburner50/index.php/user';
 //     console.log('сессия есть');
 //     console.log(sessId);
 // }else{
 //     console.log('сессии нет');
 //     console.log(sessId);
 // }
+
+// setcookie($name, $value, [
+//     'expires' => time() + 86400,
+//     'path' => '/',
+//     'domain' => 'domain.com',
+//     'secure' => true,
+//     'httponly' => true,
+//     'samesite' => 'None',
+// ]);

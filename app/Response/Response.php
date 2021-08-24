@@ -8,7 +8,13 @@ namespace app\Response;
 
 class Response
 {
+    /**
+     * Имя класса шаблона без слова View. По умолчанию 'Simple' (SimpleView.php)
+     * 
+     * @var string
+     */
     private $view = 'Simple';
+
     /**
      * Массив, содержащий feedback на запрос
      * 
@@ -18,10 +24,16 @@ class Response
 
     protected $error = null;
 
+    /**
+     * Можно передать текст ошибки при создании объекта
+     */
     public function __construct(string $error = null){
         $this->error = $error;
     }
 
+    /**
+     * Добавить $feedback и установить View
+     */
     public function setFeedback($feedback = null, string $view = 'Simple'){
         if(! is_null($feedback)){
 
@@ -36,9 +48,12 @@ class Response
     }
 
     /**
-     * Установить Feedback на запрос.
+     * Установить Feedback на запрос, метод нужен чтобы получить одномерный, а не многомерный массив feedback
      * 
-     * @param string $msg
+     * Если получен массив, присоединяет его к уже существующему массиву feedback
+     * Иначе просто сохраняет полученное в ячейку массива feedback
+     * 
+     * @param string|array $msg
      * 
      * @return void
      */
@@ -53,11 +68,19 @@ class Response
         // array_push($this->feedback, $msg);
     }
 
+    /**
+     * Добавить feedback по ключу 'key' => 'data'
+     */
     public function addKeyFeedback($key, $msg)
     {
         $this->feedback[$key] = $msg;
     }
 
+    /**
+     * Получить feedback по ключу 'key'
+     * 
+     * @return mixed
+     */
     public function getKeyFeedback($key)
     {
         if (isset($this->feedback[$key])){
@@ -67,7 +90,7 @@ class Response
     }
 
     /**
-     * Получить Feedback на запрос. Есть смысл перенести в отдельный класс Response
+     * Получить массив Feedback без изменений и обработки
      * 
      * @return array
      */
@@ -77,7 +100,7 @@ class Response
     }
 
     /**
-     * Получить Feedback на запрос в виде строки. Есть смысл перенести в отдельный класс Response
+     * Получить Feedback на запрос в виде строки
      * 
      * @return string
      */
@@ -96,21 +119,39 @@ class Response
         $this->feedback = [];
     }
 
+    /**
+     * Получить имя шаблона
+     * По умолчанию 'Simple' (SimpleView.php)
+     * 
+     * @return string
+     */
     public function getView()
     {
         return $this->view;
     }
 
+    /**
+     * Установить имя шаблона, строка без слова View
+     */
     public function setView(string $view)
     {
         $this->view = $view;
     }
 
+    /**
+     * Получить сообщение ошибки
+     * 
+     * @return mixed|string
+     */
     public function getError()
     {
         return $this->error;
     }
 
+    /**
+     * Записать сообщение ошибки
+     * Ограничение на строку можно убрать
+     */
     public function setError(string $error)
     {
         $this->error = $error;

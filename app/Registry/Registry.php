@@ -131,14 +131,22 @@ class Registry
     }
 
     /**
-     * Созранить объект PDO
+     * Сохранить объект PDO
+     * 
+     * @return void
      */
     public function setPdo(\PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
-    public function getPdo()
+    
+    /**
+     * Получить объект PDO
+     * 
+     * @return \PDO
+     */
+    public function getPdo(): \PDO
     {
         return $this->pdo;
     }

@@ -89,6 +89,9 @@ class UserTextModel extends DomainModel
         return $this->statistics;
     }
 
+    /**
+     * Требует пояснения
+     */
     public function setStatistics(string $statistics)
     {
         $this->statistics = $statistics;
@@ -100,6 +103,9 @@ class UserTextModel extends DomainModel
         return $this->statistics_best;
     }
 
+    /**
+     * Требует пояснения
+     */
     public function setStatisticsBest(string $statistics_best)
     {
         $this->statistics_best = $statistics_best;

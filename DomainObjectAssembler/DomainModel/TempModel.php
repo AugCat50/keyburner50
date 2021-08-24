@@ -1,4 +1,7 @@
 <?php
+/**
+ * Модель для таблицы активационных ключей для недавно зарегистрированных пользователей
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 class TempModel extends DomainModel

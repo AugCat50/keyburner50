@@ -1,8 +1,8 @@
 "use strict"
-
+//Получить и вывести случайный пользовательский текст и его статистику
 function random_user_text() {
-    //Случайный пользовательский текст
     var BUFFER_1 = -1;
+
     $(".main-header-menu").on("click", ".js_get-random-text", function(){
         let list_length = $(".js_users-theme").find('.js_user-text-name').length;
         
@@ -12,6 +12,7 @@ function random_user_text() {
         
         //Чтобы не повторялись числа
         let number = getRandomInt(0, list_length);
+        
         while(BUFFER_1 === number){
             number = getRandomInt(0, list_length);
         }

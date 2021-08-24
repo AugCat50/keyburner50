@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Класс выполняющий регистрацию и отправку письма мактивации пользователю
+ */
 namespace app\Workers;
 
 use app\Requests\Request;
@@ -174,9 +177,13 @@ class UserCheckInWorker
         $this->objectWather->performOperations();
     }
 
-    private function getHeshedKey()
+    /**
+     * Генерируем ключ для активации
+     * 
+     * @return string
+     */
+    private function getHeshedKey(): string
     {
-        //Генерируем ключ для активации
         $length_key = rand(1,100);
         $key        = random_bytes($length_key);
         $hashed_key = hash("sha512", $key);

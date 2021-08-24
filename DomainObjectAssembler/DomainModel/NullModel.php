@@ -1,4 +1,7 @@
 <?php
+/**
+ * Шаблон проектирования NullModel. Корректный способ ничего не делать
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 class NullModel extends DomainModel

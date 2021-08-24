@@ -1,6 +1,9 @@
 <?php
 /**
- * Класс, отвечающий за поиск и получение команды соотвествующий url запроса.
+ * Контроллеру требуется какой-нибудь способ, позволяющий решить, как интерпретировать HTTP-запрос, 
+ * чтобы в результате можно было вызвать нужный код для обработки этого запроса.
+ * 
+ * Класс, отвечает за поиск и получение команды соотвествующий url запроса.
  * Фабрика команд.
  */
 namespace app\CommandResolver;
@@ -47,19 +50,19 @@ class CommandResolver{
         $class = $commands->get($path);
 
         if (is_null($class)) {
-            $response = new Response("CommandResolver(46): Соответствие пути ". $path. " не обнаружено!");
+            $response = new Response("CommandResolver(53): Соответствие пути ". $path. " не обнаружено!");
             return new self::$defaultcmd($response);
         }
 
         if (! class_exists($class)) {
-            $response = new Response("CommandResolver(51): Класс ". $class. " не найден!");
+            $response = new Response("CommandResolver(58): Класс ". $class. " не найден!");
             return new self::$defaultcmd($response);
         }
 
         $refclass = new \ReflectionClass ($class);
 
         if (! $refclass->isSubClassOf(self::$refcmd)) {
-            $response = new Response("CommandResolver(58): Команда ". $refclass. " не относится к классу Command!");
+            $response = new Response("CommandResolver(65): Команда ". $refclass. " не относится к классу Command!");
             return new self::$defaultcmd($response);
         }
 

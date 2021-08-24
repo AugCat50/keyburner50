@@ -1,4 +1,7 @@
 <?php
+/**
+ * Модель пользовательских тем
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 use DomainObjectAssembler\Collections\UserTextCollection;

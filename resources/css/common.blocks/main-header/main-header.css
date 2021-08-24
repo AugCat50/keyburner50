@@ -71,10 +71,19 @@
 
 .saerch-close{
     position: absolute;
-    top: 1px;
+    top: 6px;
     right: 5px;
     color: white;
     cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.saerch-close:hover{
+    border-radius: 3px;
+    border: 1px solid #c6e2ff;
+    top: 5px;
+    right: 4px;
 }
 /*
 .users-theme-wrapper{

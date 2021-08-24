@@ -1,8 +1,9 @@
 "use strict"
+//При перезагрузке проверить данные localStorage и вставить их на страницу, если имеются
 function page_reload(){
     let WORK_AREA    = getWorkAreaSelector();
 
-    //ВЫяснить тип запроса к странице (обновление, навигация)
+    //Выяснить тип запроса к странице (обновление, навигация)
     let perf_entries = performance.getEntriesByType("navigation");
     let nav_type     = perf_entries[0].type;
 
@@ -14,6 +15,7 @@ function page_reload(){
         let r_ar_at = localStorage.getItem("area-attr");
         let r_text  = localStorage.getItem("text");
         
+        //Если текст template не пуст, вставить textarea
         if(typeof(r_text) !== "undefined" && r_text !== null && r_text !== ""){
             $('.js_main-name').val(r_name);
             $('.js_main-theme-name').val(r_area);
@@ -27,6 +29,16 @@ function page_reload(){
             }
             
             $(".js-main-textarea").replaceWith("<textarea class='textarea main__textarea blue-neon-box js-main-textarea js-textarea' placeholder='Добавьте ваш текст в это окно или выберите текст из списка'>"+r_text+"</textarea>");
+        }
+
+        //Если название текста не пустое, вставить его в input
+        if(r_name !== null && r_name !== ''){
+            $('.js_main-name').val(r_name);
+        }
+
+        //Если название темы не пустое, вставить его в input
+        if(r_area !== null && r_area !== ''){
+            $('.js_main-theme-name').val(r_area);
         }
         
         if(r_text != false && r_text !== null){

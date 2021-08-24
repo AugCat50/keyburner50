@@ -1,4 +1,9 @@
 <?php
+/**
+ * Шаблон Front Controller (Фронтальный контроллер) предоставляет центральную точку доступа для обработки всех
+ * входящих запросов и в конечном итоге поручает уровню представления вывод
+ * полученных результатов для просмотра пользователем.
+ */
 use app\Registry\Registry;
 use app\CommandResolver\CommandResolver;
 use app\Response\Response;
@@ -29,9 +34,7 @@ class FrontController
     {
         $frontController = new FrontController();
         $frontController->init();
-        // d($frontController->reg);
         $frontController->handleRequest();
-        // d($frontController);
     }
 
     /**
@@ -51,7 +54,7 @@ class FrontController
      * Обработка запроса вызывается здесь.
      * 
      * Контроллер, обращается к логике приложения, выполняя команду из объекта типа Command.
-     * Этот объект выбирается в соответствии со структурой запрошенного URL.
+     * Этот объект выбирается в соответствии со структурой запрошенного URL (в соответствии роутам).
      * 
      * @return void
      */
@@ -68,7 +71,7 @@ class FrontController
     /**
      * Вывод данных ответа. 
      * 
-     * Если получен объект Response и у него заполнено свойство view, то создаём объект View и передаём ему Response на отрисовку. 
+     * Если получен объект Response и у него заполнено свойство view, то создаём объект View и передаём ему Response на обработку и отрисовку. 
      * Если свойство view не заполнено, выводим feedback как строку. 
      * Если получен не объект Response, то просто выводим в поток вывода.
      * 
@@ -92,8 +95,7 @@ class FrontController
             }
 
         } else{
-            //Если возвращён не Response
-            // d($response);
+            //Если возвращён не app\Response\Response
             echo $response;
         }
     }

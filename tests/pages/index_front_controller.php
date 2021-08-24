@@ -1,3 +1,4 @@
+<!-- Страница для тестирования FrontController -->
 <!DOCTYPE html>
 <html lang="ru" class="html">
     <head>

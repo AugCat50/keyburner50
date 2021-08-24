@@ -1,4 +1,7 @@
 <?php
+/**
+ * Модель пользователей
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 class UserModel extends DomainModel

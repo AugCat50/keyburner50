@@ -17,10 +17,19 @@ abstract class HttpCommand extends Command
     abstract public function update (Request $request);
     abstract public function destroy(Request $request);
 
+    /**
+     * Общий для все команд метод, запускающий выполнение.
+     * Делегирует выполнение методу, в зависимости от параметров запроса
+     * 
+     * @param app\Requests\Http\HttpRequest $request
+     * 
+     * Чаще всего будет возвращать Response
+     * @return void|Response
+     */
     public function execute(Request $request)
     {
         if (! $request instanceof HttpRequest) {
-            throw new \Exception('HttpCommand(21): HTTP команде должен быть передан объект HttpRequest. Получен - '. get_class($request));
+            throw new \Exception('HttpCommand(32): HTTP команде должен быть передан объект HttpRequest. Получен - '. get_class($request));
         }
 
         $httpMethod = $request->getHttpMethod();

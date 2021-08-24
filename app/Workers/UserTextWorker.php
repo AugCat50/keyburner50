@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс для логики работы с пользовательскими текстами
+ * Класс логики работы с пользовательскими текстами. Сохранить, обновить, удалить
  */
 namespace app\Workers;
 
@@ -12,7 +12,10 @@ use DomainObjectAssembler\IdentityMap\ObjectWatcher;
 class UserTextWorker
 {
     /**
-     * Записать в БД новый текст
+     * Записать в БД новый пользовательский текст
+     * 
+     * @param  app\Requests\Request $request
+     * @return int
      */
     public function insert(Request $request): int
     {
@@ -32,7 +35,10 @@ class UserTextWorker
     }
 
     /**
-     * Обновить в БД уже существующий текст
+     * Обновить в БД уже существующий пользовательский текст
+     * 
+     * @param  app\Requests\Request $request
+     * @return int
      */
     public function update(Request $request)
     {
@@ -58,10 +64,12 @@ class UserTextWorker
     }
 
     /**
-     * DELETE
-     * Удалить текст по id, для этого создаётся модель-пустышка с id и добавляется в очередб на удалениее
+     * Удалить текст по id, для этого создаётся модель-пустышка с id и добавляется в очередь на удаление
      * 
-     * Может при необходимости вернуть строку ответ из ObjectWatcher. 
+     * Может при необходимости вернуть строку ответ из ObjectWatcher.
+     * 
+     * @param  int $id
+     * @return void|string
      */
     public function delete(int $id)
     {

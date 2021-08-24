@@ -1,5 +1,7 @@
 "use strict"
+//Обработка диалогового окна Регистрация
 function check_in(){
+    
     function ajax_query_check_in(name, pass_1, pass_2, mail){
         $.ajax({
             url:    "ajax.php/check_in",

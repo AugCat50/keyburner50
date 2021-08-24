@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Коллекция для модели TempModel
+ */
 namespace DomainObjectAssembler\Collections;
 
 use DomainObjectAssembler\Factories\DomainObjectFactory\TempObjectFactory;

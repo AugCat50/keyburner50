@@ -1,72 +1,99 @@
 "use strict"
-function user_text(){
-    //Получение пользовательского текста и текста из поиска. По аналогии с дефолтным, см выше
-    //Search не ищет в дефолтных текстах. Но эту возможность можно добавить, поэтому я решил не убирать проверки.
-    $(".js_users-theme, .js_serch-result").on("click", ".js_select", function(){
-        let select = $(this);
+function user(){
+   
+    //--------------------- Добавить или изменить текст ---------------------
+    $(".js-main").on("click", ".js_add-text", function(){
+        let id    = $('.js_current-text-id').html();
+        let name  = $(".js_main-name").val();
+        let theme = $(".js_main-theme-name").val();
+        let text  = $(".js-main-textarea").val();
         
-        //Если флаг уже есть, то это клик по <option> внутри списка, а значит можно получить val селекта
-        if(select.hasClass('opened')){
-            localStorage.clear();
-            let name  = select.val();
-            let theme = select.attr('data-area');
-  
-            //Удаление лишнего при клике на Search
-            //В option поиска данные имеюд вид textName -- themeName для сихранения уникальности имени и наглядности
-            //Разделитель и имя темы необходимо удалить для дальнейшей работы с именем текста
-            let index = name.indexOf(" --");
-            if(index != -1){
-                name = name.slice(0, index);
-            }
-
-            //Получаем элемент по составному селектору имени темы и имени текста
-            let my_option = $('[data-area = "'+theme+'"][name = "'+name+'"]');
-            let id        = my_option.attr("data-id");
-            let area      = my_option.attr("data-area");
-            
-            $('.js-main-textarea').attr("placeholder", "Текст загружается, ожидайте...");
-            $('.js-main-textarea').val('');
-            
-            ajaxQuery(id, "/user_text", ".js-main-textarea");
-
-            ajaxQuery_stat(id, 'get');
-            
-            //Удалить атрибут data='Default', защищающий стандартнные тексты от изменения
-            $('.js_main-theme-name').removeAttr('data');
-            
-            //Заполняем данными поля "Имя", "Тема", атрибут data инпута "Тема", затираем ID
-            $('.js-work-textarea').removeAttr("disabled");
-            $('.js-work-textarea').attr("placeholder", "Готовы приступать? :) \nШаблон блокируется на время теста.");
-            $('.js_main-name').val(name);
-            $('.js_main-theme-name').val(area);
-            
-            
-            //Если в поиске дефолтный текст, добавляем атрибут маркер data='Default' инпуту "Тема" и не выводим ID
-            if(area !== "Default"){
-                $('.js_current-text-id-wrapper').html("ID:<span class='js_current-text-id'>"+id+"</span>");
-            }else{
-                $('.js_current-text-id-wrapper').html("");
-                $('.js_main-theme-name').attr('data', 'Default');
-            }
-            
-            //Если в поиске дефолтный текст, сохраняем маркер area-attr='Default' и не сохраняем ID
-            if(area !== "Default"){
-                localStorage.setItem("id", id);
-            }else{
-                localStorage.setItem("area-attr", area);
-            }
-            
-            localStorage.setItem("name", name);
-            localStorage.setItem("area", area);
-        }else{
-            //Если флага нет, то это первый клик по списку, раскрывающий его. Добавляем флаг к <select>
-            select.addClass('opened');
+        function q(){
+            setTimeout(function(){
+                $(".message").hide();
+            }, 10000);
         }
         
-        //При потере фокуса на любом select, у него удаляется класс opened
-        $('.opened').blur(function() {
-            $('.opened').removeClass('opened');
-        });
+        if($(".js_main-theme-name").attr('data') === "Default"){
+            $(".message").html("Нельзя добавлять, менять, удалять стандартные тексты.<br> Тема 'Default' зарезервирована.").show();
+            q();
+            return;
+        }else if(name == false){
+            $(".message").html("Заполните имя!").show();
+            q();
+            return;
+        }else if(theme == false){
+            $(".message").html("Заполните тему!").show();
+            q();
+            return;
+        }else if(theme === 'Default'){
+            $(".message").html("Тема 'Default' зарезервирована!").show();
+            q();
+            return;
+        }else if(text == false){
+            $(".message").html("Заполните текст!").show();
+            q();
+            return;
+        }
+        
+        let end_text = text_replace();
+        if(id != undefined){
+            //Есть id - это редактирование, сохранить изменения
+            ajaxUser(id, 'PUT', "/edit_user_text", name, theme, end_text, ".message");
+        }else{
+            //Нет id - сохранить новый текст
+            ajaxUser(null, 'POST', "/add_user_text", name, theme, end_text, ".message");
+        }
+    });
+    
+    //--------------------- Удалить текст ---------------------
+    //Показать диалоговое окно "удалить текст"
+    $(".js-main").on("click", ".js-del", function(){
+        $('.dialog_delete').show();
+    });
+    
+    //Скрыть диалоговое окно "удалить текст"
+    $('.body').on('click', '.js_dialog_delete__hide', function(event){
+        $('.dialog_delete').hide();
+    })
+    
+    //Запустить удаление текста
+    $('.body').on('click', '.js_dialog_delete__ready', function(event){
+        let id         = $('.js_current-text-id').html();
+        let theme      = $(".js_main-theme-name");
+        //В случае, если текст дефолтный, но пользователь изменил val в input темы, берём значение для проверки из атрибута
+        let theme_attr = theme.attr('data');
+        
+        if(id){
+            ajaxUser(id, 'DELETE', "/del_user_text", null, null, null, ".message");
+
+            //Очистить поля и localStorage
+            $('.js_main-name').val("");
+            theme.val("");
+            $('.current-text-id').html("");
+            $(".js-main-textarea").val("");
+            localStorage.clear();
+        }else if(!id && theme_attr === "Default"){
+            $(".js_dialog_delete-message").html("Нельзя удалять стандартные тексты!").show();
+        }else{
+            $(".js_dialog_delete-message").html("Не удалось получить ID текста. Обратитесь к администратору").show();
+        }
+        $('.dialog_delete').hide();
+    })
+    
+    
+
+    //При вводе названия текста, сохранять его в localStorage
+    $('.js_main-name').on('input', function() {
+        let name = $('.js_main-name').val();
+        localStorage.setItem("name", name);
+    });
+
+    //При вооде названия темы, сохранять его в localStorage
+    $('.js_main-theme-name').on('input', function() {
+       let area = $('.js_main-theme-name').val();
+       localStorage.setItem("area", area);
+       let r_area  = localStorage.getItem("area");
     });
 }
-document.addEventListener("DOMContentLoaded", user_text);
+document.addEventListener("DOMContentLoaded", user);

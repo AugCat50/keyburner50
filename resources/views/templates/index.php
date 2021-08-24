@@ -1,3 +1,4 @@
+<!-- тело страницы '/' -->
 <div class="main-wrapper">
     <header class="main-header">
         <h1 class="h1 main-header_h1 bright-blue-neon">Keyburner</h1>
@@ -8,26 +9,20 @@
                 <li class="blue-neon main-header-menu__item js_get-random-text-default"><span class='pointer'>&#187;</span> Случайный текст</li>
                 <li class="blue-neon main-header-menu__item js_check-in__show"><span class='pointer'>&#187;</span> Регистрация</li>
                 <li class="blue-neon main-header-menu__item js_authorization__show"><span class='pointer'>&#187;</span> Вход</li>
-<!--                            <li class="blue-neon main-header-menu__item"><span class='pointer'>&#187;</span> Добавить текст</li>-->
             </nav>
         </menu>
 
         <ul class="default-text-list js_ul_list js_default-text-list">
             <h3 class="default-text-list__head pink-neon">Быстрый старт:</h3>
             <?php
-                //Точка входа. Так же вывод списка по роуту "/" - DefaultTextHttpCommand --- DefaultTextListView
+                //Вывод списка по роуту "/" - DefaultTextHttpCommand --- DefaultTextListView
                 echo $str;
             ?>
         </ul>
     </header> 
                 
     <main class="main js-main">
-        <section class="test">
-                    <?php
-                        //Переменная из DefaultTextListView
-                        // echo $str;
-                    ?>
-        </section>
+        <section class="test"></section>
 
         <section class="section statistics-section main__statistics">
             <div class="statistics-section__item first">
@@ -61,7 +56,6 @@
             <textarea class="textarea main__textarea main__work-textarea blue-neon-box js-work-textarea js-textarea" placeholder='Сначала добавьте текст в верхнее поле' autofocus disabled></textarea>
         </section>
         
-<!--                 <button class="button pink-neon pink-neon-box test-button" id="test">Test</button>-->
         <button class="button main__button pink-neon pink-neon-box js-replaceWith" title="Редактировать"><img src="resources/img/edit.png" class="main__ico"></button>
     </main>
 </div>

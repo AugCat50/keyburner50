@@ -18,7 +18,6 @@ use DomainObjectAssembler\Mapper\Mapper;
 use DomainObjectAssembler\DomainModel\DomainModel;
 use DomainObjectAssembler\DomainModel\NullModel;
 use DomainObjectAssembler\Factories\DomainObjectFactory\DomainObjectFactory;
-// use DomainObjectAssembler\Factories\DomainObjectFactory\DefaultTextObjectFactory;
 
 abstract class Collection implements \Iterator
 {
@@ -76,7 +75,7 @@ abstract class Collection implements \Iterator
     abstract public function targetFactoryClass(): string;
 
     /**
-     * В конструктор передаётся массив данных, полученный из БД и объект Mapper,
+     * В конструктор передаётся массив данных, полученный из БД и объект Mapper (фабрику, здесь - ассемблер),
      * преобразующий каждую строку из таблицы в объект. 
      * Так же может быть вызыван без параметров. 
      * 
@@ -89,7 +88,7 @@ abstract class Collection implements \Iterator
     {
         //Если есть $raw, обязательно нужен Mapper для обработки
         if (count($raw) && is_null($factory)) {
-            throw new \Exception("Collection(109): Нужен объект типа DomainObjectFactory для создания объектов");
+            throw new \Exception(">>>>> Collection(91): Нужен объект типа DomainObjectFactory для создания объектов <<<<<");
         }
 
         //Получаем имя класса фабрики в дочерней реализации
@@ -97,7 +96,7 @@ abstract class Collection implements \Iterator
 
         //Если массив данных не пуст, проверяем, что фабрика нужного класса
         if ( count($raw) && !($factory instanceof $class)) {
-            throw new \Exception("Collection(116): Коллекции необходимо передать маппер типа {$class}");
+            throw new \Exception(">>>>> Collection(99): Коллекции необходимо передать маппер типа {$class} <<<<<");
         }
 
         $this->raw     = $raw;
@@ -105,36 +104,10 @@ abstract class Collection implements \Iterator
         $this->factory = $factory;
     }
 
-
-
-        // public function __construct(array $raw = [], Mapper $mapper = null)
-    // {
-    //     //Если есть $raw, обязательно нужен Mapper для обработки
-    //     if (count($raw) && is_null($mapper)) {
-    //         throw new \Exception("Нужен объект типа Mapper для создания объектов");
-    //     }
-
-    //     //Получаем имя класса маппера в дочерней реализации
-    //     $class = $this->targetMapperClass();
-    //     //Если массив данных не пуст, проверяем, что маппер нужного класса
-    //     if ( count($raw) && !($mapper instanceof $class)) {
-    //         throw new \Exception("Коллекции необходимо передать маппер типа {$class}");
-    //     }
-
-    //     $this->raw    = $raw;
-    //     $this->total  = count($raw);
-    //     $this->mapper = $mapper;
-    // }
-
-
-
-
-
-
     /**
      * Метод для добавления объектов модели в коллекцию
      * 
-     * @param DomainModel\DomainModel $object
+     * @param DomainModel\DomainModel $model
      * 
      * @return void
      */
@@ -144,7 +117,7 @@ abstract class Collection implements \Iterator
         $class = $this->targetClass();
         //В коллекцию можно добавить только объекты соответствующего класса
         if (! ($model instanceof $class)) {
-            throw new \Exception("Collection(): Это коллекция {$class}, можно добавлять только соответствующие модели");
+            throw new \Exception(">>>>> Collection(120): Это коллекция {$class}, можно добавлять только соответствующие модели <<<<<");
         }
 
         //Для шаблона Lazy Load
@@ -187,13 +160,6 @@ abstract class Collection implements \Iterator
             return $this->objects[$num];
         }
     }
-
-    // TODO: Вроде не нужный метод
-    public static function getCollection(string $type)
-    {
-        return [];
-    }
-
 
 
     //Далее реализация методов итератора

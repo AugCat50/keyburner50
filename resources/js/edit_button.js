@@ -1,8 +1,8 @@
 "use strict"
+//Кнопка "Редактировать текст"
 function edit_button() {
     var WORK_AREA = getWorkAreaSelector();
 
-    //BLOK-3 Кнопка "Редактировать текст"    
     //Возврат возможности редактирования текста
     $(".js-main").on('click', ".js-replaceWith", function(){
         if(BLOCK_STATUS === true){
@@ -18,6 +18,5 @@ function edit_button() {
             alert("Поле для ввода уже разблокировано");
         }
     });
-//END BLOK-3  
 }
 document.addEventListener("DOMContentLoaded", edit_button);

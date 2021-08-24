@@ -1,5 +1,4 @@
 "use strict"
-
 //Удаление начальных, конечных пробелов, излишних пробельных символов в тексте
 function text_replace(){
     let v = $(".js-main-textarea").val();

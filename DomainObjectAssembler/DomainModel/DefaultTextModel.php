@@ -1,4 +1,7 @@
 <?php
+/**
+ * Модель текстов по умолчанию.
+ */
 namespace DomainObjectAssembler\DomainModel;
 
 class DefaultTextModel extends DomainModel

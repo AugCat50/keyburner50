@@ -1,4 +1,5 @@
 "use strict"
+//Функция для запроса графика статистики и лучшего результата
 // Возможно  стоит сделать проверку метода.
 function ajaxQuery_stat (id, method, time = 0, speed = 0){
     let stat_time = null

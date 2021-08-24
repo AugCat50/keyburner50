@@ -1,3 +1,4 @@
+<!-- Страница для обработки запроса активации из письма -->
 <!DOCTYPE html>
 <html lang="ru" class="html">
     <head>
@@ -5,50 +6,23 @@
         <meta name="description" content="Тренажёр слепого набора">
         <meta name="keywords" content="Keyburner, Тренажёр слепого набора">
         <meta name="autor" content="draackul2@gmail.com">
-<!--        <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Keyburner - Тренажёр слепого набора</title>
         
         <link rel="shortcut icon" type="image/jpeg" href="resources/img/favicon.jpg"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet"> 
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/normalize/normalize.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/body/body.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main-wrapper/main-wrapper.css">
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main-header/main-header.css">
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main/main.css">
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/statistics-section/statistics-section.css">
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/default-text-list/default-text-list.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/footer/footer.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/html/html.css">
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/neon/neon.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/button/button.css">
-        
         <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/dialog/dialog.css">
-        
-        <!-- <script src="resources/js/jquery-3.5.1.min.js"></script>
-        <script src="resources/js/textarea_autosize.js"></script>
-
-        <script src="resources/js/const_and_null_var.js"></script>
-        <script src="resources/js/text_replace.js"></script>
-        <script src="resources/js/ajaxQuery.js"></script>
-        <script src="resources/js/ajaxQuery_stat.js"></script>
-        <script src="resources/js/default_text.js"></script>
-        <script src="resources/js/template_textarea.js"></script>
-        <script src="resources/js/work_textarea.js"></script>
-        <script src="resources/js/edit_button.js"></script>
-        <script src="resources/js/page_reload.js"></script>
-        <script src="resources/js/random_default_text.js"></script>
-        <script src="resources/js/random_user_text.js"></script>
-        <script src="resources/js/new_text_button.js"></script>
-        
-        <!-- <script src="resources/js/main.js"></script> -->
-        <!--<script src="resources/js/log_in.js"></script>
-        <script src="resources/js/check_in.js"></script> -->
     </head>
     
     <body class="body">

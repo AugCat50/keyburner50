@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Класс для подготовки html для отображения меню с списками пользовательских текстов
+ * Подключается напрямую в user.php
+ */
 namespace resources\views;
 
 use app\Response\Response;
@@ -7,6 +11,8 @@ class UserTextListView extends View
 {
     public function print(Response $response)
     {
+        $err = $this->debug($response);
+
         //массив
         $userThemes = $response->getKeyFeedback('userThemesArray');
         $count      = count($userThemes);
@@ -59,7 +65,8 @@ class UserTextListView extends View
                 $result = $message. $result;
             }
 
-            echo $result;
+            // echo $result;
+            echo $result. $err;
         }
     }
 }

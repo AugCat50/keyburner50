@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Коллекция для модели UserThemeModel
+ */
 namespace DomainObjectAssembler\Collections;
 
 use DomainObjectAssembler\Factories\DomainObjectFactory\UserThemeObjectFactory;

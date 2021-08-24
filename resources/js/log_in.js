@@ -1,10 +1,12 @@
 "use strict"
+//Аутентификация
 function log_in(){
 
     function ajax_query_log_in(login, password, identifier){
         let name = "";
         let mail = "";
         
+        //по флагу определить пользователь ввёл почту или логин
         if(identifier){
             name = login;
         }else{
@@ -51,36 +53,37 @@ function log_in(){
             
             //Проверка, ввёл пользователь почту или логин
             if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(login)){
-//                alert("Почта! "+login);
+                //почта
                 ajax_query_log_in(login, password, false);
             }else{
-//                alert("Не почта, "+login);
+                //логин
                 ajax_query_log_in(login, password, true);
             }
             
         }
     });
 
-   //BLOK-5 authorization log_in
-    $(".js_authorization__show").click(function(){
+    //Показать диалоговое окно аутентификации
+    $('.js_main-header-menu').on('click', '.js_authorization__show', function() {
+        
+        //Если сессия есть, при нажатии кнопки "Вход", пользователя сразу перебросит на /user
+        let sessId = getCookie('PHPSESSID');
+        if(typeof(sessId) != "undefined" && sessId !== null && sessId !== ""){
+            document.location.href="http://94.244.191.245/keyburner50/index.php/user";
+        }
+
         $(".authorization").show();
-
-            if(typeof(sessId) != "undefined" && sessId !== null ){
-                // document.location.href = 'http://94.244.191.245/keyburner50/index.php/user';
-                console.log('сессия есть');
-                console.log(sessId);
-            }else{
-                console.log('сессии нет');
-                console.log(sessId);
-            }
-
-
     });
-    
-    $(".js_authorization__hide").click(function(event){
+
+    //Скрыть диалоговое окно аутентификации
+    $('.authorization').on('click', '.js_authorization__hide', function(event) {
         event.preventDefault();
         $(".authorization").hide();
     });
-//END BLOK-4
+
+    //Выйти из аккаунта / уничтожить сессию
+    $(".main-header-menu").on('click', '.js_desroy', function(){
+        ajaxUser(null, 'DELETE', '/log_out', null, null, null, null);
+    });
 }
 document.addEventListener("DOMContentLoaded", log_in);

@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Класс для отображения простых данных по умолчанию, данных, для которых не задан класс View
+ */
 namespace resources\views;
 
 use app\Response\Response;

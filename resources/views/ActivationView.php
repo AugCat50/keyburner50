@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Класс для отображения страницы активации
+ */
 namespace resources\views;
 
 use app\Response\Response;
@@ -12,6 +15,5 @@ class ActivationView extends View
         $msg = $err. $msg;
         
         require('templates/activation.php');
-        // echo $msg;
     }
 }

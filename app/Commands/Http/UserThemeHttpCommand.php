@@ -1,7 +1,7 @@
 <?php
 /**
  * Комманда для работы с пользовательской темой, обновление, удаление.
- * За исключением создания и сохранения новой, это находится там же, где создаётся пользовательский текст
+ * За исключением создания и сохранения новой, это находится в UserTextHttpCommand::getThemeId
  */
 namespace app\Commands\Http;
 
@@ -16,7 +16,7 @@ class UserThemeHttpCommand extends HttpCommand
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserThemeHttpCommand(19): ID пользователя отсутствует в сессии');
 
         parent::__construct($response);
     }
@@ -43,6 +43,8 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * POST
+     * Сохранение новой темы находится в UserTextHttpCommand::getThemeId , поскольку отденой от тестов функции "создать тему" нет
+     * Но можно переделать и перенести создание темы сюда.
      *
      * @param  app\Requests\Request  $request
      */
@@ -114,6 +116,7 @@ class UserThemeHttpCommand extends HttpCommand
 
     /**
      * Получение объекта ObjectWatcher и запуск на выполнение его очередей
+     * Выполнение работы с БД
      * 
      * @return array
      */

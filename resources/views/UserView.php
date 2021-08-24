@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Класс для отображения страницы '/user'
+ */
 namespace resources\views;
 
 use app\Response\Response;

@@ -1,9 +1,9 @@
 "use strict"
+//Получить и вывести случайный дефолтный текст
 function random_default_text() {
-    //Случайный дефолтный текст
     var BUFFER = -1;
+
     $(".js_default-text-list, .main-header-menu").on("click", ".js_get-random-text-default", function(){
-        let WORK_AREA    = getWorkAreaSelector();
         let list_length = $(".js_default-text-list").find('.js_default-text-list__name').length;
 
         function getRandomInt(min, max) {
@@ -12,6 +12,7 @@ function random_default_text() {
 
         //Чтобы не повторялись числа
         let number = getRandomInt(0, list_length);
+        
         while(BUFFER === number){
             number = getRandomInt(0, list_length);
         }

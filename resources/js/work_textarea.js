@@ -1,6 +1,7 @@
 "use strict"
+//Обработка рабочей области, отслеживание ошибок, рассчёт результатов и статистики
+
 //Начальные значения для буффера должны быть ВНЕ функции, данные циклически обновляются
-        
 //Обновляются раз в слово
 var old_work        = "";
 var old_work_length = 0;
@@ -19,8 +20,7 @@ var wrong_length    = 0;
 var errors          = 0;
 
 function work_textarea(){
-    var WORK_AREA = getWorkAreaSelector();
-    
+    var WORK_AREA            = getWorkAreaSelector();
     let change_work_textarea = document.querySelector('.js-work-textarea');
 
     if(! change_work_textarea){
@@ -184,6 +184,5 @@ function work_textarea(){
             $('.js-div-main-textarea').animate({scrollTop:inner_h - 5}, '100');
         }
     }
-//END BLOK-2 
 }
 document.addEventListener("DOMContentLoaded", work_textarea);

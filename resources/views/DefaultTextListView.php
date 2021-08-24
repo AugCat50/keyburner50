@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Класс для отображения страницы index.php/
+ * Выводит в шаблон список дефолтных текстов
+ */
 namespace resources\views;
 
 use app\Response\Response;
@@ -25,6 +29,5 @@ class DefaultTextListView extends View
 
         //Выводим html страницы index и переменную $str в нём
         require('templates/index.php');
-        // echo $str;
     }
 }

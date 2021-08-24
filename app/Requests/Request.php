@@ -12,6 +12,8 @@ abstract class Request
 {
     /**
      * Для сохранения параметров запроса, массива $_REQUEST в http
+     * 
+     * @var array
      */
     protected $properties;
 
@@ -56,9 +58,9 @@ abstract class Request
     * Установить строку URL запроса, для нахождения соответствующей команды в роутах.
     * Саму строку получают реализующие классы.
     *
-    * @param string $key
+    * @param string $path
     *
-    * @return string
+    * @return void
     */
     protected function setPath(string $path)
     {
@@ -68,7 +70,7 @@ abstract class Request
     /**
     * Получить строку URL запроса, для нахождения соответствующей команды в роутах.
     *
-    * @return void
+    * @return string
     */
     public function getPath(): string
     {

@@ -2,7 +2,7 @@
 /**
  * ApplicationHelper
  * Не обязательный класс для шаблона FrontController, 
- * реализует стратегию инициализации переменных окружения и routes, зависимостей Url - комманда.
+ * реализует стратегию инициализации переменных окружения и routes зависимостей Url - комманда.
  */
 namespace app\ApplicationHelper;
 
@@ -21,7 +21,7 @@ class ApplicationHelper
     private $enviroment;
 
     /**
-     * Путь к файлу - Роуты. Но по факту, зависимости настроек запроса с коммандой (command)
+     * Путь к файлу - routes зависимостей Url - комманда
      * 
      * @var string
      */
@@ -53,6 +53,7 @@ class ApplicationHelper
      */
     public function init()
     {
+        //чтение конфигурационных файлов
         $this->setupOptions();
 
         if (isset($_SERVER['REQUEST_METHOD'])) {
@@ -79,13 +80,12 @@ class ApplicationHelper
         }
         
         //массив типа Conf для хранения общих значений конfигурации
-        $env = parse_ini_file($this->enviroment, true);
+        $env   = parse_ini_file($this->enviroment, true);
         $eConf = new Conf($env['config']);
         $this->reg->setEnviroment($eConf);
-        // $this->config = $conf;
         
         //массив типа Conf для преобразования путей URL в классы типа Command
-        $rts = parse_ini_file($this->routes, true);
+        $rts   = parse_ini_file($this->routes, true);
         $rConf = new Conf($rts['commands']);
         $this->reg->setRoutes($rConf);
 
@@ -93,6 +93,12 @@ class ApplicationHelper
         $this->setDataBaseConnection($eConf);
     }
 
+    /**
+     * Создать PDO, установить соединение с БД, объект PDO сохраняется в реестр.
+     * Конфигурационные данные из "/env.ini"
+     * 
+     * @return void;
+     */
     public function setDataBaseConnection(Conf $eConf)
     {
         $dbType = $eConf->get('dbType');

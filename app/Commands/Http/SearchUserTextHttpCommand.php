@@ -15,7 +15,7 @@ class SearchUserTextHttpCommand extends HttpCommand
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('SearchUserTextHttpCommand(18): ID пользователя отсутствует в сессии');
 
         parent::__construct($response);
     }
@@ -32,11 +32,12 @@ class SearchUserTextHttpCommand extends HttpCommand
      *
      * @param  app\Requests\Request $request
      * 
-     * Возвращает коллекцию тектов в Response
+     * Возвращает коллекцию текcтов в Response
      * @return app\Response\Response
      */
     public function index(Request $request)
     {
+        //Поисковая фраза обязательно должна быть заключена в %
         $searchPhrase = '%'. $request->getProperty('text'). '%';
         $assembler    = new DomainObjectAssembler('UserText');
         $identityObj  = $assembler->getIdentityObject()
@@ -72,18 +73,14 @@ class SearchUserTextHttpCommand extends HttpCommand
 
     /**
      * GET id
+     * 
      * @param  app\Requests\Request $request
-     * @return app\Response\Response
      */
     public function show(Request $request)
     {
-        // d('show');
-        // d($request);
         // return $this->response;
     }
 
-
-    
     /**
      * POST
      * Store a newly created resource in storage.

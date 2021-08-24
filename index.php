@@ -4,6 +4,15 @@
     //Подключение автозагрузчика
     require_once('autoload.php');
     //Старт стессии в index.php, потому что иконка загружается http
+    session_set_cookie_params([
+        'lifetime' => time() + 86400,
+        'path'     => '/',
+        'domain'   => $_SERVER['HTTP_HOST'],
+        'secure'   => true,
+        'httponly' => true,
+        'samesite' => 'None'
+    ]);
+
     session_start();
     ob_start();
 ?>
@@ -33,12 +42,16 @@
         <link rel="stylesheet" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/dialog/dialog.css">
         <script src="http://94.244.191.245/keyburner50/resources/js/jquery-3.5.1.min.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/cookie.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/search.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/const_and_null_var.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/text_replace.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/ajaxQuery.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/ajaxQuery_stat.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/ajaxUser.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/default_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/user_text.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/user_text_show.js"></script>
+        <script src="http://94.244.191.245/keyburner50/resources/js/user_theme.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/template_textarea.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/work_textarea.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/edit_button.js"></script>
@@ -46,7 +59,6 @@
         <script src="http://94.244.191.245/keyburner50/resources/js/random_default_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/random_user_text.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/new_text_button.js"></script>
-        <script src="http://94.244.191.245/keyburner50/resources/js/user.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/log_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/check_in.js"></script>
         <script src="http://94.244.191.245/keyburner50/resources/js/statistics.js"></script>

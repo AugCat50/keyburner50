@@ -25,8 +25,8 @@ class LogInHttpCommand extends HttpCommand
      * GET id
      * Метод для проверки авторизации пользвателя
      * 
-     * При неудаче заполняем feedback response. Если фидбек пуст, фронт редиректит на роут /user
-     * Почему не в error? Потому что отображение ошибок может быть отключено в env.ini
+     * При неудаче заполняем feedback response. Если фидбек пуст, значит акторизация удачна, js фронт редиректит на роут /user
+     * Сохраняем сообщение не в response->error потому, что отображение ошибок может быть отключено в env.ini
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
@@ -51,11 +51,13 @@ class LogInHttpCommand extends HttpCommand
 
         if($name && $password){
 
+            //Если пользователь ввёл логин, запрашиваем из БД name
             $name_hash = hash("sha512", $name);
             $identityObj->field('name')->eq($name_hash);
 
         } else if($mail && $password){
 
+            //Если пользователь ввёл mail, запрашиваем из БД mail
             $mail_hash = hash("sha512", $mail);
             $identityObj->field('mail')->eq($mail_hash);
 

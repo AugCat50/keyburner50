@@ -18,6 +18,11 @@
     margin-left: 3px;
 }
 
+.user-text-list__button:hover{
+    border-bottom: 1px solid #c6e2ff;
+    padding-bottom: 1px;
+}
+
 .user-text-list__ico{
     width: 16px;
     display: block;

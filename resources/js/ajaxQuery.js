@@ -1,4 +1,5 @@
 "use strict"
+//Функция для получения текстов
 function ajaxQuery (id, ajax_path, clss){
     var WORK_AREA = getWorkAreaSelector();
     //ajax_path = "get_user_text" если пользовательский или "get_default_text" если дефолтный

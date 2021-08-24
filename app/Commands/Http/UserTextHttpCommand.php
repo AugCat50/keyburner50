@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Работа с текстами пользователей. Сохранить, обновить, удалить.
+ * Если при сохранении текста тема новая, сохраняется и тема.
+ */
 namespace app\Commands\Http;
 
 use app\Requests\Request;
@@ -15,7 +19,7 @@ class UserTextHttpCommand extends HttpCommand
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
-        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(49): ID пользователя отсутствует в сессии');
+        if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(22): ID пользователя отсутствует в сессии');
 
         $this->userTextWorker = new UserTextWorker();
         parent::__construct($response);
@@ -24,7 +28,7 @@ class UserTextHttpCommand extends HttpCommand
     /**
      * GET no id
      * 
-     * @return app\Response\Response
+     * @param  app\Requests\Request $request
      */
     public function index(Request $request)
     {
@@ -54,24 +58,20 @@ class UserTextHttpCommand extends HttpCommand
 
     /**
      * POST
-     * Метод для сохранения пользовательского текста. Если тема новая, сохраняется так же тема
+     * Сохранить новый пользовательский текст. Если тема новая, сохраняется так же тема
      *
      * @param  app\Requests\Request  $request
-     * @return 
+     * @return app\Response\Response
      */
     public function store(Request $request)
     {
         //Получить id темы
         $request = $this->getThemeId($request);
-        // $userThemeWorker = new UserThemesWorker();
-        // $themeName       = $request->getProperty('theme');
-        // $themeId         = $userThemeWorker->getThemeIdWhereName($themeName);
-        // $request->setProperty('themeId', $themeId);
 
         //Запись самого нового текста, получение id записанного текста
         $textId = $this->userTextWorker->insert($request);
 
-        //Получаем обновлённый стек пользовательских тем и текстов, чтобы обновить меню
+        //Получаем обновлённый стек пользовательских тем и текстов в response, чтобы обновить меню
         $this->updateUserTextList();
         
         //Заполняем response. span должен быть обязательно, на нём завязано разбитие строки в js
@@ -83,11 +83,10 @@ class UserTextHttpCommand extends HttpCommand
 
     /**
      * PUT
-     * Обновить текст в БД
+     * Обновить пользовательский текст
      *
      * @param  app\Requests\Request  $request
-     * @param  int  $id
-     * @return 
+     * @return app\Response\Response
      */
     public function update(Request $request)
     {
@@ -107,10 +106,10 @@ class UserTextHttpCommand extends HttpCommand
 
     /**
      * DELETE
-     * Remove the specified resource from storage.
+     * Удалить пользовательский текст
      *
-     * @param  int  $id
-     * @return 
+     * @param  app\Requests\Request  $request
+     * @return app\Response\Response 
      */
     public function destroy(Request $request)
     {
@@ -127,7 +126,7 @@ class UserTextHttpCommand extends HttpCommand
     /**
      * Получаем обновлённый стек пользовательских тем и текстов, чтобы обновить меню
      * 
-     * Обратите внимание, устанавливается вью
+     * Обратите внимание, устанавливается View
      */
     public function updateUserTextList()
     {
@@ -137,9 +136,15 @@ class UserTextHttpCommand extends HttpCommand
         $this->response->setView('UserTextList');
     }
 
+    /**
+     * Выяснить id темы по имени, если не найден - создать и записать в БД новую тему
+     * и сохранить в $request
+     * 
+     * @param  app\Requests\Request  $request
+     * @return app\Requests\Request 
+     */
     public function getThemeId(Request $request): Request
     {
-        //Получить id темы
         $userThemeWorker = new UserThemesWorker();
         $themeName       = $request->getProperty('theme');
         $themeId         = $userThemeWorker->getThemeIdWhereName($themeName);

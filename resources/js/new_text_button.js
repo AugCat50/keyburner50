@@ -1,7 +1,7 @@
 "use strict"
-
+//Обработка кнопки 'Новый текст', очищаем все поля и локальное хранилище
 function new_text_button(){
-    //BLOK-5    Кнопка 'новый текст', очищаем все поля
+    
     $(".main-header-menu").on('click', '.js_clean-all', function(){
         let WORK_AREA = getWorkAreaSelector();
         
@@ -19,6 +19,7 @@ function new_text_button(){
         WORK_AREA.attr("placeholder", "Сначала добавьте текст в верхнее поле");
         WORK_AREA.val("");
 
+        //Очищаем локальное хранилище и все данные переменных отслежзивания статистики ввода
         localStorage.clear();
         null_var();
 
@@ -27,6 +28,6 @@ function new_text_button(){
         $('.js_graph-button').removeClass('green-neon-box');
         $('.js_graph-button').addClass('pink-neon-box');
     });
-    //END BLOK-5
+    
 }
 document.addEventListener("DOMContentLoaded", new_text_button);

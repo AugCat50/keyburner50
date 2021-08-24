@@ -1,10 +1,18 @@
-<?php 
+<?php
+/**
+ * Фабрика для подготовки SQL строки запроса на удаление 
+ */
 namespace DomainObjectAssembler\Factories\DeleteQueriesFactory;
 
 use DomainObjectAssembler\IdentityObject\IdentityObject;
 
 class DeletionFactory
 {
+    /**
+     * @param DomainObjectAssembler\IdentityObject\IdentityObject $obj
+     * 
+     * @return string
+     */
     public function newDeletion(IdentityObject $obj)
     {
         $compArray = $obj->getComps();

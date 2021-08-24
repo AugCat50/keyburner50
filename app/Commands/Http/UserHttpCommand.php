@@ -17,6 +17,7 @@ class UserHttpCommand extends HttpCommand
      * GET no id
      * Получение данных пользователя, когда он попадает на роут /user
      * Получение списка стандартных текстов, получение списков тем с текстами пользователя
+     * 
      * id пользователя в сессии - $_SESSION["auth_subsystem"]["user_id"]
      *
      * @param  app\Requests\Request  $request
@@ -24,7 +25,7 @@ class UserHttpCommand extends HttpCommand
      */
     public function index(Request $request)
     {
-        //Костыль, товарищи. Чтобы не попадать сюда из check_in.
+        //Костыль, чтобы запретить попадать сюда из check_in.
         $path = $request->getPath();
         if($path === '/check_in'){
             throw new \Exception('"/check_in" доступен только с id = -1 и из ajax');
@@ -59,12 +60,9 @@ class UserHttpCommand extends HttpCommand
      * Display the specified resource.
      *
      * @param  app\Requests\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        // d('show');
-        // d($request);
         // return $this->response;
     }
 
@@ -86,7 +84,7 @@ class UserHttpCommand extends HttpCommand
 
     /**
      * PUT
-     * Update the specified resource in storage.
+     * Возможности переименовать пользователя пока нет, но можно добавить
      *
      * @param app\Requests\Request $request
      */
@@ -97,7 +95,7 @@ class UserHttpCommand extends HttpCommand
 
     /**
      * DELETE
-     * Remove the specified resource from storage.
+     * Возможности удаления пользователя пока нет, но можно добавить
      *
      * @param app\Requests\Request $request 
      */

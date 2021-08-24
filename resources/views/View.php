@@ -1,4 +1,10 @@
-<?php 
+<?php
+/**
+ * Суперкласс View
+ * 
+ * Использование классов View:
+ * @see FrontController::print()
+ */
 namespace resources\views;
 
 use app\Registry\Registry;
@@ -6,6 +12,9 @@ use app\Response\Response;
 
 abstract class View 
 {
+    /**
+     * Отрисовка или получить html для отрисовки
+     */
     abstract function print(Response $response);
 
     /**

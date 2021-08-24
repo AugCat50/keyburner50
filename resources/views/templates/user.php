@@ -1,3 +1,4 @@
+<!-- тело страницы '/user' -->
 <div class="main-wrapper">
     <header class="main-header">
         <h1 class="h1 main-header_h1 bright-blue-neon">Keyburner</h1>
@@ -34,6 +35,7 @@
             <div class="select__wrapper blue-neon-box">
                 <span class="select__arrow">&#9660;</span>
                 <select class="select default-select">
+                    <!-- select список дефолтных текстов -->
                     <?php
                         $defTextCol = $response->getKeyFeedback('defaultTextCollection');
 
@@ -53,11 +55,7 @@
     </header> 
                 
     <main class="main js-main">
-        <section class="test">
-            <?php
-                //
-            ?>
-        </section>
+        <section class="test"></section>
 
         <section class="section statistics-section main__statistics">
             <div class="statistics-section__item first">
@@ -99,7 +97,6 @@
                 </button>
                 <dialog class="dialog graph__dialog">
                     <div class="graph__inner">
-                        <!-- <p class="blue-neon graph-fail js-graph-fail">Выберите текст для отображения статистики</p> -->
                         <div class="js-graph-image"><p class="bright-blue-neon">Выберите текст для отображения статистики</p></div>
                     </div>
                     <button class="graph__close pink-neon pink-neon-box js-graph__close">&#10006;</button>

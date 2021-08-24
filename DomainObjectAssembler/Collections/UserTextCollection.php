@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Коллекция для модели UserTextModel
+ */
 namespace DomainObjectAssembler\Collections;
 
 use DomainObjectAssembler\Factories\DomainObjectFactory\UserTextObjectFactory;

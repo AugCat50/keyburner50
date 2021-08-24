@@ -27,6 +27,11 @@ class UserThemesWorker
         }
     }
 
+    /**
+     * Получить коллекцию пользовательских тем по id пользователя
+     * 
+     * @return DomainObjectAssembler\Collections\UserThemeCollection
+     */
     public function findThemes()
     {
         $assembler   = new DomainObjectAssembler('UserTheme');
@@ -40,6 +45,12 @@ class UserThemesWorker
         return $collection;
     }
 
+    /**
+     * Получить модель темы по id
+     * 
+     * @param  int $id
+     * @return DomainObjectAssembler\DomainModel\UserThemeModel
+     */
     public function findThemeWhereId(int $id)
     {
         $assembler   = new DomainObjectAssembler('UserTheme');
@@ -53,7 +64,10 @@ class UserThemesWorker
     }
 
     /**
-     * Возвращает массив моделей пользовательских тем, но без самих текстов
+     * Возвращает массив моделей пользовательских тем c сохранёнными списками имён текстов, но без самих текстов
+     * 
+     * @param  DomainObjectAssembler\Collections\UserThemeCollection $collection
+     * @return array
      */
     public function getUserTexts(UserThemeCollection $collection){
         $assembler = new DomainObjectAssembler('UserText');
@@ -77,6 +91,9 @@ class UserThemesWorker
 
     /**
      * Выяснить id модели по имени, если не найден - создать и записать в БД новую тему
+     * 
+     * @param  string $themeName
+     * @return int
      */
     public function getThemeIdWhereName(string $themeName): int
     {
@@ -101,11 +118,6 @@ class UserThemesWorker
         
             //После записи в БД получаем id. Или так или делать запрос, как закомменировано ниже.
             $themeId = $pdo->lastInsertId();
-        
-            // $modelUsTheme = $assembler->findOne($identityObj);
-            // if ($modelUsTheme instanceof UserThemeModel) {
-            //     $themeId = $modelUsTheme->getId();
-            // }
         }
 
         return $themeId;
