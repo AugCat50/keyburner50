@@ -75,8 +75,8 @@ abstract class Collection implements \Iterator
     abstract public function targetFactoryClass(): string;
 
     /**
-     * В конструктор передаётся массив данных, полученный из БД и объект Mapper (фабрику, здесь - ассемблер),
-     * преобразующий каждую строку из таблицы в объект. 
+     * В конструктор передаётся массив сырых данных, (например полученных из БД) и объект фабрика моделей,
+     * преобразующий каждую строку - набор данных из массива в объект. 
      * Так же может быть вызыван без параметров. 
      * 
      * @param array         $raw
@@ -219,6 +219,11 @@ abstract class Collection implements \Iterator
         return isset($this->raw[$this->pointer]);
     }
 
+    /**
+     * Возвращает размер полученного коллекцией массива данных count($raw)
+     * 
+     * @return int
+     */
     public function getTotal(): int
     {
         return $this->total;

@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Фабрика UserTextModel
+ */
 namespace DomainObjectAssembler\Factories\DomainObjectFactory;
 
 use DomainObjectAssembler\DomainModel\DomainModel;
@@ -7,8 +10,7 @@ use DomainObjectAssembler\DomainModel\UserTextModel;
 class UserTextObjectFactory extends DomainObjectFactory
 {
     /**
-     * Получить имя обрабатываемой этим маппером модели для проверки
-     * Проверка в суперклассе Mapper
+     * Получить имя класса обрабатываемой этой фабрикой модели
      * 
      * @return string
      */
@@ -18,14 +20,16 @@ class UserTextObjectFactory extends DomainObjectFactory
     }
 
     /**
-     * Создать объект модели соответствующий ассемблеру (мапперу)
+     * Создать объект модели соответствующей фабрике
      * 
-     * Поскольку Ивент находится в самом низу иерархии, коллекцию для него создвать пока не будем
+     * Ассоциативный массив, где ключи - это имена полей
+     * @param  array $raw
      * 
-     * @return DomainModel\EventModel
+     * @return DomainObjectAssembler\DomainModel\UserTextModel
      */
     protected function doCreateObject(array $raw): DomainModel
     {
+        //При отсутствии каких-либо значений, заполняем их значениями-затычками.
         if(! array_key_exists('id', $raw))              $raw['id']              = -1;
         if(! array_key_exists('user_id', $raw))         $raw['user_id']         = -1;
         if(! array_key_exists('user_themes', $raw))     $raw['user_themes']     = -1;

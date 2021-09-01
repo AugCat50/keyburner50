@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * Фабрика UserModel
+ */
 namespace DomainObjectAssembler\Factories\DomainObjectFactory;
 
 use DomainObjectAssembler\DomainModel\DomainModel;
@@ -7,8 +10,7 @@ use DomainObjectAssembler\DomainModel\UserModel;
 class UserObjectFactory extends DomainObjectFactory
 {
     /**
-     * Получить имя обрабатываемой этим маппером модели для проверки
-     * Проверка в суперклассе Mapper
+     * Получить имя класса обрабатываемой этой фабрикой модели
      * 
      * @return string
      */
@@ -18,11 +20,12 @@ class UserObjectFactory extends DomainObjectFactory
     }
 
     /**
-     * Создать объект модели соответствующей мапперу
+     * Создать объект модели соответствующей фабрике
      * 
-     * Поскольку Ивент находится в самом низу иерархии, коллекцию для него создвать пока не будем
+     * Ассоциативный массив, где ключи - это имена полей
+     * @param  array $raw
      * 
-     * @return DomainModel\EventModel
+     * @return DomainObjectAssembler\DomainModel\UserModel
      */
     protected function doCreateObject(array $raw): DomainModel
     {

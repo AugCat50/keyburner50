@@ -101,7 +101,9 @@ abstract class DomainModel
         ObjectWatcher::addDirty($this);
 
         if (isset($fields)){
+            //Если dirtyFieldsArray == null, делаем сначала из него массив. 
             if(is_null($this->dirtyFieldsArray)) $this->dirtyFieldsArray = [];
+            
             array_push($this->dirtyFieldsArray, $fields);
         }
     }

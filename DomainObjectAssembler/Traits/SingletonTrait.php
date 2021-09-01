@@ -17,7 +17,6 @@ trait SingletonTrait
      */
     private function __construct()
     {
-        //
     }
 
     /**
@@ -25,7 +24,6 @@ trait SingletonTrait
      */
     private function __clone()
     {
-        //
     }
 
     /**

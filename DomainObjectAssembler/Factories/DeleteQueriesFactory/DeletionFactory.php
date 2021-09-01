@@ -9,6 +9,10 @@ use DomainObjectAssembler\IdentityObject\IdentityObject;
 class DeletionFactory
 {
     /**
+     * Получает объект идентичности, извлекает из него имя обслуживаемой таблицы,
+     * имя поля, по которому производится выборка, и условие для него, 
+     * извлечённые данные подставляются в строку SQL, строка запроса возвращается на выполнение.
+     * 
      * @param DomainObjectAssembler\IdentityObject\IdentityObject $obj
      * 
      * @return string

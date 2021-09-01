@@ -6,6 +6,7 @@
  * где объекты формируются из базы данных или вводятся в нее, 
  * вероятность дублирования объектов в ходе одного процесса практически равна нулю
  * 
+ * Так де класс реализует шаблон Unit of Work.
  * 
  * Шаблон Unit of Work очень полезен, но имеется ряд моментов, которые следует иметь в виду. Применяя данный шаблон, следует быть уверенным, что во
  * всех операциях изменения на самом деле модифицированный объект помечается
@@ -48,14 +49,14 @@ class ObjectWatcher
      */
     public static function add(DomainModel $model)
     {
-        
         $inst = self::getInstance();
-        $inst->all[$inst->globalKey($model)] = $model ;
+        $inst->all[$inst->globalKey($model)] = $model;
     }
 
     /**
      * Поиск объекта по уникальному ключу в массиве
      * 
+     * Имя класса
      * @param sring $classname
      * @param int   $id
      * 
@@ -89,7 +90,7 @@ class ObjectWatcher
     /**
      * Объекты помечаются как “измененные”, если они были модифицированы
      * после извлечения из базы данных. Измененный объект сохраняется с помощью
-     * метода addDirtyf) в массиве свойств $dirty, до тех пор, пока не придет
+     * метода addDirty() в массиве свойств $dirty, до тех пор, пока не придет
      * время обновить базу данных.
      * 
      * @param DomainModel\DomainModel $model
@@ -150,12 +151,15 @@ class ObjectWatcher
      * цикле массивы $dirty и $new, обновляя или добавляя объекты.
      * 
      * Подозреваю, где-то тут можно реализовать механизм транзакций.
+     * 
+     * Массив с сообщениями от каждого этапа работы с БД
+     * @return array
      */
     public function performOperations()
     {
         $messageArray = [];
 
-        foreach ($this->new as $key => $obj) {
+        foreach ($this->new as $obj) {
             $answer = $obj->getAssembler()->doInsert($obj);
             array_push($messageArray, $answer);
 
@@ -171,8 +175,7 @@ class ObjectWatcher
             // print "ObjectWather(160): Выполяется обновление в БД: " . $obj->getId() . "<br>";
         }
 
-        //Так же сделать обход массива delete
-        foreach ($this->delete as $key => $obj) {
+        foreach ($this->delete as $obj) {
             $answer = $obj->getAssembler()->doDelete($obj);
             array_push($messageArray, $answer);
 
@@ -182,7 +185,7 @@ class ObjectWatcher
         
         //Удалить из массива all все модели, подвергшиеся удалению из БД
         $inst = self::getInstance();
-        foreach ($this->delete as $key => $obj){
+        foreach ($this->delete as $obj){
             unset( $this->all[$inst->globalKey($obj)]);
         }
 
