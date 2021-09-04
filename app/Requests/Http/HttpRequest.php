@@ -17,17 +17,12 @@ class HttpRequest extends Request
     private $method;
 
     /**
-     * Учаток url, по которому будет побдираться соответствие в роутах
-     * 
-     * @var string
-     */
-    public  $path;
-
-    /**
      * Проверку типа запроса можно было сделать здесь, но я решил передавать информацию в HttpCommand
      * и принимать решение по обработке там.
      * 
      * @see app\Commands\Command\HttpCommand::execute()
+     * 
+     * @return void
      */
     public function init()
     {
@@ -79,6 +74,7 @@ class HttpRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
+     * Пока не реализовано
      *
      * @return array
      */

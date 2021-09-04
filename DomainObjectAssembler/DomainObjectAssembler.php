@@ -152,6 +152,7 @@ class DomainObjectAssembler
 
     /**
      * Unit of Work. Добавить модель в очередь ObjectWatcher на обновление
+     * Дублирование DomainModel::markDirty() Будет логично удалить этот метод совсем, проверить что он нигде не используется.
      * 
      * @param  DomainObjectAssembler\DomainModel\DomainModel $model
      * 
@@ -164,6 +165,7 @@ class DomainObjectAssembler
 
     /**
      * Unit of Work. Добавить модель в очередь ObjectWatcher на удаление
+     * Дублирование DomainModel::markDeleted() Будет логично удалить этот метод совсем, проверить что он нигде не используется.
      * 
      * @param  DomainObjectAssembler\DomainModel\DomainModel $model
      * 

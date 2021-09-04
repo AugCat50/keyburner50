@@ -24,11 +24,6 @@ abstract class Request
      */
     protected $path = '/';
 
-    public function __construct()
-    {
-        $this->init();
-    }
-
     /**
      * Метод init() отвечает за наполнение закрытого массива $properties для обработки в дочерних классах
      */
@@ -36,22 +31,23 @@ abstract class Request
 
     /**
      * Determine if the user is authorized to make this request.
+     * Пока не реализовано
      *
      * @return bool
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    abstract public function authorize(): bool;
 
     /**
      * Get the validation rules that apply to the request.
+     * Пока не реализовано
      *
      * @return array
      */
-    public function rules(): array
+    abstract public function rules(): array;
+
+    public function __construct()
     {
-        return [];
+        $this->init();
     }
 
     /**

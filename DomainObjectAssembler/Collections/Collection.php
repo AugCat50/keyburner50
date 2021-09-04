@@ -96,7 +96,7 @@ abstract class Collection implements \Iterator
 
         //Если массив данных не пуст, проверяем, что фабрика нужного класса
         if ( count($raw) && !($factory instanceof $class)) {
-            throw new \Exception(">>>>> Collection(99): Коллекции необходимо передать маппер типа {$class} <<<<<");
+            throw new \Exception(">>>>> Collection(99): Коллекции необходимо передать фабрику типа {$class} <<<<<");
         }
 
         $this->raw     = $raw;

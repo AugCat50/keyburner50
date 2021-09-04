@@ -20,9 +20,9 @@ class Response
      * 
      * @var array
      */
-    protected $feedback = [];
+    private $feedback = [];
 
-    protected $error = null;
+    private $error = null;
 
     /**
      * Можно передать текст ошибки при создании объекта
@@ -69,6 +69,16 @@ class Response
     }
 
     /**
+     * Получить массив Feedback без изменений и обработки
+     * 
+     * @return array
+     */
+    public function getFeedback(): array
+    {
+        return $this->feedback;
+    }
+
+    /**
      * Добавить feedback по ключу 'key' => 'data'
      */
     public function addKeyFeedback($key, $msg)
@@ -87,16 +97,6 @@ class Response
             return $this->feedback[$key];
         }
         return null;
-    }
-
-    /**
-     * Получить массив Feedback без изменений и обработки
-     * 
-     * @return array
-     */
-    public function getFeedback(): array
-    {
-        return $this->feedback;
     }
 
     /**

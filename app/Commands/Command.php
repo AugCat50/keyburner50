@@ -12,6 +12,11 @@ use app\Response\Response;
 
 abstract class Command
 {
+    /**
+     * Объект Response
+     * 
+     * @var app\Response\Response
+     */
     protected $response;
 
     /**

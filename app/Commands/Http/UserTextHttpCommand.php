@@ -22,6 +22,7 @@ class UserTextHttpCommand extends HttpCommand
         if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserTextHttpCommand(22): ID пользователя отсутствует в сессии');
 
         $this->userTextWorker = new UserTextWorker();
+        
         parent::__construct($response);
     }
 
@@ -128,7 +129,7 @@ class UserTextHttpCommand extends HttpCommand
      * 
      * Обратите внимание, устанавливается View
      */
-    public function updateUserTextList()
+    private function updateUserTextList()
     {
         $userThemeWorker = new UserThemesWorker();
         $userThemesArray = $userThemeWorker->find();
@@ -143,7 +144,7 @@ class UserTextHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Requests\Request 
      */
-    public function getThemeId(Request $request): Request
+    private function getThemeId(Request $request): Request
     {
         $userThemeWorker = new UserThemesWorker();
         $themeName       = $request->getProperty('theme');

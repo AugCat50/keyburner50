@@ -13,6 +13,13 @@ use DomainObjectAssembler\Collections\UserThemeCollection;
 
 class UserThemesWorker
 {
+    private $assembler = null;
+
+    public function __construct()
+    {
+        $this->assembler = new DomainObjectAssembler('UserTheme');
+    }
+
     public function find()
     {
         $collection = $this->findThemes();
@@ -34,13 +41,12 @@ class UserThemesWorker
      */
     public function findThemes()
     {
-        $assembler   = new DomainObjectAssembler('UserTheme');
         $userId      = $_SESSION["auth_subsystem"]["user_id"];
-        $identityObj = $assembler->getIdentityObject()
-                                    ->field('user_id')
-                                    ->eq($userId);
+        $identityObj = $this->assembler->getIdentityObject()
+                                        ->field('user_id')
+                                        ->eq($userId);
         
-        $collection  = $assembler->find($identityObj);
+        $collection  = $this->assembler->find($identityObj);
 
         return $collection;
     }
@@ -53,12 +59,11 @@ class UserThemesWorker
      */
     public function findThemeWhereId(int $id)
     {
-        $assembler   = new DomainObjectAssembler('UserTheme');
-        $identityObj = $assembler->getIdentityObject()
-                                    ->field('id')
-                                    ->eq($id);
+        $identityObj = $this->assembler->getIdentityObject()
+                                        ->field('id')
+                                        ->eq($id);
         
-        $model  = $assembler->findOne($identityObj);
+        $model  = $this->assembler->findOne($identityObj);
 
         return $model;
     }
@@ -79,6 +84,7 @@ class UserThemesWorker
             $identityObj        = $assembler->getIdentityObject()
                                                 ->field('user_themes')
                                                 ->eq($id);
+            //Установить список полей, которые требуется получить
             $identityObj->setEnforrceFields(['id', 'user_themes', 'name']);
             $userTextCollection = $assembler->find($identityObj);
 
@@ -101,11 +107,10 @@ class UserThemesWorker
         $pdo         = $reg->getPdo();
         $objWatcher  = ObjectWatcher::getInstance();
         
-        $assembler   = new DomainObjectAssembler('UserTheme');
-        $identityObj = $assembler->getIdentityObject()
+        $identityObj = $this->assembler->getIdentityObject()
                                         ->field('name')
                                         ->eq($themeName);
-        $modelUsTheme = $assembler->findOne($identityObj);
+        $modelUsTheme = $this->assembler->findOne($identityObj);
 
         //Если тема в БД есть, получаем её id
         if ($modelUsTheme instanceof UserThemeModel) {
@@ -113,10 +118,14 @@ class UserThemesWorker
         } else if ($modelUsTheme instanceof NullModel) {
         
             //Если темы нет, записываем как новую в БД
-            new UserThemeModel(-1, $_SESSION["auth_subsystem"]["user_id"], $themeName);
+            $data['id']      = -1;
+            $data['user_id'] =  $_SESSION["auth_subsystem"]["user_id"];
+            $data['name']    = $themeName;
+
+            $this->assembler->createNewModel($data);
             $objWatcher->performOperations();
         
-            //После записи в БД получаем id. Или так или делать запрос, как закомменировано ниже.
+            //После записи в БД получаем id
             $themeId = $pdo->lastInsertId();
         }
 

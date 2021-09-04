@@ -30,6 +30,9 @@ abstract class DomainObjectFactory
 
     /**
      * Созадть объект модели из массива сырых данных
+     * 
+     * Метод просто раскладывает ассоциативный массив с данными в правильм порядке для конструктора модели.
+     * Можно проверять наличие и полноту данных, как в UserTextObjectFactory
      */
     abstract protected function doCreateObject(array $raw): DomainModel;
 
@@ -59,7 +62,7 @@ abstract class DomainObjectFactory
         $obj = $this->doCreateObject($raw);
 
         //Сохранить ссылку на объект в ObjectWatcher (IdentityMap), если id реальный. Иначе добавить в список на запись в БД
-        //В данный момент это делает модель
+        //В данный момент это делает суперкласс DomainModel
         // if ($raw['id'] > 0) {
         //     $this->addToMap($obj);
         // }

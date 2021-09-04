@@ -15,7 +15,7 @@ abstract class View
     /**
      * Отрисовка или получить html для отрисовки
      */
-    abstract function print(Response $response);
+    abstract public function print(Response $response);
 
     /**
      * Показывать сообщения об ошибках, если константа окружения debug = true и имеется сообщение об ощибке в Response

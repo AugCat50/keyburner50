@@ -25,7 +25,7 @@ function ajaxUser(id, method, operation, name, theme, text, clss){
 
                 }else if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
 
-                    //Удалить пользовательскую тему
+                    //Удалить/Редактировать пользовательскую тему
                     $(clss).html(data);
                     $(clss).show();
 

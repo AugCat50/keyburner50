@@ -8,6 +8,13 @@ use app\Requests\Request;
 
 class StatisticsWorker
 {
+    private $imageBuilder = null;
+
+    public function __construct()
+    {
+        $this->imageBuilder = new ImageBuilderWorker();
+    }
+
     /**
      * Получить и вернуть данные статистики
      * 
@@ -79,8 +86,7 @@ class StatisticsWorker
      */
     public function createImage($statistics, $statistics_best)
     {
-        $worker = new ImageBuilderWorker();
-        $data   = $worker->createImage($statistics, $statistics_best);
+        $data   = $this->imageBuilder->createImage($statistics, $statistics_best);
 
         return $data;
     }

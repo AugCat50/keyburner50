@@ -12,11 +12,17 @@ use DomainObjectAssembler\IdentityMap\ObjectWatcher;
 
 class UserThemeHttpCommand extends HttpCommand
 {
+    private $themeAssembler = null;
+    private $objWatcher     = null;
+
     public function __construct(Response $response)
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
         if (! isset($_SESSION["auth_subsystem"]["user_id"])) throw new \Exception('UserThemeHttpCommand(19): ID пользователя отсутствует в сессии');
+
+        $this->themeAssembler = new DomainObjectAssembler('UserTheme');
+        $this->objWatcher     = ObjectWatcher::getInstance();
 
         parent::__construct($response);
     }
@@ -62,15 +68,17 @@ class UserThemeHttpCommand extends HttpCommand
      */
     public function update(Request $request)
     {
-        $id   = $request->getProperty('id');
-        $name = $request->getProperty('name');
+        //Подготовить ассоциативный массив для создания модели
+        $data['id']      = $request->getProperty('id');
+        $data['name']    = $request->getProperty('name');
+        $data['user_id'] = $_SESSION["auth_subsystem"]["user_id"];
 
-        $assembler   = new DomainObjectAssembler('UserTheme');
-        $identityObj = $assembler->getIdentityObject()->field('id')->eq($id);
-        $model       = $assembler->findOne($identityObj);
-        $model->setName($name);
+        //Создать модель, id>0 - модель добавится в objWatcher как существующая. Помечаем её как Dirty
+        $model = $this->themeAssembler->createNewModel($data);
+        $model->markDirty();
 
-        $answer = $this->performDB();
+        //Запускаем очереди на выполнение
+        $answer = $this->objWatcher->performOperations();
 
         $this->response->addFeedback($answer);
         $this->response->addFeedback('Тема '. $request->getProperty('name'). ' успешно переименована!');
@@ -98,32 +106,18 @@ class UserThemeHttpCommand extends HttpCommand
 
         //Ставим тексты в очередь на удаление
         foreach ($collection as $model) {
-            $userTextAssembler->delete($model);
+            $model->markDeleted();
         }
 
         //Создаём фейковую модель темы с настоящим id и ставим её в очередь на удаление
-        $userThemeAssembler = new DomainObjectAssembler('UserTheme');
-        $themeModel         = $userThemeAssembler->createNewModel(['id' => $themeId, 'user_id' => -1, 'name' => '']);
-        $userThemeAssembler->delete($themeModel);
+        $themeModel = $this->themeAssembler->createNewModel(['id' => $themeId, 'user_id' => -1, 'name' => '']);
+        $themeModel->markDeleted();
 
         //Запускаем очереди БД на выполнение
-        $answer = $this->performDB();
+        $answer = $this->objWatcher->performOperations();
 
         $this->response->addFeedback($answer);
         $this->response->addFeedback('Тема '. $request->getProperty('name'). 'успешно удалена!');
         return $this->response;
-    }
-
-    /**
-     * Получение объекта ObjectWatcher и запуск на выполнение его очередей
-     * Выполнение работы с БД
-     * 
-     * @return array
-     */
-    private function performDB(){
-        $objWather = ObjectWatcher::getInstance();
-        $answer    = $objWather->performOperations();
-
-        return $answer;
     }
 }

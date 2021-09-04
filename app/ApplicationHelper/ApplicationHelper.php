@@ -3,6 +3,10 @@
  * ApplicationHelper
  * Не обязательный класс для шаблона FrontController, 
  * реализует стратегию инициализации переменных окружения и routes зависимостей Url - комманда.
+ * 
+ * Создаёт объект Request.
+ * Парсит конфигурационные ini файлы, создаёт и заполняет объекты Conf данными из ini.
+ * Сохраняет это всё в реестр.
  */
 namespace app\ApplicationHelper;
 
@@ -99,7 +103,7 @@ class ApplicationHelper
      * 
      * @return void;
      */
-    public function setDataBaseConnection(Conf $eConf)
+    private function setDataBaseConnection(Conf $eConf)
     {
         $dbType = $eConf->get('dbType');
         $host   = $eConf->get('host');
@@ -112,7 +116,7 @@ class ApplicationHelper
             $pdo = new \PDO( $dsn, $dbUser, $dpPass);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e){
-            echo "ApplicationHelper(109) _error_: Соединение с БД не удалось: " . $e->getMessage() . "<br>";
+            echo "ApplicationHelper(119) _error_: Соединение с БД не удалось: " . $e->getMessage() . "<br>";
             exit;
         }
 

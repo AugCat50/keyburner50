@@ -159,6 +159,7 @@
     <div class="dialog__display">
         <div class="dialog__form">
             <h3 class="dialog__h bright-blue-neon">Переименовать тему?</h3>
+            <p class="pink-neon"><small>Текст во всех полях будет сброшен</small></p>
             <input name="name" class="dialog__input blue-neon-box js_rename-theme" type="text">
             <div class="dialog__message pink-neon js_dialog_rename_theme-message"></div>
             <button class="button dialog__button blue-neon-box js_dialog_rename_theme__ready">Сохранить</button>

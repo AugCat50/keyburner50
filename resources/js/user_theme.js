@@ -69,8 +69,9 @@ function user_theme(){
         list.children('h4').children('.js_theme-name').html(themeName);
 
         ajaxUser(id, 'PUT', "/edit_user_theme", themeName, false, false, ".message");
+        $('.js_clean-all').click();
         localStorage.clear();
-        localStorage.setItem("area", themeName);
+        // localStorage.setItem("area", themeName);
     });
 }
 document.addEventListener("DOMContentLoaded", user_theme);

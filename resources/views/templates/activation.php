@@ -1,7 +1,7 @@
 <!-- тело страницы активации -->
 <div class="main-wrapper activation-main">
     <p class="activation-answer bright-blue-neon"><?= $msg ?></p>
-    <a class="activation-main__button button pink-neon pink-neon-box" href="user.php">OK</a>
+    <a class="activation-main__button button pink-neon pink-neon-box" href="user">OK</a>
 </div>
 
 <footer class="footer">

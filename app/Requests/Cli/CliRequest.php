@@ -10,9 +10,12 @@ namespace app\Requests\Cli;
 use app\Requests\Request;
 
 class CliRequest extends Request
-{
-    public $path;
-    
+{ 
+    /**
+     * Обработка ввода из командной строки
+     * 
+     * @return void
+     */
     public function init()
     {
         $args = $_SERVER ['argv'] ;
@@ -32,6 +35,7 @@ class CliRequest extends Request
 
     /**
      * Determine if the user is authorized to make this request.
+     * Пока не реализовано
      *
      * @return bool
      */
@@ -42,6 +46,7 @@ class CliRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
+     * Пока не реализовано
      *
      * @return array
      */
