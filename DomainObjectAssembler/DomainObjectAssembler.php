@@ -119,7 +119,10 @@ class DomainObjectAssembler
             return $this->factory->getCollection($raw);
 
         } catch(\Exception $e){
-            return '>>>>> DomainObjectAssembler(122): Не удалось получить данные. Текст ошибки: '. $e->getMessage(). ' <<<<<';
+            //Вообще-то, тут должна быть коллекция, мать его. В return
+            echo '>>>>> DomainObjectAssembler(122): Не удалось получить данные. Текст ошибки: '. $e->getMessage(). ' <<<<<';
+            return $this->factory->getCollection([]); 
+            // return '>>>>> DomainObjectAssembler(122): Не удалось получить данные. Текст ошибки: '. $e->getMessage(). ' <<<<<';
         }
     }
 

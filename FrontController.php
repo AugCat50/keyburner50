@@ -15,7 +15,7 @@ class FrontController
      * 
      * @var app\Registry\Registry
      */
-    private $reg;
+    private Registry $reg;
 
     /**
      * Получение экземпляра класса Реестр
@@ -30,9 +30,10 @@ class FrontController
      * 
      * @return void
      */
-    public static function run()
+    public static function run() : void
     {
-        $frontController = new FrontController();
+        // $frontController = new FrontController();
+        $frontController = new self();
         $frontController->init();
         $frontController->handleRequest();
     }
@@ -45,7 +46,7 @@ class FrontController
      * 
      * @return void
      */
-    private function init()
+    private function init() : void
     {
         //Изначально, в шаблоне подразумевается широкий доступ к хелперу
         //Здесь же хелпер больше нигде не использвется, можно его создание вынести из реестра сюда. Но уже не буду трогать
@@ -60,7 +61,7 @@ class FrontController
      * 
      * @return void
      */
-    private function handleRequest()
+    private function handleRequest() : void
     {
         $request  = $this->reg->getRequest();
         $resolver = new CommandResolver();
@@ -80,14 +81,15 @@ class FrontController
      * @param  string|app\Response\Response
      * @return void
      */
-    private function print($response)
+    private function print(string|Response $response): void
     {
-        
+        //Переместить получение вью в аппКонтроллер
         if($response instanceof Response){
 
             $viewName = $response->getView();
 
             if(! is_null($viewName)){
+                //Получать папку с фронтом из env.ini. И вообще, возможно лучше генерировать вью фабрикой по запросу команды, а не здесь
                 $className = 'resources\views\\' . $viewName .'View';
                 $class     = new \ReflectionClass($className);
                 $view      = $class->newInstance();

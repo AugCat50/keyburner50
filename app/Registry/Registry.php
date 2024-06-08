@@ -2,12 +2,11 @@
 /**
  * Реестр
  * 
- * Этот шаблон предназначен для того, чтобы предоставлять доступ к объектам во всей системе, 
- * позволяет обойти каналы связи и изабвиться от длинных путей передачи информации.
- * Лучшая альтернатива глобальным переменным.
+ * Шаблон предназначен для того, чтобы предоставлять глобальтный доступ к данным, 
+ * позволяет избавиться от передачи данных через все слои системы, где они не используются, снижая связанность.
+ * Клиенты зависят от реестра, что не отражено в их интерфейсе, что является минусом шаблона.
  * 
- * Является синглтоном.
- * (Камни не кидать)
+ * Данные конфигурации есть смысл кешировать.
  */
 namespace app\Registry;
 
@@ -26,29 +25,35 @@ class Registry
      * 
      * @var app\ApplicationHelper\ApplicationHelper
      */
-    private $applicationHelper = null;
+    private ? ApplicationHelper $applicationHelper = null;
 
     /**
      * Объект Conf с переменными окружения
      * 
      * @var Conf
      */
-    private $enviroment;
+    private Conf $enviroment;
 
     /**
      * Объект Conf с настройками роутов
      * 
      * @var Conf
      */
-    private $routes;
+    private Conf $routes;
 
     /**
      * Объект реквест. app\Requests\Http\ или app\Requests\Cli\ ,
      * в зависимости от запроса, поступившего в систему
      * @var Request
      */
-    private $request;
-    private $pdo;
+    private Request $request;
+
+    /**
+     * Объект \PDO
+
+     * @var \PDO
+     */
+    private \PDO $pdo;
 
 
     /**
@@ -71,7 +76,7 @@ class Registry
      * 
      * @return void
      */
-    public function setEnviroment(Conf $enviroment)
+    public function setEnviroment(Conf $enviroment): void
     {
         $this->enviroment = $enviroment;
     }
@@ -83,6 +88,9 @@ class Registry
      */
     public function getEnviroment(): Conf
     {
+        if (is_null($this->enviroment)) {
+            throw new \Exception("Registry _error_: Массив ностроек окружения не установлен");
+        }
         return $this->enviroment;
     }
 
@@ -93,7 +101,7 @@ class Registry
      * 
      * @return void
      */
-    public function setRoutes(Conf $routes)
+    public function setRoutes(Conf $routes): void
     {
         $this->routes = $routes;
     }
@@ -105,17 +113,20 @@ class Registry
      */
     public function getRoutes(): Conf
     {
+        if (is_null($this->routes)) {
+            throw new \Exception("Registry _error_: Массив роутов не установлен");
+        }
         return $this->routes;
     }
 
     /**
      * Установить объект Request
      * 
-     * @param app\Request $request
+     * @param app\Requests\Request $request
      * 
      * @return void
      */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): void
     {
         $this->request = $request;
     }
@@ -123,10 +134,13 @@ class Registry
     /**
      * Получить объект Request
      * 
-     * @return app\Request
+     * @return app\Requests\Request
      */
     public function getRequest(): Request
     {
+        if (is_null($this->request)) {
+            throw new \Exception("Registry _error_: Request не установлен");
+        }
         return $this->request;
     }
 
@@ -135,7 +149,7 @@ class Registry
      * 
      * @return void
      */
-    public function setPdo(\PDO $pdo)
+    public function setPdo(\PDO $pdo): void
     {
         $this->pdo = $pdo;
     }

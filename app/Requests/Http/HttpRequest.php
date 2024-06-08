@@ -14,7 +14,7 @@ class HttpRequest extends Request
      * 
      * @var string
      */
-    private $method;
+    private string $method;
 
     /**
      * Проверку типа запроса можно было сделать здесь, но я решил передавать информацию в HttpCommand
@@ -56,7 +56,7 @@ class HttpRequest extends Request
      * 
      * @return string
      */
-    public function getHttpMethod()
+    public function getHttpMethod(): string
     {
         return $this->method;
     }

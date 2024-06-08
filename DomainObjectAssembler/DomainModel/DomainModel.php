@@ -73,6 +73,7 @@ abstract class DomainModel
 
 
     //Unit of Work methods
+    //Вынести в трейт?
     /**
      * Отметить модель как новую, добавить в очередь на запись в БД
      */

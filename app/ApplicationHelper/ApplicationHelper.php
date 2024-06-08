@@ -22,21 +22,21 @@ class ApplicationHelper
      * 
      * @var string
      */
-    private $enviroment;
+    private string $enviroment;
 
     /**
      * Путь к файлу - routes зависимостей Url - комманда
      * 
      * @var string
      */
-    private $routes;
+    private string $routes;
 
     /**
      * Реестр
      * 
      * @var app\Registry\Registry
      */
-    private $reg;
+    private Registry $reg;
     
 
     /**
@@ -51,11 +51,14 @@ class ApplicationHelper
     }
     
     /**
-     * Инициализация приложения. Попытка выяснить, выполняется ли приложение в контексте веб или запущено из командной строки
+     * Инициализация приложения. Создание объекта Request, в зависимости от того 
+     * выполняется ли приложение в контексте веб или запущено из командной строки
+     * 
+     * -- Функционал метода похож на шаблон PageController --
      * 
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         //чтение конфигурационных файлов
         $this->setupOptions();
@@ -65,6 +68,11 @@ class ApplicationHelper
         } else {
             $request = new CliRequest();
         }
+
+        //Возможна и такая проверка
+        // if (defined('STDIN')) {
+        //     $request = new CliRequest();
+        // }
         $this->reg->setRequest($request);
     }
     
@@ -74,13 +82,13 @@ class ApplicationHelper
      * 
      * @return void
      */
-    private function setupOptions()
+    private function setupOptions(): void
     {
         if(!file_exists($this->enviroment)) {
-            throw new \Exception ("Файл конфигурации окружения не найден!\n");
+            throw new \Exception ("ApplicationHelper(89) _error_: Файл конфигурации окружения не найден!\n");
         }
         if(!file_exists($this->routes)) {
-            throw new \Exception ("Файл конфигурации роутов не найден!\n");
+            throw new \Exception ("ApplicationHelper(92) _error_:Файл конфигурации роутов не найден!\n");
         }
         
         //массив типа Conf для хранения общих значений конfигурации
@@ -103,7 +111,7 @@ class ApplicationHelper
      * 
      * @return void;
      */
-    private function setDataBaseConnection(Conf $eConf)
+    private function setDataBaseConnection(Conf $eConf): void
     {
         $dbType = $eConf->get('dbType');
         $host   = $eConf->get('host');
@@ -116,7 +124,7 @@ class ApplicationHelper
             $pdo = new \PDO( $dsn, $dbUser, $dpPass);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e){
-            echo "ApplicationHelper(119) _error_: Соединение с БД не удалось: " . $e->getMessage() . "<br>";
+            echo "ApplicationHelper(128) _error_: Соединение с БД не удалось: " . $e->getMessage() . "\n<br>";
             exit;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Контроллеру требуется какой-нибудь способ, позволяющий решить, как интерпретировать HTTP-запрос, 
  * чтобы в результате можно было вызвать нужный код для обработки этого запроса.
@@ -6,6 +7,7 @@
  * Класс, отвечает за поиск и получение команды соотвествующий url запроса.
  * Фабрика команд.
  */
+
 namespace app\CommandResolver;
 
 use app\Commands\Command;
@@ -13,14 +15,18 @@ use app\Requests\Request;
 use app\Registry\Registry;
 use app\Response\Response;
 use app\Commands\NotFoundCommand;
+// use resources\views\View;
 
-class CommandResolver{
-    private static $refcmd = null;
+class CommandResolver
+{
+    private static ? \ReflectionClass $refcmd = null;
 
     /**
-     * Дефолтная команда, при пустом роуте. Вывод списка дефолтных текстов
+     * Дефолтная команда, при пустом роуте. Вывод списка дефолтных текстов ♥
+     * 
+     * @var string
      */
-    private static $defaultcmd = NotFoundCommand::class;
+    private static string $defaultcmd = NotFoundCommand::class;
 
     public function __construct()
     {
@@ -50,23 +56,27 @@ class CommandResolver{
         $class = $commands->get($path);
 
         if (is_null($class)) {
-            $response = new Response("CommandResolver(53): Соответствие пути ". $path. " не обнаружено!");
+            $response = new Response("CommandResolver(58): Соответствие пути " . $path . " не обнаружено!");
             return new self::$defaultcmd($response);
         }
 
-        if (! class_exists($class)) {
-            $response = new Response("CommandResolver(58): Класс ". $class. " не найден!");
+        if (!class_exists($class)) {
+            $response = new Response("CommandResolver(63): Класс " . $class . " не найден!");
             return new self::$defaultcmd($response);
         }
 
-        $refclass = new \ReflectionClass ($class);
+        //Получение ReflectionClass для команды, для дальнейшего получения его объекта
+        $refclass = new \ReflectionClass($class);
 
-        if (! $refclass->isSubClassOf(self::$refcmd)) {
-            $response = new Response("CommandResolver(65): Команда ". $refclass. " не относится к классу Command!");
+        if (!$refclass->isSubClassOf(self::$refcmd)) {
+            $response = new Response("CommandResolver(70): Команда " . $refclass . " не относится к классу Command!");
             return new self::$defaultcmd($response);
         }
 
         $response = new Response();
         return $refclass->newInstance($response);
     }
+
+    //для расширения до AppController
+    // public function getView(Request $request): View
 }

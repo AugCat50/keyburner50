@@ -16,7 +16,7 @@ class CliRequest extends Request
      * 
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $args = $_SERVER ['argv'] ;
         foreach ($args as $arg) {

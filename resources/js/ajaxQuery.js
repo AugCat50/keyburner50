@@ -4,7 +4,7 @@ function ajaxQuery (id, ajax_path, clss){
     var WORK_AREA = getWorkAreaSelector();
     //ajax_path = "get_user_text" если пользовательский или "get_default_text" если дефолтный
     $.ajax({
-        url:    "http://94.244.191.245/keyburner50/ajax.php",
+        url:    "http://176.36.150.88/keyburner50/ajax.php",
         method: "get",
         data: {
             id: id,

@@ -2,7 +2,7 @@
 //Обслуживание поисковых запросов и выхода из аккаунта
 function ajaxUser(id, method, operation, name, theme, text, clss){
     $.ajax({
-        url:    "http://94.244.191.245/keyburner50/ajax.php",
+        url:    "http://176.36.150.88/keyburner50/ajax.php",
         method: 'post',
         data: {
             id:        id,
@@ -21,7 +21,7 @@ function ajaxUser(id, method, operation, name, theme, text, clss){
 
                     //Выход из аккаунта, уничтожить сессию
                     deleteCookie('PHPSESSID');
-                    document.location.href = 'http://94.244.191.245/keyburner50/index.php';
+                    document.location.href = 'http://176.36.150.88/keyburner50/index.php';
 
                 }else if(operation === "/del_user_theme" || operation === "/edit_user_theme"){
 

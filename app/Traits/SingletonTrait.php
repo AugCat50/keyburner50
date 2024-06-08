@@ -8,6 +8,7 @@ trait SingletonTrait
      * 
      * @var SingletonTrait;
      */
+    // private static ? SingletonTrait $instance = null;
     private static $instance = null;
 
     /**

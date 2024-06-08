@@ -55,5 +55,6 @@ abstract class HttpCommand extends Command
                 return $this->destroy($request);
                 break;
         }
+        //Вероятно, надо реализовать класс NullResponse, и убрать void. И установить тип возвращаемого значения
     }
 }

@@ -15,14 +15,14 @@ abstract class Request
      * 
      * @var array
      */
-    protected $properties;
+    protected array $properties = [];
 
     /**
      * Неполный url, часть запроса, являющаяся ключом к команде. Роут, в общем.
      * 
      * @var string
      */
-    protected $path = '/';
+    protected string $path = '/';
 
     /**
      * Метод init() отвечает за наполнение закрытого массива $properties для обработки в дочерних классах
@@ -58,7 +58,7 @@ abstract class Request
     *
     * @return void
     */
-    protected function setPath(string $path)
+    protected function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -82,7 +82,7 @@ abstract class Request
      * 
      * @return mixed
      */
-    public function getProperty(string $key)
+    public function getProperty(string $key): mixed
     {
         if (isset($this->properties[$key]) && $this->properties[$key] != '') {
             return $this->properties[$key];
@@ -99,7 +99,7 @@ abstract class Request
      * 
      * @return void
      */
-    public function setProperty(string $key, $val)
+    public function setProperty(string $key, $val): void
     {
         $this->properties[$key] = $val;
     }

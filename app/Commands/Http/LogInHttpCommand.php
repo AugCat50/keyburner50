@@ -44,7 +44,8 @@ class LogInHttpCommand extends HttpCommand
         //Если нет ни логина ни почты и нет пароля - редирект на главную.
         //Проверкой занимается фронтэнд, это на всякий случай.
         if(! (($name || $mail) && $password) ){
-            header ('Location: http://94.244.191.245/keyburner50/index.php');
+            $location = 'Location: http://' . $_SERVER['SERVER_ADDR'] . '/keyburner50/index.php';
+            header ($location);
             exit;
         }
 

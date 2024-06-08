@@ -9,7 +9,7 @@ function ajaxQuery_stat (id, method, time = 0, speed = 0){
     }
     
     $.ajax({
-        url:    "http://94.244.191.245/keyburner50/ajax.php",
+        url:    "http://176.36.150.88/keyburner50/ajax.php",
         method: method,
         data:{
             id:        id,

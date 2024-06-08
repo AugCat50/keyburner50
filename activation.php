@@ -11,18 +11,18 @@
         
         <link rel="shortcut icon" type="image/jpeg" href="resources/img/favicon.jpg"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/normalize/normalize.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/body/body.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main-wrapper/main-wrapper.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main-header/main-header.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/main/main.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/statistics-section/statistics-section.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/default-text-list/default-text-list.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/footer/footer.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/html/html.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/neon/neon.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/button/button.css">
-        <link rel="stylesheet" type="text/css" href="http://94.244.191.245/keyburner50/resources/css/common.blocks/dialog/dialog.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/normalize/normalize.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/body/body.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/main-wrapper/main-wrapper.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/main-header/main-header.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/main/main.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/statistics-section/statistics-section.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/default-text-list/default-text-list.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/footer/footer.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/html/html.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/neon/neon.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/button/button.css">
+        <link rel="stylesheet" type="text/css" href="http://176.36.150.88/keyburner50/resources/css/common.blocks/dialog/dialog.css">
     </head>
     
     <body class="body">
