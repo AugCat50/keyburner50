@@ -52,6 +52,19 @@ class HttpRequest extends Request
     }
 
     /**
+     * Метод для переадресации
+     * 
+     * @param string $path
+     * 
+     * @return void
+     */
+    public function forward(string $path): void
+    {
+        header("Location: {$path}");
+        exit;
+    }
+
+    /**
      * Получить строку http метода
      * 
      * @return string

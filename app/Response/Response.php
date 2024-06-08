@@ -9,11 +9,12 @@ namespace app\Response;
 class Response
 {
     /**
-     * Имя класса шаблона без слова View. По умолчанию 'Simple' (SimpleView.php)
+     * Имя класса шаблона без слова View. По умолчанию 'StringPrint' (StringPrintView.php)
+     * Тот же эффект, если свойство пусто, null
      * 
      * @var string
      */
-    private $view = 'Simple';
+    private $view = 'StringPrint';
 
     /**
      * Массив, содержащий feedback на запрос
@@ -102,11 +103,17 @@ class Response
     /**
      * Получить Feedback на запрос в виде строки
      * 
+     * @var string $separator
+     * 
      * @return string
      */
-    public function getFeedbackString($separator = "\n"): string
+    public function getFeedbackString(string $separator = "\n", array $array = []): string
     {
-        return implode($separator, $this->feedback);
+        if(empty($array)) $array = $this->feedback;
+        
+        foreach($array as $val)
+            $_array[] = is_array($val)? $this->getFeedbackString($separator, $val) : $val;
+        return implode($separator, $_array);
     }
 
     /**

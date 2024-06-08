@@ -49,7 +49,7 @@ class DefaultTextHttpCommand extends HttpCommand
         $model  = $worker->findOne($id);
         $text   = $model->getText();
 
-        $this->response->setFeedback($text, 'Simple');
+        $this->response->setFeedback($text, 'StringPrint');
         return $this->response;
     }
 

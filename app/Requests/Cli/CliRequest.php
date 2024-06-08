@@ -7,7 +7,9 @@
  */
 namespace app\Requests\Cli;
 
+use app\Registry\Registry;
 use app\Requests\Request;
+use FrontController;
 
 class CliRequest extends Request
 { 
@@ -31,6 +33,22 @@ class CliRequest extends Request
         }
 
         $this->path = (empty($this->path)) ? "/" : $this->path;
+    }
+
+    /**
+     * Метод для переадресации
+     * 
+     * @param string $path
+     * 
+     * @return void
+     */
+    public function forward(string $path): void
+    {
+        //Добавить новый путь к концу списка аргументов,
+        //где преимущество получает последний аргумент
+        // $_SERVER['argv'][] = "path:{$path}";
+        // Registry::reset();
+        // FrontController::run();
     }
 
     /**

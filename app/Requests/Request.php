@@ -30,6 +30,15 @@ abstract class Request
     abstract public function init();
 
     /**
+     * Метод для переадресации
+     * 
+     * @param string $path
+     * 
+     * @return void
+     */
+    abstract public function forward(string $path): void;
+
+    /**
      * Determine if the user is authorized to make this request.
      * Пока не реализовано
      *

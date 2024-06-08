@@ -5,7 +5,8 @@
  * полученных результатов для просмотра пользователем.
  */
 use app\Registry\Registry;
-use app\CommandResolver\CommandResolver;
+use app\AppController\CommandResolver;
+use app\AppController\ViewController;
 use app\Response\Response;
 
 class FrontController
@@ -19,6 +20,7 @@ class FrontController
 
     /**
      * Получение экземпляра класса Реестр
+     * Закрытый конструктор. Старт возможет только через метод run()
      */
     private function __construct()
     {
@@ -26,13 +28,12 @@ class FrontController
     }
 
     /**
-     * Метод обёртка для инициализации системы и обработки запроса
+     * Стартовая точка системы. Метод обёртка для инициализации системы и обработки запроса
      * 
      * @return void
      */
     public static function run() : void
     {
-        // $frontController = new FrontController();
         $frontController = new self();
         $frontController->init();
         $frontController->handleRequest();
@@ -56,8 +57,9 @@ class FrontController
     /**
      * Обработка запроса вызывается здесь.
      * 
-     * Контроллер, обращается к логике приложения, выполняя команду из объекта типа Command.
-     * Этот объект выбирается в соответствии со структурой запрошенного URL (в соответствии роутам).
+     * Контроллер, обращается к логике приложения, запуская на выполнение команду (Command).
+     * Этот объект выбирается и создаётся в соответствии со структурой запрошенного URL (в соответствии роутам) в фабрике CommandResolver.
+     * Логика выбора http метода в случае http запроса - в суперкласce Command.
      * 
      * @return void
      */
@@ -68,39 +70,7 @@ class FrontController
         $cmd      = $resolver->getCommand($request);
         $response = $cmd->execute($request);
 
-        $this->print($response);
-    }
-
-    /**
-     * Вывод данных ответа. 
-     * 
-     * Если получен объект Response и у него заполнено свойство view, то создаём объект View и передаём ему Response на обработку и отрисовку. 
-     * Если свойство view не заполнено, выводим feedback как строку. 
-     * Если получен не объект Response, то просто выводим в поток вывода.
-     * 
-     * @param  string|app\Response\Response
-     * @return void
-     */
-    private function print(string|Response $response): void
-    {
-        //Переместить получение вью в аппКонтроллер
-        if($response instanceof Response){
-
-            $viewName = $response->getView();
-
-            if(! is_null($viewName)){
-                //Получать папку с фронтом из env.ini. И вообще, возможно лучше генерировать вью фабрикой по запросу команды, а не здесь
-                $className = 'resources\views\\' . $viewName .'View';
-                $class     = new \ReflectionClass($className);
-                $view      = $class->newInstance();
-                $view->print($response);
-            } else {
-                echo $response->getFeedbackString('<br>');
-            }
-
-        } else{
-            //Если возвращён не app\Response\Response
-            echo $response;
-        }
+        $viewController = new ViewController();
+        $viewController->render($response);
     }
 }

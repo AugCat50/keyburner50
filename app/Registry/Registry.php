@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Реестр
  * 
@@ -8,6 +9,7 @@
  * 
  * Данные конфигурации есть смысл кешировать.
  */
+
 namespace app\Registry;
 
 use app\Traits\SingletonTrait;
@@ -16,7 +18,7 @@ use app\Conf\Conf;
 use app\ApplicationHelper\ApplicationHelper;
 use app\Requests\Request;
 
-class Registry 
+class Registry
 {
     use SingletonTrait;
 
@@ -25,26 +27,27 @@ class Registry
      * 
      * @var app\ApplicationHelper\ApplicationHelper
      */
-    private ? ApplicationHelper $applicationHelper = null;
+    private ?ApplicationHelper $applicationHelper = null;
 
     /**
      * Объект Conf с переменными окружения
      * 
-     * @var Conf
+     * @var app\Conf\Conf
      */
     private Conf $enviroment;
 
     /**
      * Объект Conf с настройками роутов
      * 
-     * @var Conf
+     * @var app\Conf\Conf
      */
     private Conf $routes;
 
     /**
      * Объект реквест. app\Requests\Http\ или app\Requests\Cli\ ,
-     * в зависимости от запроса, поступившего в систему
-     * @var Request
+     * в зависимости от типа запроса, поступившего в систему
+     * 
+     * @var app\Requests\Request $request
      */
     private Request $request;
 
@@ -63,7 +66,7 @@ class Registry
      */
     public function getApplicationHelper(): ApplicationHelper
     {
-        if (is_null($this->applicationHelper)){
+        if (is_null($this->applicationHelper)) {
             $this->applicationHelper = new ApplicationHelper();
         }
         return $this->applicationHelper;
@@ -80,7 +83,7 @@ class Registry
     {
         $this->enviroment = $enviroment;
     }
-    
+
     /**
      * Получить объект, содержащий массив настроек окружения
      * 
@@ -105,7 +108,7 @@ class Registry
     {
         $this->routes = $routes;
     }
-    
+
     /**
      * Получить объект, содержащий массив зависимостей запрос - комманда
      * 
@@ -154,7 +157,7 @@ class Registry
         $this->pdo = $pdo;
     }
 
-    
+
     /**
      * Получить объект PDO
      * 

@@ -101,6 +101,8 @@ class ApplicationHelper
         $rConf = new Conf($rts['commands']);
         $this->reg->setRoutes($rConf);
 
+        //По аналогии можно сдетать view config, с файлом соответстий вью командам. Командам со статусом, состоянием.
+
         //Установить подключение с БД
         $this->setDataBaseConnection($eConf);
     }
