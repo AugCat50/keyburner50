@@ -14,16 +14,6 @@ use DomainObjectAssembler\DomainObjectAssembler;
 class LogInHttpCommand extends HttpCommand
 {
     /**
-     * GET no id
-     * 
-     * @param app\Requests\Request $request
-     */
-    public function index(Request $request)
-    {
-        //
-    }
-
-    /**
      * GET id
      * Метод для проверки авторизации пользвателя
      * 
@@ -33,7 +23,7 @@ class LogInHttpCommand extends HttpCommand
      * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
-    public function show(Request $request)
+    protected function show(Request $request)
     {
         session_start();
 
@@ -90,35 +80,13 @@ class LogInHttpCommand extends HttpCommand
     }
 
     /**
-     * POST
-     * Store a newly created resource in storage.
-     *
-     * @param app\Requests\Request $request
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * PUT
-     * Update the specified resource in storage.
-     *
-     * @param app\Requests\Request $request
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
      * DELETE
      * Удаление сессии
      *
      * @param app\Requests\Request $request
      * @return void
      */
-    public function destroy(Request $request)
+    protected function destroy(Request $request)
     {
         session_start();
         //Затереть массив сессии

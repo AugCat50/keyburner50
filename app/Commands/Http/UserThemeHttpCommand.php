@@ -15,7 +15,7 @@ class UserThemeHttpCommand extends HttpCommand
     private $themeAssembler = null;
     private $objWatcher     = null;
 
-    public function __construct(Response $response)
+    protected function __construct(Response $response)
     {
         //Запрос приходит из ajax, проверяем сессию
         session_start();
@@ -26,39 +26,6 @@ class UserThemeHttpCommand extends HttpCommand
 
         parent::__construct($response);
     }
-
-    /**
-     * GET
-     * 
-     * @return app\Response\Response
-     */
-    public function index(Request $request)
-    {
-        
-    }
-
-    /**
-     * GET
-     * 
-     * @param  app\Requests\Request $request
-     */
-    public function show(Request $request)
-    {
-        //
-    }
-
-    /**
-     * POST
-     * Сохранение новой темы находится в UserTextHttpCommand::getThemeId , поскольку отденой от тестов функции "создать тему" нет
-     * Но можно переделать и перенести создание темы сюда.
-     *
-     * @param  app\Requests\Request  $request
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * PUT
      * Обновить тему в БД (переименовать)
@@ -66,7 +33,7 @@ class UserThemeHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function update(Request $request)
+    protected function update(Request $request)
     {
         //Подготовить ассоциативный массив для создания модели
         $data['id']      = $request->getProperty('id');
@@ -96,7 +63,7 @@ class UserThemeHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function destroy(Request $request)
+    protected function destroy(Request $request)
     {
         //Получаем коллекцию текстов этой темы
         $themeId           = $request->getProperty('id');

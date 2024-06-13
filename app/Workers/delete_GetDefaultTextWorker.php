@@ -5,19 +5,23 @@
  */
 namespace app\Workers;
 
+use app\Commands\Command;
 use DomainObjectAssembler\Collections\Collection;
 use DomainObjectAssembler\DomainObjectAssembler;
 
-class GetDefaultTextWorker
-{
+class GetDefaultTextWorker extends Worker
+{ 
     /**
      * Получить модель текста по id
      * 
      * @param  int $id
      * @return DomainObjectAssembler\DomainModel\DefaultTextModel
      */
-    public function findOne(int $id)
+    public function findOne(Command $command)
     {
+        $request = $command->getRequest();
+        $id      = $request->getProperty('id');
+        
         $assembler      = new DomainObjectAssembler('DefaultText');
         $identityObject = $assembler->getIdentityObject()->field('id')->eq($id);
         $model          = $assembler->findOne($identityObject);

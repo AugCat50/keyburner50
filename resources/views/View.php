@@ -19,6 +19,7 @@ abstract class View
 
     /**
      * Показывать сообщения об ошибках, если константа окружения debug = true и имеется сообщение об ощибке в Response
+     * При закомментированном debug = true в $env = null
      */
     protected function debug(Response $response){
         $reg = Registry::getInstance();

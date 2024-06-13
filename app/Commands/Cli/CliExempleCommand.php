@@ -11,8 +11,6 @@ class CliExempleCommand extends Command
 {
     /**
      * Вызывыть логику приложения тут.
-     * 
-     * @return void|mixed
      */
     public function execute(Request $request)
     {

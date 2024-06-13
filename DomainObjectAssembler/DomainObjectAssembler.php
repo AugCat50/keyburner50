@@ -13,6 +13,7 @@ namespace DomainObjectAssembler;
 
 use app\Registry\Registry;
 use DomainObjectAssembler\Collections\Collection;
+use DomainObjectAssembler\Collections\NullCollection;
 use DomainObjectAssembler\DomainModel\DomainModel;
 use DomainObjectAssembler\IdentityMap\ObjectWatcher;
 use DomainObjectAssembler\IdentityObject\IdentityObject;
@@ -121,7 +122,8 @@ class DomainObjectAssembler
         } catch(\Exception $e){
             //Вообще-то, тут должна быть коллекция, мать его. В return
             echo '>>>>> DomainObjectAssembler(122): Не удалось получить данные. Текст ошибки: '. $e->getMessage(). ' <<<<<';
-            return $this->factory->getCollection([]); 
+            return new NullCollection();
+            return $this->factory->getCollection([]);
             // return '>>>>> DomainObjectAssembler(122): Не удалось получить данные. Текст ошибки: '. $e->getMessage(). ' <<<<<';
         }
     }

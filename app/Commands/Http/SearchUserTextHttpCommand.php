@@ -35,7 +35,7 @@ class SearchUserTextHttpCommand extends HttpCommand
      * Возвращает коллекцию текcтов в Response
      * @return app\Response\Response
      */
-    public function index(Request $request)
+    protected function index(Request $request)
     {
         //Поисковая фраза обязательно должна быть заключена в %
         $searchPhrase = '%'. $request->getProperty('text'). '%';
@@ -69,48 +69,5 @@ class SearchUserTextHttpCommand extends HttpCommand
         }
 
         return $this->response;
-    }
-
-    /**
-     * GET id
-     * 
-     * @param  app\Requests\Request $request
-     */
-    public function show(Request $request)
-    {
-        // return $this->response;
-    }
-
-    /**
-     * POST
-     * Store a newly created resource in storage.
-     *
-     * @param  app\Requests\Request  $request
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * PUT
-     * Update the specified resource in storage.
-     *
-     * @param  app\Requests\Request  $request 
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * DELETE
-     * Remove the specified resource from storage.
-     *
-     * @param app\Requests\Request $request 
-     */
-    public function destroy(Request $request)
-    {
-        //
     }
 }

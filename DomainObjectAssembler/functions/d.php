@@ -1,20 +1,19 @@
 <?php
+
 /**
  * Debug функция, выводит полученную информацию в удобном для чтения виде.
  * Так же выводит имя файла, строку, имя функции и путь к файлу, стек вызова
  * 
- * @param mixed     $value
- * @param bool|int  $exit
+ * @param mixed $value
+ * @param mixed $exit
  * 
  * @return void
  */
 
-if (! function_exists('d')) {
+if (!function_exists('d')) {
 
     function d($value = null, $exit = false)
     {
-        
-
         echo '<table>';
         echo '<caption><h3>Cтек вызовов функций</h3></caption>';
         echo '<tr><th>File</th><th>Line</th><th> Function</th><th>Path</th></tr>';
@@ -39,15 +38,14 @@ if (! function_exists('d')) {
         // print_r($value);
         echo '</pre>';
 
-        if($exit) exit;
+        if ($exit) exit;
     }
 
-    function debugOut ($a)
+    function debugOut($a)
     {
-        echo '<tr><td><b>'. basename( $a['file'] ). '</b></td>'
-            . '<td><span style="color: red">('. $a['line']. ')</span></td>'
-            . '<td><span style="color: green"> '. $a['function']. '</span></td>'
-            . '<td>---<span style="color: blue">'. dirname($a['file']). '</span></td></tr>';
+        echo '<tr><td><b>' . basename($a['file']) . '</b></td>'
+            . '<td><span style="color: red">(' . $a['line'] . ')</span></td>'
+            . '<td><span style="color: green"> ' . $a['function'] . '</span></td>'
+            . '<td>---<span style="color: blue">' . dirname($a['file']) . '</span></td></tr>';
     }
-
 }

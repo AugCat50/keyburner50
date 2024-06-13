@@ -23,10 +23,10 @@ class UserHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    protected function index(Request  $request)
     {
         //Костыль, чтобы запретить попадать сюда из check_in.
-        $path = $request->getPath();
+        $path = $this->request->getPath();
         if($path === '/check_in'){
             throw new \Exception('"/check_in" доступен только с id = -1 и из ajax');
         }
@@ -56,51 +56,18 @@ class UserHttpCommand extends HttpCommand
     }
 
     /**
-     * GET id
-     * Display the specified resource.
-     *
-     * @param  app\Requests\Request  $request
-     */
-    public function show(Request $request)
-    {
-        // return $this->response;
-    }
-
-    /**
      * POST
      * Зарегистрировать нового пользователя, проверить, сохранить в БД
      *
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function store(Request $request)
+    protected function store(Request  $request)
     {
         $worker = new UserCheckInWorker();
         $msg    = $worker->addNewUser($request);
 
         $this->response->setFeedback($msg);
         return $this->response;
-    }
-
-    /**
-     * PUT
-     * Возможности переименовать пользователя пока нет, но можно добавить
-     *
-     * @param app\Requests\Request $request
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * DELETE
-     * Возможности удаления пользователя пока нет, но можно добавить
-     *
-     * @param app\Requests\Request $request 
-     */
-    public function destroy(Request $request)
-    {
-        //
     }
 }

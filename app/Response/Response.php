@@ -109,8 +109,11 @@ class Response
      */
     public function getFeedbackString(string $separator = "\n", array $array = []): string
     {
+        //Если обращение не рекурсивное, устанавливаем $this->feedback
         if(empty($array)) $array = $this->feedback;
-        
+        //Если $this->feedback пуст
+        if(empty($array)) return implode($separator, $array);
+
         foreach($array as $val)
             $_array[] = is_array($val)? $this->getFeedbackString($separator, $val) : $val;
         return implode($separator, $_array);

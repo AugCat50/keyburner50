@@ -20,23 +20,13 @@ class StatisticsHttpCommand extends HttpCommand
     }
     
     /**
-     * GET no id
-     * 
-     * @return app\Response\Response
-     */
-    public function index(Request $request)
-    {
-        // return $this->response;
-    }
-
-    /**
      * GET id
      * Получить и вернуть статистику для текста по id
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
-    public function show(Request $request)
+    protected function show(Request $request)
     {
         $worker = new StatisticsWorker();
         $data   = $worker->getStatistics($request);
@@ -52,34 +42,12 @@ class StatisticsHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function store(Request $request)
+    protected function store(Request $request)
     {
         $worker = new StatisticsWorker();
         $data   = $worker->main($request);
 
         $this->response->addFeedback($data);
         return $this->response;
-    }
-
-    /**
-     * PUT
-     * Update the specified resource in storage.
-     *
-     * @param  app\Requests\Request $request
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * DELETE
-     * Удаления статистики текста пока не предусмотрено, но можно сделать
-     *
-     * @param  app\Requests\Request $request
-     */
-    public function destroy(Request $request)
-    {
-        //
     }
 }

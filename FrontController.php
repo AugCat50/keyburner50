@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Шаблон Front Controller (Фронтальный контроллер) предоставляет центральную точку доступа для обработки всех
  * входящих запросов и в конечном итоге поручает уровню представления вывод
  * полученных результатов для просмотра пользователем.
  */
+
 use app\Registry\Registry;
 use app\AppController\CommandResolver;
 use app\AppController\ViewController;
-use app\Response\Response;
 
 class FrontController
 {
@@ -32,7 +33,7 @@ class FrontController
      * 
      * @return void
      */
-    public static function run() : void
+    public static function run(): void
     {
         $frontController = new self();
         $frontController->init();
@@ -47,10 +48,10 @@ class FrontController
      * 
      * @return void
      */
-    private function init() : void
+    private function init(): void
     {
         //Изначально, в шаблоне подразумевается широкий доступ к хелперу
-        //Здесь же хелпер больше нигде не использвется, можно его создание вынести из реестра сюда. Но уже не буду трогать
+        //Здесь же хелпер больше нигде не используется, можно его создание вынести из реестра сюда. Но уже не буду трогать
         $this->reg->getApplicationHelper()->init();
     }
 
@@ -61,9 +62,11 @@ class FrontController
      * Этот объект выбирается и создаётся в соответствии со структурой запрошенного URL (в соответствии роутам) в фабрике CommandResolver.
      * Логика выбора http метода в случае http запроса - в суперкласce Command.
      * 
+     * Получает контроллер View и передаёт Response на обработку и рендер
+     * 
      * @return void
      */
-    private function handleRequest() : void
+    private function handleRequest(): void
     {
         $request  = $this->reg->getRequest();
         $resolver = new CommandResolver();

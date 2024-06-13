@@ -27,23 +27,13 @@ class UserTextHttpCommand extends HttpCommand
     }
 
     /**
-     * GET no id
-     * 
-     * @param  app\Requests\Request $request
-     */
-    public function index(Request $request)
-    {
-        //
-    }
-
-    /**
      * GET id
      * Получить один текст
      * 
      * @param  app\Requests\Request $request
      * @return app\Response\Response
      */
-    public function show(Request $request)
+    private function show(Request $request)
     {
         $id          = $request->getProperty('id');
         $assembler   = new DomainObjectAssembler('UserText');
@@ -64,7 +54,7 @@ class UserTextHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function store(Request $request)
+    private function store(Request $request)
     {
         //Получить id темы
         $request = $this->getThemeId($request);
@@ -89,7 +79,7 @@ class UserTextHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response
      */
-    public function update(Request $request)
+    private function update(Request $request)
     {
         //Получить id темы
         $request = $this->getThemeId($request);
@@ -112,7 +102,7 @@ class UserTextHttpCommand extends HttpCommand
      * @param  app\Requests\Request  $request
      * @return app\Response\Response 
      */
-    public function destroy(Request $request)
+    private function destroy(Request $request)
     {
         $id     = $request->getProperty('id');
         $this->userTextWorker->delete($id);

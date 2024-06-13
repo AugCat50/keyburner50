@@ -11,14 +11,8 @@ use app\Requests\Request;
 
 abstract class HttpCommand extends Command
 {
-    abstract public function index  (Request $request);
-    abstract public function show   (Request $request);
-    abstract public function store  (Request $request);
-    abstract public function update (Request $request);
-    abstract public function destroy(Request $request);
-
     /**
-     * Общий для все команд метод, запускающий выполнение.
+     * Общий для всеx команд метод, запускающий выполнение.
      * Делегирует выполнение методу, в зависимости от параметров запроса
      * 
      * @param app\Requests\Http\HttpRequest $request
@@ -32,8 +26,11 @@ abstract class HttpCommand extends Command
             throw new \Exception('HttpCommand(32): HTTP команде должен быть передан объект HttpRequest. Получен - '. get_class($request));
         }
 
-        $httpMethod = $request->getHttpMethod();
-        $id         = $request->getProperty('id');
+        //Request сохраняется в свойство, потому что данные из него пригодятся в воркерах
+        //Передать напрямую в конструкторе команды воркеру не получится, потому что request не попадает в конустроктор команды
+        $this->request = $request;
+        $httpMethod    = $request->getHttpMethod();
+        $id            = $request->getProperty('id');
         
         switch ($httpMethod) {
             case 'GET':
@@ -56,5 +53,81 @@ abstract class HttpCommand extends Command
                 break;
         }
         //Вероятно, надо реализовать класс NullResponse, и убрать void. И установить тип возвращаемого значения
+    }
+
+    /**
+     * GET all (no id)
+     * 
+     * @param  app\Requests\Request $request
+     * @return app\Response\Response
+     */
+    protected function index(Request $request)
+    {
+        $this->voidHttpMethodResponce('GET (index)');
+        return $this->response;
+    }
+
+    /**
+     * GET id
+     * 
+     * @param  app\Requests\Request $request
+     * @return app\Response\Response
+     */
+    protected function show(Request $request)
+    {
+        $this->voidHttpMethodResponce('GET (id)');
+        return $this->response;
+    }
+
+    /**
+     * POST
+     * Store a newly created resource in storage.
+     *
+     * @param  app\Requests\Request  $request
+     * @return app\Response\Response
+     */
+    protected function store(Request $request)
+    {
+        $this->voidHttpMethodResponce('POST (store)');
+        return $this->response;
+    }
+
+    /**
+     * PUT
+     * Update the specified resource in storage.
+     *
+     * @param  app\Requests\Request  $request
+     * @return app\Response\Response
+     */
+    protected function update(Request $request)
+    {
+        $this->voidHttpMethodResponce('PUT (update)');
+        return $this->response;
+    }
+
+    /**
+     * DELETE
+     * Remove the specified resource from storage.
+     *
+     * @param  app\Requests\Request $request
+     * @return app\Response\Response
+     */
+    protected function destroy(Request $request)
+    {
+        $this->voidHttpMethodResponce('_DELETE (destroy)');
+        return $this->response;
+    }
+
+    /**
+     * Просто добавляет в объект Response сообщение, что вызванный метод не переопределён в дочернем классе
+     * 
+     * @param  string $name
+     * @return void
+     */
+    private function voidHttpMethodResponce($name): void
+    {
+        $refClass = new \ReflectionClass($this);
+        $command  = $refClass->getName();
+        $this->response->addFeedback('HTTP method ... ' . $name . ' ... в комманде ... ' . $command . ' ... не определён.');
     }
 }

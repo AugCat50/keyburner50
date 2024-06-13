@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ApplicationHelper
  * Не обязательный класс для шаблона FrontController, 
@@ -8,6 +9,7 @@
  * Парсит конфигурационные ini файлы, создаёт и заполняет объекты Conf данными из ini.
  * Сохраняет это всё в реестр.
  */
+
 namespace app\ApplicationHelper;
 
 use app\Conf\Conf;
@@ -37,7 +39,7 @@ class ApplicationHelper
      * @var app\Registry\Registry
      */
     private Registry $reg;
-    
+
 
     /**
      * Конструктор.
@@ -49,7 +51,7 @@ class ApplicationHelper
         $this->routes     = dirname(dirname(__DIR__)) . "/routes/routes.ini";
         $this->reg        = Registry::getInstance();
     }
-    
+
     /**
      * Инициализация приложения. Создание объекта Request, в зависимости от того 
      * выполняется ли приложение в контексте веб или запущено из командной строки
@@ -75,7 +77,7 @@ class ApplicationHelper
         // }
         $this->reg->setRequest($request);
     }
-    
+
     /**
      * Парсинг файлов настроек в объекты-обёртки Conf
      * Настройки окружения и роуты.
@@ -84,24 +86,25 @@ class ApplicationHelper
      */
     private function setupOptions(): void
     {
-        if(!file_exists($this->enviroment)) {
-            throw new \Exception ("ApplicationHelper(89) _error_: Файл конфигурации окружения не найден!\n");
+        if (!file_exists($this->enviroment)) {
+            throw new \Exception("ApplicationHelper(90) _error_: Файл конфигурации окружения не найден!\n");
         }
-        if(!file_exists($this->routes)) {
-            throw new \Exception ("ApplicationHelper(92) _error_:Файл конфигурации роутов не найден!\n");
+        if (!file_exists($this->routes)) {
+            throw new \Exception("ApplicationHelper(93) _error_:Файл конфигурации роутов не найден!\n");
         }
-        
+
         //массив типа Conf для хранения общих значений конfигурации
         $env   = parse_ini_file($this->enviroment, true);
         $eConf = new Conf($env['config']);
         $this->reg->setEnviroment($eConf);
-        
+
         //массив типа Conf для преобразования путей URL в классы типа Command
         $rts   = parse_ini_file($this->routes, true);
         $rConf = new Conf($rts['commands']);
         $this->reg->setRoutes($rConf);
 
-        //По аналогии можно сдетать view config, с файлом соответстий вью командам. Командам со статусом, состоянием.
+        //По аналогии можно сдетать view config, с файлом соответстий вью командам. Командам со статусом, состоянием. 
+        //И получать view в ViewController`e по данным конфига 
 
         //Установить подключение с БД
         $this->setDataBaseConnection($eConf);
@@ -120,13 +123,13 @@ class ApplicationHelper
         $dbName = $eConf->get('dbName');
         $dbUser = $eConf->get('dbUser');
         $dpPass = $eConf->get('dbPass');
-        $dsn    = $dbType. ':host='. $host. ';dbname='. $dbName;
+        $dsn    = $dbType . ':host=' . $host . ';dbname=' . $dbName;
 
         try {
-            $pdo = new \PDO( $dsn, $dbUser, $dpPass);
+            $pdo = new \PDO($dsn, $dbUser, $dpPass);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        } catch (\PDOException $e){
-            echo "ApplicationHelper(128) _error_: Соединение с БД не удалось: " . $e->getMessage() . "\n<br>";
+        } catch (\PDOException $e) {
+            echo "ApplicationHelper(132) _error_: Соединение с БД не удалось: " . $e->getMessage() . "\n<br>";
             exit;
         }
 

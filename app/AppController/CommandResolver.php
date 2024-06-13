@@ -17,7 +17,6 @@ use app\Requests\Request;
 use app\Registry\Registry;
 use app\Response\Response;
 use app\Commands\NotFoundCommand;
-// use resources\views\View;
 
 class CommandResolver
 {
@@ -58,12 +57,12 @@ class CommandResolver
         $class = $commands->get($path);
 
         if (is_null($class)) {
-            $response = new Response("CommandResolver(58): Соответствие пути " . $path . " не обнаружено!");
+            $response = new Response("CommandResolver(60): Соответствие пути " . $path . " не обнаружено!");
             return new self::$defaultcmd($response);
         }
 
         if (!class_exists($class)) {
-            $response = new Response("CommandResolver(63): Класс " . $class . " не найден!");
+            $response = new Response("CommandResolver(65): Класс " . $class . " не найден!");
             return new self::$defaultcmd($response);
         }
 
@@ -71,14 +70,11 @@ class CommandResolver
         $refclass = new \ReflectionClass($class);
 
         if (!$refclass->isSubClassOf(self::$refcmd)) {
-            $response = new Response("CommandResolver(70): Команда " . $refclass . " не относится к классу Command!");
+            $response = new Response("CommandResolver(73): Команда " . $refclass . " не относится к классу Command!");
             return new self::$defaultcmd($response);
         }
 
         $response = new Response();
         return $refclass->newInstance($response);
     }
-
-    //для расширения до AppController
-    // public function getView(Request $request): View
 }
